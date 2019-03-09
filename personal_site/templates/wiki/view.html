@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div class="row">
+        <h1>
+            {{ page.name }}
+            {% if current_user.is_admin %}
+                <small>
+                    <a href="{{ url_for("wiki.edit", page_name=page.name) }}" class="btn btn-default">Edit this page</a>
+                    <a href="{{ url_for("wiki.new") }}" class="btn btn-primary">Create new page</a>
+                    <a href="{{ url_for("wiki.delete") }}" data-method="post" data-confirm="Are you sure you want to delete this page?" class="btn btn-danger">Delete this page</a>
+                </small>
+            {% endif %}
+        </h1>
+        <p>Author: {{ page.creator.username }}</p>
+        <small>Last modified: {{ page.last_modified_at }} by {{ page.last_editor.username }}</small>
+
+        Table of Contents
+        {{ toc|safe }}
+        <hr>
+
+        {{ html|safe }}
+{% endblock %}

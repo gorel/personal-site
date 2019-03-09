@@ -3,7 +3,7 @@ import functools
 import flask
 import flask_login
 
-from personal_site import db
+from personal_site import constants, db
 
 from personal_site.admin import forms, utils
 
@@ -28,7 +28,7 @@ def index():
 @flask_login.login_required
 @utils.admin_required
 def users(page_num=1):
-    users = auth_models.User.query.paginate(page_num)
+    users = auth_models.User.query.paginate(page_num, constants.ADMIN_USERS_PER_PAGE)
     return flask.render_template("admin/users.html", users=users)
 
 

@@ -5,6 +5,7 @@ Performs webapp startup procedures
 import logging
 
 import flask
+import flask_bootstrap
 import flask_bcrypt
 import flask_login
 import flask_mail
@@ -23,6 +24,12 @@ print("Done.")
 # Load configuration file
 print("Loading config from object...", end="")
 app.config.from_object("config")
+print("Done.")
+
+
+# Set up bootstrap
+print("Enabling Bootstrap...", end="")
+bootstrap = flask_bootstrap.Bootstrap(app)
 print("Done.")
 
 

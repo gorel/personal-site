@@ -43,10 +43,9 @@ def new():
         return flask.render_template("wiki/new.html", form=form)
 
 
-@wiki.route("/<page_name>")
-def view(page_name):
-    idname = WikiPage.name_to_idname(page_name)
-    page = WikiPage.get_by_idname_or_404(idname)
+@wiki.route("/<page_idname>")
+def view(page_idname):
+    page = WikiPage.get_by_idname_or_404(page_idname)
     page.views += 1
     db.session.commit()
 
@@ -54,12 +53,11 @@ def view(page_name):
     return flask.render_template("wiki/view.html", page=page, html=html, toc=MD.toc)
 
 
-@wiki.route("/<page_name>/edit", methods=["GET", "POST"])
+@wiki.route("/<page_idname>/edit", methods=["GET", "POST"])
 @login_required
 @admin_utils.admin_required
-def edit(page_name):
-    idname = WikiPage.name_to_idname(page_name)
-    page = WikiPage.get_by_idname_or_404(idname)
+def edit(page_idname):
+    page = WikiPage.get_by_idname_or_404(page_idname)
     form = forms.EditWikiPageForm(page)
 
     if page.validate_on_submit():
@@ -69,3 +67,15 @@ def edit(page_name):
         form.page_name.data = page.name
         form.page_content.data = page.content
         return flask.render_template("wiki/edit.html", form=form)
+
+
+@wiki.route("/<page_idname>/delete", methods=["POST"])
+@login_required
+@admin_utils.admin_required
+def delete(page_idname):
+    page = WikiPage.get_by_idname_or_404(page_idname)
+    db.session.delete(page)
+    db.session.commit()
+
+    flask.flash("Page deleted successfully")
+    return flask.redirect(flask.url_for("wiki.index"))
