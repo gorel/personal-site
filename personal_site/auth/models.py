@@ -39,6 +39,7 @@ class PasswordReset(db.Model):
         self.expiration = datetime.datetime.now() + datetime.timedelta(days=2)
 
     def __repr__(self):
+        # TODO - repr
         pass
 
     @classmethod
@@ -84,10 +85,11 @@ class User(db.Model, flask_login.UserMixin):
         self.email_verified = True
 
     def send_email_verification_link(self):
-        # TODO
+        # TODO - send email verification
         pass
 
     def __repr__(self):
+        # TODO - repr
         pass
 
     @classmethod

@@ -9,6 +9,8 @@ class RegisterForm(flask_wtf.Form):
         "Username",
         validators=[
             wtforms.validators.DataRequired(),
+            # TODO - magic constant
+            wtforms.validators.Length(max=32),
         ],
     )
     email = wtforms.TextField(
@@ -22,6 +24,7 @@ class RegisterForm(flask_wtf.Form):
         "Password",
         validators=[
             wtforms.validators.InputRequired(),
+            # TODO - magic constant
             wtforms.validators.Length(min=8),
             wtforms.validators.EqualTo(
                 "confirm_password",

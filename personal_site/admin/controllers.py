@@ -5,7 +5,7 @@ import flask_login
 
 from personal_site import db
 
-from personal_site.admin import forms
+from personal_site.admin import forms, utils
 
 import personal_site.auth.models as auth_models
 import personal_site.forum.models as forum_models
@@ -15,17 +15,9 @@ import personal_site.wiki.models as wiki_models
 admin = flask.Blueprint("admin", __name__, url_prefix="/admin")
 
 
-def admin_required(f):
-    @functools.wraps(f)
-    def _wrap(*args, **kwargs):
-        if not flask_login.current_user.is_admin:
-            flask.flash("You must be an admin to perform that action")
-            return flask.redirect(flask.url_for("default.home"))
-    return _wrap
-
 @admin.route("/")
 @flask_login.login_required
-@admin_required
+@utils.admin_required
 def index():
     return flask.render_template("admin/index.html")
 
@@ -34,7 +26,7 @@ def index():
 @admin.route("/users/")
 @admin.route("/users/<int:page_num>")
 @flask_login.login_required
-@admin_required
+@utils.admin_required
 def users(page_num=1):
     users = auth_models.User.query.paginate(page_num)
     return flask.render_template("admin/users.html", users=users)
@@ -42,7 +34,7 @@ def users(page_num=1):
 
 @admin.route("/users/delete/<int:user_id>", methods=["POST"])
 @flask_login.login_required
-@admin_required
+@utils.admin_required
 def delete_user(user_id):
     if flask_login.current_user.id == user_id:
         flask.flash("Now that doesn't seem like a great idea...")

@@ -9,7 +9,7 @@ import flask_login
 import flask_mail
 
 from personal_site import db, mail
-from personal_site.module_auth import forms, models
+from personal_site.auth import forms, models
 
 
 auth = flask.Blueprint("auth", __name__, url_prefix="/auth")

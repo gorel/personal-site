@@ -17,7 +17,8 @@ class ErrorReport(db.Model):
         self.error_text = error_text
         self.user_text = user_text
         self.report_type = report_type
-        self.submitted_at = datetime.datetime.now()
+        self.submitted_at = datetime.datetime.utcnow()
 
     def __repr__(self):
+        # TODO - repr
         pass
