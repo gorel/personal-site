@@ -9,6 +9,7 @@ import flask_bootstrap
 import flask_bcrypt
 import flask_login
 import flask_mail
+import flask_moment
 import flask_sqlalchemy
 import flask_wtf
 
@@ -54,6 +55,12 @@ print("Done.")
 # Configure mail server
 print("Configuring mail server...", end="")
 mail = flask_mail.Mail(app)
+print("Done.")
+
+
+# Set up Moment.js for rendering times
+print("Configure Moment.js handler...", end="")
+moment = flask_moment.Moment(app)
 print("Done.")
 
 

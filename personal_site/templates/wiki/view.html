@@ -12,8 +12,8 @@
                 </small>
             {% endif %}
         </h1>
-        <p>Author: {{ page.creator.username }}</p>
-        <small>Last modified: {{ page.last_modified_at }} by {{ page.last_editor.username }}</small>
+        <p>{{ page.creator.username }} created this page on {{ moment(page.created_at).format("LLL") }}</p>
+        <small>Last modified: {{ moment(page.last_modified_at).fromNow() }} by {{ page.last_editor.username }}</small>
 
         Table of Contents
         {{ toc|safe }}
