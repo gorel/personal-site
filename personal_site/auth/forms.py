@@ -8,7 +8,7 @@ def LengthRequired(lower=-1, upper=-1):
     if lower == -1 and upper == -1:
         raise ValueError("Must set either lower or upper bounds")
 
-    def _verifier(form, field):
+    def _wrap(form, field):
         if lower == -1:
             # Only validate upper bound
             if len(form.field.data) > upper:
@@ -25,7 +25,7 @@ def LengthRequired(lower=-1, upper=-1):
                 raise wtforms.ValidationError(
                     f"Must be between {lower} and {upper} characters long")
 
-    return _verifier
+    return _wrap
 
 
 class RegisterForm(flask_wtf.Form):

@@ -19,35 +19,42 @@ print("Creating Flask app...", end="")
 app = Flask(__name__)
 print("Done.")
 
+
 # Load configuration file
 print("Loading config from object...", end="")
 app.config.from_object("config")
 print("Done.")
+
 
 # Initialize database
 print("Set up database...", end="")
 db = flask_sqlalchemy.SQLAlchemy(app)
 print("Done.")
 
+
 # Create login manager
 print("Creating login manager...", end="")
 login_manager = flask_login.LoginManager(app)
 print("Done.")
+
 
 # Set up BCrypt password hashing
 print("Initializing BCrypt library...", end="")
 bcrypt = flask_bcrypt.Bcrypt(app)
 print("Done.")
 
+
 # Configure mail server
 print("Configuring mail server...", end="")
 mail = flask_mail.Mail(app)
 print("Done.")
 
+
 # Enable CSRF protection
 print("Enable CSRF protection", end="")
 csrf = flask_wtf.CsrfProtect(app)
 print("Done.")
+
 
 # Set up logging
 print("Set up logger...", end="")
@@ -61,6 +68,7 @@ handler.setLevel(logging.INFO)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 print("Done.")
+
 
 # Register error handlers
 print("Registering error handlers...")
@@ -81,6 +89,7 @@ def error500(error):
 
 print("Done.")
 
+
 # Minify sent HTML
 print("Define HTML content minifier...", end="")
 @app.after_request
@@ -90,8 +99,20 @@ def response_minify(response):
     return response
 print("Done.")
 
+
 # Import all blueprints from controllers
 from personal_site.controllers import default
+from personal_site.account.controllers import account
+from personal_site.admin.controllers import admin
+from personal_site.auth.controllers import auth
+from personal_site.forum.controllers import forum
+from personal_site.wiki.controllers import wiki
+
 
 # Register blueprints
 app.register_blueprint(default)
+app.register_blueprint(account)
+app.register_blueprint(admin)
+app.register_blueprint(auth)
+app.register_blueprint(forum)
+app.register_blueprint(wiki)
