@@ -36,7 +36,7 @@ def index():
 @flask_login.login_required
 @admin_required
 def users(page_num=1):
-    users = User.query.paginate(page_num)
+    users = auth_models.User.query.paginate(page_num)
     return flask.render_template("admin/users.html", users=users)
 
 
@@ -48,7 +48,7 @@ def delete_user(user_id):
         flask.flash("Now that doesn't seem like a great idea...")
         return flask.redirect(flask.url_for("admin.users"))
 
-    user = User.query.get(user_id)
+    user = auth_models.User.query.get(user_id)
     if user is not None:
         db.session.delete(user)
         db.session.commit()

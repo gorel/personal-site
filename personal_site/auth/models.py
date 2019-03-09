@@ -51,16 +51,16 @@ class PasswordReset(db.Model):
 
 class User(db.Model, flask_login.UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64))
+    username = db.Column(db.String(64))
     email = db.Column(db.String(64), index=True, unique=True)
     pw_hash = db.Column(db.String(64))
     email_verified = db.Column(db.Boolean)
     is_admin = db.Column(db.Boolean)
     pw_reset = db.relationship(PasswordReset, backref="user")
 
-    def __init__(self, name, email, password):
+    def __init__(self, username, email, password):
         flask_login.UserMixin.__init__(self)
-        self.name = name
+        self.username = username
         self.email = email
         self.email_verified = False
         self.is_admin = False
@@ -82,6 +82,10 @@ class User(db.Model, flask_login.UserMixin):
 
     def verify_email(self):
         self.email_verified = True
+
+    def send_email_verification_link(self):
+        # TODO
+        pass
 
     def __repr__(self):
         pass
