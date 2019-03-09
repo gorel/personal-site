@@ -12,8 +12,12 @@ class WikiPage(db.Model):
     content = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     last_modified_at = db.Column(db.DateTime)
-    creator = db.relationship()
-    last_editor = db.relationship()
+
+    creator_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    creator = db.relationship("User")
+    last_editor_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    last_editor = db.relationship("User")
+
     views = db.Column(db.Integer)
 
     def __init__(self, idname, name, content):
@@ -27,8 +31,7 @@ class WikiPage(db.Model):
         self.views = 0
 
     def __repr__(self):
-        # TODO - repr
-        pass
+        return f"<WikiPage {self.id}: {idname}>"
 
     def with_toc(self):
         """Return the page contents with a Table of Contents header"""

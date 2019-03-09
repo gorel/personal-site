@@ -1,6 +1,7 @@
 import flask_wtf
 import wtforms
 
+from personal_site import constants
 from personal_site.wiki import models
 
 
@@ -9,8 +10,7 @@ class AddWikiPageForm(flask_wtf.Form):
         "Page name",
         validators=[
             wtforms.validators.DataRequired(),
-            # TODO - magic constant
-            wtforms.validators.Length(max=64)
+            wtforms.validators.Length(max=constants.WIKIPAGE_MAX_LEN),
         ],
     )
     page_content = wtforms.TextAreaField(
@@ -47,8 +47,7 @@ class EditWikiPageForm(flask_wtf.Form):
         "Page name",
         validators=[
             wtforms.validators.DataRequired(),
-            # TODO - magic constant
-            wtforms.validators.Length(max=64)
+            wtforms.validators.Length(max=constants.WIKIPAGE_MAX_LEN),
         ],
     )
     page_content = wtforms.TextAreaField(

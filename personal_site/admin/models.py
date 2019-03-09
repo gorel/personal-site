@@ -20,5 +20,4 @@ class ErrorReport(db.Model):
         self.submitted_at = datetime.datetime.utcnow()
 
     def __repr__(self):
-        # TODO - repr
-        pass
+        return f"<ErrorReport {self.id}>"

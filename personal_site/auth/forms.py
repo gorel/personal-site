@@ -1,6 +1,7 @@
 import flask_wtf
 import wtforms
 
+from personal_site import constants
 from personal_site.auth import models
 
 
@@ -9,8 +10,7 @@ class RegisterForm(flask_wtf.Form):
         "Username",
         validators=[
             wtforms.validators.DataRequired(),
-            # TODO - magic constant
-            wtforms.validators.Length(max=32),
+            wtforms.validators.Length(max=constants.USERNAME_MAX_LEN),
         ],
     )
     email = wtforms.TextField(
@@ -24,8 +24,7 @@ class RegisterForm(flask_wtf.Form):
         "Password",
         validators=[
             wtforms.validators.InputRequired(),
-            # TODO - magic constant
-            wtforms.validators.Length(min=8),
+            wtforms.validators.Length(min=constants.PASSWORD_MIN_LEN),
             wtforms.validators.EqualTo(
                 "confirm_password",
                 message="Passwords must match",

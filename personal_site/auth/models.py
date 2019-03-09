@@ -39,8 +39,7 @@ class PasswordReset(db.Model):
         self.expiration = datetime.datetime.now() + datetime.timedelta(days=2)
 
     def __repr__(self):
-        # TODO - repr
-        pass
+        return f"<PasswordReset {self.id}>"
 
     @classmethod
     def get_by_key(cls, key):
@@ -89,8 +88,7 @@ class User(db.Model, flask_login.UserMixin):
         pass
 
     def __repr__(self):
-        # TODO - repr
-        pass
+        return f"<User {self.id}: {username}>"
 
     @classmethod
     def get_by_email(cls, email):
