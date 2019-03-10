@@ -1,14 +1,13 @@
-{% extends "base.html" %}
+{% extends "wiki/base.html" %}
 
-{% block app_content %}
+{% block wiki_content %}
     <div class="row">
         <h1>
             {{ page.name }}
             {% if current_user.is_admin %}
                 <small>
-                    <a href="{{ url_for("wiki.edit", page_idname=page.idname) }}" class="btn btn-default">Edit this page</a>
-                    <a href="{{ url_for("wiki.new") }}" class="btn btn-primary">Create new page</a>
-                    <a href="{{ url_for("wiki.delete", page_idname=page.idname) }}" data-method="post" data-confirm="Are you sure you want to delete this page?" class="btn btn-danger">Delete this page</a>
+                    <a href="{{ url_for("wiki.edit", page_idname=page.idname) }}" class="btn btn-small btn-default">Edit this page</a>
+                    <a href="{{ url_for("wiki.delete", page_idname=page.idname) }}" data-method="post" data-confirm="Are you sure you want to delete this page?" class="btn btn-small btn-danger">Delete this page</a>
                 </small>
             {% endif %}
         </h1>
@@ -16,11 +15,6 @@
         <small>Last modified: {{ moment(page.last_modified_at).fromNow() }} by {{ page.last_editor.username }}</small>
 
         <div class="container">
-            <div class="container">
-                <h1>Table of Contents</h1>
-                {{ page.toc|safe }}
-            </div>
-
             {{ page.html|safe }}
         </div>
 {% endblock %}

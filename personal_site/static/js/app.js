@@ -1,9 +1,4 @@
 $(function() {
-  // Prevent form submission using the Enter key
-  $(document).on('keypress', 'form', function(e) {
-    return e.keyCode != 13;
-  });
-
   // Anchor tag override
   $('a[data-method]').click(function(e) {
     method = $(this).data('method');

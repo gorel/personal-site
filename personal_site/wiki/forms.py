@@ -1,3 +1,6 @@
+import datetime
+
+import flask_login
 import flask_wtf
 import wtforms
 
@@ -76,4 +79,6 @@ class EditWikiPageForm(flask_wtf.Form):
 
         self.page.name = self.page_name.data
         self.page.content = self.page_content.data
+        self.page.last_editor = flask_login.current_user
+        self.page.last_modified_at = datetime.datetime.utcnow()
         return True

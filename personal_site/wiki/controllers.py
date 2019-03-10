@@ -56,7 +56,7 @@ def edit(page_idname):
     page = models.WikiPage.get_by_idname_or_404(page_idname)
     form = forms.EditWikiPageForm(page)
 
-    if page.validate_on_submit():
+    if form.validate_on_submit():
         db.session.commit()
         return flask.redirect(flask.url_for("wiki.view", page_idname=form.page.idname))
     else:

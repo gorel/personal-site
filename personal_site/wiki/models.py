@@ -53,12 +53,14 @@ class WikiPage(db.Model):
         self.views = 0
 
     @property
-    def toc(self):
-        return MD.toc
-
-    @property
     def html(self):
-        return MD.convert(self.content)
+        content_with_toc = "\n".join([
+            "<h2>Table of Contents</h2>",
+            "[TOC]",
+            "",
+            self.content,
+        ])
+        return MD.convert(content_with_toc)
 
     @property
     def preview(self):
@@ -76,7 +78,8 @@ class WikiPage(db.Model):
             if c in valid
         )
         # Remove multiple spaces
-        idname = re.sub(" +", " ", name)
+        idname = re.sub(" +", " ", stripped)
+        idname = idname.lower().replace(" ", "-")
         return idname
 
     @classmethod
