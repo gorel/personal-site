@@ -1,8 +1,15 @@
 import datetime
 import markdown
 
+from markdown.extensions import (
+    extra,
+    nl2br,
+    toc,
+    wikilinks,
+)
+
 import flask
-import flaks_login
+import flask_login
 import flask_mail
 
 from personal_site import db, mail
@@ -13,16 +20,16 @@ import personal_site.admin.utils as admin_utils
 
 
 WIKI_EXTENSIONS = [
-    markdown.extensions.extra.ExtraExtension(),
-    markdown.extensions.nl2br.Nl2BrExtension(),
-    markdown.extensions.toc.TocExtension(),
-    markdown.extensions.wikilinks.WikiLinkExtension(base_url="/wiki/"),
+    extra.ExtraExtension(),
+    nl2br.Nl2BrExtension(),
+    toc.TocExtension(),
+    wikilinks.WikiLinkExtension(base_url="/wiki/"),
 ]
 
 MD = markdown.Markdown(extensions=WIKI_EXTENSIONS)
 
 
-wiki = flask.Bluerint("wiki", __name__, url_prefix="/wiki")
+wiki = flask.Blueprint("wiki", __name__, url_prefix="/wiki")
 
 
 @wiki.route("/")
@@ -31,7 +38,7 @@ def index():
 
 
 @wiki.route("/new", methods=["GET", "POST"])
-@login_required
+@flask_login.login_required
 @admin_utils.admin_required
 def new():
     form = forms.AddWikiPageForm()
@@ -54,7 +61,7 @@ def view(page_idname):
 
 
 @wiki.route("/<page_idname>/edit", methods=["GET", "POST"])
-@login_required
+@flask_login.login_required
 @admin_utils.admin_required
 def edit(page_idname):
     page = WikiPage.get_by_idname_or_404(page_idname)
@@ -70,7 +77,7 @@ def edit(page_idname):
 
 
 @wiki.route("/<page_idname>/delete", methods=["POST"])
-@login_required
+@flask_login.login_required
 @admin_utils.admin_required
 def delete(page_idname):
     page = WikiPage.get_by_idname_or_404(page_idname)

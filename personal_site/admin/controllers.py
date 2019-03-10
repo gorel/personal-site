@@ -8,8 +8,6 @@ from personal_site import constants, db
 from personal_site.admin import forms, utils
 
 import personal_site.auth.models as auth_models
-import personal_site.forum.models as forum_models
-import personal_site.wiki.models as wiki_models
 
 
 admin = flask.Blueprint("admin", __name__, url_prefix="/admin")

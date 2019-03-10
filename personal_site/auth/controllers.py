@@ -2,8 +2,6 @@
 Authentication and related behavior
 """
 
-import os
-
 import flask
 import flask_login
 import flask_mail
@@ -58,7 +56,7 @@ def forgot_password():
         db.session.commit()
 
         email_title = "Reset your password"
-        site = os.environ["PERSONAL_SITE_URL"]
+        site = flask.current_app.config["SITE_URL"]
         url = f"{site}/auth/reset_password/{pw_reset.key}"
         email_content = f"Click this link to reset your password: {url}"
         email_content += "\nThis link will expire in 48 hours."

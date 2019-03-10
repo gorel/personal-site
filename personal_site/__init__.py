@@ -3,6 +3,7 @@ Performs webapp startup procedures
 """
 
 import logging
+import logging.handlers
 
 import flask
 import flask_bootstrap
@@ -15,118 +16,77 @@ import flask_wtf
 
 import htmlmin.main
 
-
-# Create app
-print("Creating Flask app...", end="")
-app = Flask(__name__)
-print("Done.")
+import site_config
 
 
-# Load configuration file
-print("Loading config from object...", end="")
-app.config.from_object("config")
-print("Done.")
+bootstrap = flask_bootstrap.Bootstrap()
+db = flask_sqlalchemy.SQLAlchemy()
+login_manager = flask_login.LoginManager()
+bcrypt = flask_bcrypt.Bcrypt()
+mail = flask_mail.Mail()
+moment = flask_moment.Moment()
+csrf = flask_wtf.CSRFProtect()
 
 
-# Set up bootstrap
-print("Enabling Bootstrap...", end="")
-bootstrap = flask_bootstrap.Bootstrap(app)
-print("Done.")
+def create_app(config_class=site_config.Config):
+    # Create app
+    app = flask.Flask(__name__)
+    app.config.from_object(config_class)
 
+    # Set up extensions
+    bootstrap.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+    bcrypt.init_app(app)
+    mail.init_app(app)
+    moment.init_app(app)
+    csrf.init_app(app)
 
-# Initialize database
-print("Set up database...", end="")
-db = flask_sqlalchemy.SQLAlchemy(app)
-print("Done.")
+    # Set up logging if we aren't in debug/testing mode
+    if not app.debug and not app.testing:
+        formatter = logging.Formatter(
+            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
+        )
+        handler = logging.handlers.RotatingFileHandler(
+            "site.log", maxBytes=10000, backupCount=2,
+        )
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+        app.logger.addHandler(handler)
 
+    # Register error handlers if we aren't in debug/testing mode
+    if not app.debug and not app.testing:
+        @app.errorhandler(404)
+        def error404(error):
+            return flask.render_template("404.html", error=error), 404
 
-# Create login manager
-print("Creating login manager...", end="")
-login_manager = flask_login.LoginManager(app)
-print("Done.")
+        @app.errorhandler(500)
+        def error500(error):
+            app.logger.error(f"HTTP 500: {error}")
+            flask.flash("Something went wrong :( A log has been generated.")
+            return flask.redirect(flask.url_for("default.home", error=error))
 
+        # Minify sent HTML
+        @app.after_request
+        def response_minify(response):
+            if response.content_type == "text/html; charset=utf-8":
+                response.set_data(htmlmin.main.minify(response.get_data(as_text=True)))
+            return response
 
-# Set up BCrypt password hashing
-print("Initializing BCrypt library...", end="")
-bcrypt = flask_bcrypt.Bcrypt(app)
-print("Done.")
+    # Import all blueprints from controllers
+    from personal_site.controllers import default
+    from personal_site.admin.controllers import admin
+    from personal_site.auth.controllers import auth
+    from personal_site.forum.controllers import forum
+    from personal_site.profile.controllers import profile
+    from personal_site.wiki.controllers import wiki
 
+    # Register blueprints
+    app.register_blueprint(default)
+    app.register_blueprint(admin)
+    app.register_blueprint(auth)
+    app.register_blueprint(forum)
+    app.register_blueprint(profile)
+    app.register_blueprint(wiki)
 
-# Configure mail server
-print("Configuring mail server...", end="")
-mail = flask_mail.Mail(app)
-print("Done.")
-
-
-# Set up Moment.js for rendering times
-print("Configure Moment.js handler...", end="")
-moment = flask_moment.Moment(app)
-print("Done.")
-
-
-# Enable CSRF protection
-print("Enable CSRF protection", end="")
-csrf = flask_wtf.CsrfProtect(app)
-print("Done.")
-
-
-# Set up logging
-print("Set up logger...", end="")
-formatter = logging.Formatter(
-    "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
-)
-handler = logging.handlers.RotatingFileHandler(
-    "site.log", maxBytes=10000, backupCount=2,
-)
-handler.setLevel(logging.INFO)
-handler.setFormatter(formatter)
-app.logger.addHandler(handler)
-print("Done.")
-
-
-# Register error handlers
-print("Registering error handlers...")
-
-@app.errorhandler(404)
-def error404(error):
-    return flask.render_template("404.html", error=error), 404
-
-@app.errorhandler(500)
-def error500(error):
-    app.logger.error(f"HTTP 500: {error}")
-    if app.debug:
-        return flask.redirect(flask.url_for("admin.bugsplat", error=error))
-    else:
-        flask.flash("Something went wrong :( A log has been generated.")
-        return flask.redirect(flask.url_for("default.home", error=error))
-
-
-print("Done.")
-
-
-# Minify sent HTML
-print("Define HTML content minifier...", end="")
-@app.after_request
-def response_minify(response):
-    if response.content_type == "text/html; charset=utf-8":
-        response.set_data(htmlmin.main.minify(response.get_data(as_text=True)))
-    return response
-print("Done.")
-
-
-# Import all blueprints from controllers
-from personal_site.controllers import default
-from personal_site.account.controllers import account
-from personal_site.admin.controllers import admin
-from personal_site.auth.controllers import auth
-from personal_site.forum.controllers import forum
-from personal_site.wiki.controllers import wiki
-
-
-# Register blueprints
-app.register_blueprint(default)
-app.register_blueprint(account)
-app.register_blueprint(admin)
-app.register_blueprint(auth)
-app.register_blueprint(forum)
-app.register_blueprint(wiki)
+    return app

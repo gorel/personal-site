@@ -1,6 +1,6 @@
-from personal_site import app
+import personal_site
 
-app.config.from_object("config")
+app = personal_site.create_app()
 app.run(
     host=app.config["SERVER_HOST"],
     port=app.config["SERVER_PORT"],
