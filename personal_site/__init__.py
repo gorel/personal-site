@@ -56,6 +56,10 @@ def create_app(config_class=site_config.Config):
 
     # Register error handlers if we aren't in debug/testing mode
     if not app.debug and not app.testing:
+        @app.errorhandler(401)
+        def error401(error):
+            return flask.render_template("401.html", error=error), 401
+
         @app.errorhandler(404)
         def error404(error):
             return flask.render_template("404.html", error=error), 404
@@ -63,7 +67,7 @@ def create_app(config_class=site_config.Config):
         @app.errorhandler(500)
         def error500(error):
             app.logger.error(f"HTTP 500: {error}")
-            flask.flash("Something went wrong :( A log has been generated.")
+            flask.flash("Something went wrong :( A log has been generated.", "alert-warning")
             return flask.redirect(flask.url_for("default.home", error=error))
 
         # Minify sent HTML

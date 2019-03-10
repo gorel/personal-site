@@ -35,16 +35,16 @@ def users(page_num=1):
 @utils.admin_required
 def delete_user(user_id):
     if flask_login.current_user.id == user_id:
-        flask.flash("Now that doesn't seem like a great idea...")
+        flask.flash("Now that doesn't seem like a great idea...", "alert-danger")
         return flask.redirect(flask.url_for("admin.users"))
 
     user = auth_models.User.query.get(user_id)
     if user is not None:
         db.session.delete(user)
         db.session.commit()
-        flask.flash("Deleted user account")
+        flask.flash("Deleted user account", "alert-success")
     else:
-        flask.flash("Invalid user_id")
+        flask.flash("Invalid user_id", "alert-warning")
     return flask.redirect(flask.url_for("admin.users"))
 
 
@@ -59,7 +59,7 @@ def bugsplat(error=None):
         db.sesion.add(form.error_report)
         db.session.commit()
 
-        flask.flash("Thank you for your report!")
+        flask.flash("Thank you for your report!", "alert-success")
         return flask.redirect(flask.url_for("default.home"))
     else:
         form.error.data = error

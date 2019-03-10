@@ -29,8 +29,8 @@ class AddWikiPageForm(flask_wtf.Form):
         if not flask_wtf.Form.validate(self):
             return False
 
-        idname = WikiPage.name_to_idname(self.page_name)
-        page = WikiPage.get_by_idname(idname)
+        idname = models.WikiPage.name_to_idname(self.page_name.data)
+        page = models.WikiPage.get_by_idname(idname)
         if page is not None:
             self.page_name.errors.append("Page name not unique")
             return False
@@ -67,8 +67,8 @@ class EditWikiPageForm(flask_wtf.Form):
         if not flask_wtf.Form.validate(self):
             return False
 
-        idname = WikiPage.name_to_idname(self.page_name)
-        page = WikiPage.get_by_idname(idname)
+        idname = models.WikiPage.name_to_idname(self.page_name.data)
+        page = models.WikiPage.get_by_idname(idname)
         # Page is allowed to be None if the page was renamed
         if page is not None and page.id != self.page.id:
             self.page_name.errors.append("Page name not unique")

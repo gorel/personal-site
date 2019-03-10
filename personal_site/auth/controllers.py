@@ -31,7 +31,7 @@ def register():
 def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
-        login_user(form.user, remember=form.remember.data)
+        flask_login.login_user(form.user, remember=form.remember.data)
         return flask.redirect(flask.request.args.get("next")
             or flask.url_for("default.home"))
     else:
@@ -65,7 +65,7 @@ def forgot_password():
         msg.body = email_content
         mail.send(msg)
 
-        flask.flash("Sent password reset email")
+        flask.flash("Sent password reset email", "alert-success")
         return flask.redirect(flask.url_for("auth.login"))
     else:
         return flask.render_template("auth/forgot.html", form=form)
@@ -75,7 +75,7 @@ def forgot_password():
 def reset_password(reset_key):
     user = models.PasswordReset.get_by_key(reset_key)
     if user is None:
-        flask.flash("Invalid password reset key (did it expire?)")
+        flask.flash("Invalid password reset key (did it expire?)", "alert-warning")
         return flask.redirect(flask.url_for("default.home"))
 
     form = forms.SetNewPasswordForm()
@@ -89,7 +89,7 @@ def reset_password(reset_key):
 
         flask_login.login_user(user)
 
-        flask.flash("Password reset successfully")
+        flask.flash("Password reset successfully", "alert-success")
         return flask.redirect(flask.url_for("default.home"))
     else:
         return flask.render_template("auth/set_new_password.html", form=form)
