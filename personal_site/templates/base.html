@@ -4,6 +4,10 @@
     {% if title %}{{ title }}{% else %}Logan Gore{% endif %}
 {% endblock %}
 
+{% block styles %}
+    {{ super() }}
+{% endblock %}
+
 {% block navbar %}
     <nav class="navbar navbar-default">
         <div class="container">
@@ -18,19 +22,19 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-primary-navbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for("wiki.index") }}">Wiki</a></li>
-                    <li><a href="{{ url_for("forum.index") }}">Forum</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for("wiki.index") }}">Wiki</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for("forum.index") }}">Forum</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
-                        <li><a href="{{ url_for("auth.register") }}">Register</a></li>
-                        <li><a href="{{ url_for("auth.login") }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for("auth.register") }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for("auth.login") }}">Login</a></li>
                     {% else %}
-                        <li><a href="{{ url_for("profile.index") }}">My profile</a></li>
-                        <li><a href="{{ url_for("auth.logout") }}">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for("profile.index") }}">My profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for("auth.logout") }}">Logout</a></li>
                     {% endif %}
                     {% if current_user.is_admin %}
-                        <li><a href="{{ url_for("admin.index") }}">Admin panel</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for("admin.index") }}">Admin panel</a></li>
                     {% endif %}
                 </ul>
             </div>

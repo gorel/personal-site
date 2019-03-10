@@ -33,6 +33,7 @@ class RegisterForm(flask_wtf.Form):
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
     remember = wtforms.BooleanField("Remember me?")
+    submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
         flask_wtf.Form.__init__(self, *args, **kwargs)
@@ -77,6 +78,7 @@ class LoginForm(flask_wtf.Form):
         ],
     )
     remember = wtforms.BooleanField("Remember Me?")
+    submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
         flask_wtf.Form.__init__(self, *args, **kwargs)

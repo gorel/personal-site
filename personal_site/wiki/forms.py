@@ -19,6 +19,7 @@ class AddWikiPageForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
         ],
     )
+    submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
         flask_wtf.Form.__init__(self, *args, **kwargs)
@@ -56,6 +57,7 @@ class EditWikiPageForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
         ],
     )
+    submit = wtforms.SubmitField("Submit")
 
     def __init__(self, page, *args, **kwargs):
         flask_wtf.Form.__init__(self, *args, **kwargs)

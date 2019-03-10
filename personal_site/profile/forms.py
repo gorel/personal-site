@@ -33,6 +33,7 @@ class EditAccountForm(flask_wtf.Form):
         ],
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
+    submit = wtforms.SubmitField("Submit")
 
     def validate(self):
         if not flask_wtf.Form.validate(self):
