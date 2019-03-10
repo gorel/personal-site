@@ -1,57 +1,57 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}
-    {% if title %}{{ title }}{% else %}Logan Gore{% endif %}
+  {% if title %}{{ title }}{% else %}Logan Gore{% endif %}
 {% endblock %}
 
 {% block head %}
-    {{ super() }}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  {{ super() }}
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 {% endblock %}
 
 {% block styles %}
-    {{ super() }}
+  {{ super() }}
 {% endblock %}
 
 {% block navbar %}
-    {% include "partials/_nav.html" %}
+  {% include "partials/_nav.html" %}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="container">
-                <div class="alert-list">
-                    {% for category, message in messages %}
-                    <div class="alert {{ category }} fade in">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        {% if category == "alert-success" %}
-                            <span class="fa fa-check"></span>
-                        {% elif category == "alert-warning" %}
-                            <span class="fa fa-question"></span>
-                        {% elif category == "alert-danger" %}
-                            <span class="fa fa-exclamation"></span>
-                        {% endif %}
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-        {% endif %}
-        {% endwith %}
+  <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <div class="container">
+              <div class="alert-list">
+                  {% for category, message in messages %}
+                  <div class="alert {{ category }} fade in">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      {% if category == "alert-success" %}
+                          <span class="fa fa-check"></span>
+                      {% elif category == "alert-warning" %}
+                          <span class="fa fa-question"></span>
+                      {% elif category == "alert-danger" %}
+                          <span class="fa fa-exclamation"></span>
+                      {% endif %}
+                      {{ message }}
+                  </div>
+                  {% endfor %}
+      {% endif %}
+      {% endwith %}
 
-        {% block no_container %}
-            <div class="container" style="padding-bottom:50px">
-                {% block app_content %}{% endblock %}
-            </div>
-        {% endblock %}
-    </div>
+      {% block no_container %}
+          <div class="container" style="padding-bottom:50px">
+              {% block app_content %}{% endblock %}
+          </div>
+      {% endblock %}
+  </div>
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+  {{ super() }}
+  {{ moment.include_moment() }}
 
-    <script src="{{ url_for("static", filename="js/jquery.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/jquery-ui.min.js") }}"></script>
-    <script src="{{ url_for("static", filename="js/app.js") }}"></script>
+  <script src="{{ url_for("static", filename="js/jquery.js") }}"></script>
+  <script src="{{ url_for("static", filename="js/jquery-ui.min.js") }}"></script>
+  <script src="{{ url_for("static", filename="js/app.js") }}"></script>
 {% endblock %}
