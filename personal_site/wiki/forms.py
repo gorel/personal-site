@@ -77,6 +77,7 @@ class EditWikiPageForm(flask_wtf.Form):
             self.page_name.errors.append("Page name not unique")
             return False
 
+        self.page.idname = idname
         self.page.name = self.page_name.data
         self.page.content = self.page_content.data
         self.page.last_editor = flask_login.current_user
