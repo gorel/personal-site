@@ -47,16 +47,16 @@ class SearchableMixin(object):
             return cls.query.filter(
                 cls.id.in_(ids)).order_by(db.case(when, value=cls.id)), total
 
-    @classmethod
-    def before_commit(cls, session):
+    @staticmethod
+    def before_commit(session):
         session._changes = {
             "add": list(session.new),
             "update": list(session.dirty),
             "delete": list(session.deleted),
         }
 
-    @classmethod
-    def after_commit(cls, session):
+    @staticmethod
+    def after_commit(session):
         for obj in session._changes["add"]:
             if isinstance(obj, SearchableMixin):
                 add_to_index(obj.__tablename__, obj)

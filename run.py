@@ -1,9 +1,11 @@
 import personal_site
 
 app = personal_site.create_app()
-app.run(
-    host=app.config["SERVER_HOST"],
-    port=app.config["SERVER_PORT"],
-    debug=app.config["DEBUG"],
-    threaded=True,
-)
+
+if __name__ == "__main__":
+    app.run(
+        host=app.config["SERVER_HOST"],
+        port=app.config["SERVER_PORT"],
+        debug=app.config["DEBUG"],
+        threaded=True,
+    )

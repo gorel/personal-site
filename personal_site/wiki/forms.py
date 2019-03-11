@@ -40,7 +40,6 @@ class AddWikiPageForm(flask_wtf.Form):
             return False
 
         self.page = models.WikiPage(
-            idname=idname,
             name=self.page_name.data,
             content=self.page_content.data,
         )
@@ -78,11 +77,11 @@ class EditWikiPageForm(flask_wtf.Form):
             self.page_name.errors.append("Page name not unique")
             return False
 
-        self.page.idname = idname
-        self.page.name = self.page_name.data
-        self.page.content = self.page_content.data
-        self.page.last_editor = flask_login.current_user
-        self.page.last_modified_at = datetime.datetime.utcnow()
+        self.page.edit(
+            editor=flask_login.current_user,
+            new_name=self.page_name.data,
+            new_content=self.page_content.data,
+        )
         return True
 
 

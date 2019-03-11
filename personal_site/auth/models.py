@@ -5,6 +5,7 @@ import random
 import flask_login
 
 from personal_site import bcrypt, db, login_manager, mail
+import personal_site.forum.models as forum_models
 
 
 RESET_LEN = 32
@@ -58,6 +59,11 @@ class User(db.Model, flask_login.UserMixin):
     is_admin = db.Column(db.Boolean)
     pw_reset = db.relationship(PasswordReset, backref="user")
 
+    notifications = db.relationship("Notification", backref="recipient", lazy="dynamic")
+    posts = db.relationship("Post", backref="author", lazy="dynamic")
+    comments = db.relationship("Comment", backref="author", lazy="dynamic")
+    last_notification_read_time = db.Column(db.DateTime)
+
     def __init__(self, username, email, password):
         flask_login.UserMixin.__init__(self)
         self.username = username
@@ -86,6 +92,12 @@ class User(db.Model, flask_login.UserMixin):
     def send_email_verification_link(self):
         # TODO - send email verification
         pass
+
+    def get_new_notifications(self):
+        last_read_time = self.last_notification_read_time or datetime.datetime(1900, 1, 1)
+        self.last_notification_read_time = datetime.datetime.utcnow()
+        return forum_models.Notification.query.filter_by(recipient=self).filter(
+            forum_models.Notification.timestamp > last_read_time).limit(10)
 
     def __repr__(self):
         return f"<User {self.id}: {username}>"

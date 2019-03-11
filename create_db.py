@@ -5,7 +5,7 @@ from personal_site import create_app, db
 
 import personal_site.admin.models as admin_models
 import personal_site.auth.models as auth_models
-#import personal_site.forum.models as forum_models
+import personal_site.forum.models as forum_models
 import personal_site.wiki.models as wiki_models
 
 parser = argparse.ArgumentParser(description="DB initial setup utility")

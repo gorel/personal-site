@@ -16,3 +16,4 @@
 - set up prev/next/random in wiki
 - make wiki texteditarea larger
 - wiki preview?
+- better wiki 404 page

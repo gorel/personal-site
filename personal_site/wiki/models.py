@@ -43,8 +43,8 @@ class WikiPage(db.Model, search.SearchableMixin):
 
     views = db.Column(db.Integer)
 
-    def __init__(self, idname, name, content):
-        self.idname = idname
+    def __init__(self, name, content):
+        self.idname = self.name_to_idname(new_name)
         self.name = name
         self.content = content
         self.created_at = datetime.datetime.utcnow()
@@ -52,6 +52,15 @@ class WikiPage(db.Model, search.SearchableMixin):
         self.creator = flask_login.current_user
         self.last_editor = flask_login.current_user
         self.views = 0
+
+    def edit(self, editor, new_name, new_content):
+        if self.name == new_name and self.content == new_content:
+            return
+        self.idname = self.name_to_idname(new_name)
+        self.name = new_name
+        self.content = new_content
+        self.last_edtior = editor
+        self.last_modified_at = datetime.datetime.utcnow()
 
     @property
     def html(self):
@@ -71,8 +80,8 @@ class WikiPage(db.Model, search.SearchableMixin):
     def __repr__(self):
         return f"<WikiPage {self.id}: {idname}>"
 
-    @classmethod
-    def name_to_idname(cls, name):
+    @staticmethod
+    def name_to_idname(name):
         valid = string.ascii_letters + string.digits + " "
         stripped = "".join(
             c for c in name
