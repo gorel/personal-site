@@ -14,6 +14,11 @@ import personal_site.admin.utils as admin_utils
 wiki = flask.Blueprint("wiki", __name__, url_prefix="/wiki")
 
 
+@wiki.errorhandler(404)
+def error404(error):
+    return flask.render_template("wiki/404.html", error=error), 404
+
+
 @wiki.before_request
 def load_search_form():
     flask.g.search_form = forms.SearchForm()
