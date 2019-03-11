@@ -27,7 +27,7 @@ def index():
 @utils.admin_required
 def users(page_num=1):
     users = auth_models.User.query.paginate(page_num, constants.ADMIN_USERS_PER_PAGE)
-    return flask.render_template("admin/users.html", users=users)
+    return flask.render_template("admin/users.html", users=users, title="Users")
 
 
 @admin.route("/users/delete/<int:user_id>", methods=["POST"])

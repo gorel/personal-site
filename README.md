@@ -1,7 +1,7 @@
 # personal-site
 
 ## TODO
-- Elasticsearch for wiki pages
+- ~Elasticsearch for wiki pages~
 - i18n/l10n
 - admin panel
 - homepage?
@@ -17,3 +17,4 @@
 - make wiki texteditarea larger
 - wiki preview?
 - better wiki 404 page
+- git-backed wiki

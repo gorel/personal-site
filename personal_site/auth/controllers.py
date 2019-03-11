@@ -24,7 +24,7 @@ def register():
         return flask.redirect(flask.request.args.get("next")
             or flask.url_for("default.home"))
     else:
-        return flask.render_template("auth/register.html", form=form)
+        return flask.render_template("auth/register.html", form=form, title="Register")
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -35,7 +35,7 @@ def login():
         return flask.redirect(flask.request.args.get("next")
             or flask.url_for("default.home"))
     else:
-        return flask.render_template("auth/login.html", form=form)
+        return flask.render_template("auth/login.html", form=form, title="Login")
 
 
 @auth.route("/logout", methods=["POST"])
@@ -68,7 +68,7 @@ def forgot_password():
         flask.flash("Sent password reset email", "alert-success")
         return flask.redirect(flask.url_for("auth.login"))
     else:
-        return flask.render_template("auth/forgot.html", form=form)
+        return flask.render_template("auth/forgot.html", form=form, title="Forgot your password?")
 
 
 @auth.route("/reset_password/<reset_key>", methods=["GET", "POST"])
@@ -92,4 +92,4 @@ def reset_password(reset_key):
         flask.flash("Password reset successfully", "alert-success")
         return flask.redirect(flask.url_for("default.home"))
     else:
-        return flask.render_template("auth/set_new_password.html", form=form)
+        return flask.render_template("auth/set_new_password.html", form=form, title="Reset your password")

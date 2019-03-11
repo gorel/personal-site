@@ -61,7 +61,7 @@ def new():
         db.session.commit()
         return flask.redirect(flask.url_for("wiki.view", page_idname=form.page.idname))
     else:
-        return flask.render_template("wiki/new.html", form=form)
+        return flask.render_template("wiki/new.html", form=form, title="New page")
 
 
 @wiki.route("/<page_idname>")
@@ -70,7 +70,7 @@ def view(page_idname):
     page.views += 1
     db.session.commit()
 
-    return flask.render_template("wiki/view.html", page=page)
+    return flask.render_template("wiki/view.html", page=page, title=page.name)
 
 
 @wiki.route("/<page_idname>/edit", methods=["GET", "POST"])
@@ -86,7 +86,7 @@ def edit(page_idname):
     else:
         form.page_name.data = page.name
         form.page_content.data = page.content
-        return flask.render_template("wiki/edit.html", form=form)
+        return flask.render_template("wiki/edit.html", form=form, title="Edit page")
 
 
 @wiki.route("/<page_idname>/delete", methods=["POST"])

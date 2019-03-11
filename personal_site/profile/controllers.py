@@ -16,7 +16,7 @@ profile = flask.Blueprint("profile", __name__, url_prefix="/profile")
 def index(user_id=None):
     user_id = user_id or flask_login.current_user.id
     user = auth_models.User.query.get(user_id)
-    return flask.render_template("profile/index.html", user=user)
+    return flask.render_template("profile/index.html", user=user, title=f"{user.username}'s profile")
 
 
 @profile.route("/edit", methods=["GET", "POST"])
@@ -29,4 +29,4 @@ def edit():
     else:
         form.username.data = flask_login.current_user.username
         form.email.data = flask_login.current_user.email
-        return flask.render_template("profile/edit.html", form=form)
+        return flask.render_template("profile/edit.html", form=form, title="Edit profile")
