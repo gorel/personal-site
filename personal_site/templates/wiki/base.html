@@ -6,13 +6,20 @@
 
 {%  block app_content %}
   <div class="row">
-      {% if current_user.is_admin %}
-          <small>
-              <a class="btn btn-small btn-default" href="{{ url_for("wiki.new") }}">Create a new page</a>
-          </small>
-      {% endif %}
+    {% if current_user.is_admin %}
+      <small>
+        <a class="btn btn-small btn-default" href="{{ url_for("wiki.new") }}">Create a new page</a>
+      </small>
+    {% endif %}
 
-      TODO: Search bar
+    {% if g.search_form %}
+        <form class="col-md-4 pull-right" method="get" action="{{ url_for("wiki.search") }}">
+          <div class="form-group">
+            {{ g.search_form.q(size=20, class="form-control", placeholder=g.search_form.q.label.text) }}
+          </div>
+        </form>
+      </div>
+    {% endif %}
   </div>
 
   {% block wiki_content %}{% endblock %}

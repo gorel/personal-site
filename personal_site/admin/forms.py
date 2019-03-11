@@ -33,7 +33,7 @@ class ErrorReportForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(ErrorReportForm, self).__init__(*args, **kwargs)
         self.error_report = None
 
     def validate(self):

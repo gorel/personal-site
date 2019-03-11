@@ -1,0 +1,8 @@
+<div class="row">
+  <h3>
+    <a href="{{ url_for("wiki.view", page_idname=wikipage_preview.idname) }}">
+      <b>{{ wikipage_preview.name }}</b></a>
+  </h3>
+  <!-- TODO: Figure out how to fade out near the bottom -->
+  <p>{{ wikipage_preview.preview|safe }}</p>
+</div>

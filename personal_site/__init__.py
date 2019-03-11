@@ -5,6 +5,7 @@ Performs webapp startup procedures
 import logging
 import logging.handlers
 
+import elasticsearch
 import flask
 import flask_bootstrap
 import flask_bcrypt
@@ -41,6 +42,9 @@ def create_app(config_class=site_config.Config):
     mail.init_app(app)
     moment.init_app(app)
     csrf.init_app(app)
+
+    # Enable ElasticSearch for wiki pages
+    app.elasticsearch = elasticsearch.Elasticsearch([app.config["ELASTICSEARCH_URL"]])
 
     # Set up logging if we aren't in debug/testing mode
     if not app.debug and not app.testing:

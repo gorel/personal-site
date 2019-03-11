@@ -3,14 +3,8 @@
 {% block wiki_content %}
   <h1>Wiki</h1>
   <div class="container">
-      {% for wikipage in most_popular %}
-      <div class="row">
-          <h3>
-              <a href="{{ url_for("wiki.view", page_idname=wikipage.idname) }}"><b>{{ wikipage.name }}</b></a>
-          </h3>
-          <!-- TODO: Figure out how to fade this out -->
-          <p>{{ wikipage.preview|safe }}</p>
-      </div>
+      {% for wikipage_preview in most_popular %}
+        {% include "partials/wiki/_wikipage_preview.html" %}
       {% endfor %}
   </div>
 {% endblock %}

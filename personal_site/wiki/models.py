@@ -21,13 +21,14 @@ WIKI_EXTENSIONS = [
 
 import flask_login
 
-from personal_site import db
+from personal_site import constants, db, search
 
 
 MD = markdown.Markdown(extensions=WIKI_EXTENSIONS)
 
 
-class WikiPage(db.Model):
+class WikiPage(db.Model, search.SearchableMixin):
+    __searchable__ = ["name", "content"]
     id = db.Column(db.Integer, primary_key=True)
     idname = db.Column(db.String(64), index=True, unique=True)
     name = db.Column(db.String(64))

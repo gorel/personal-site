@@ -11,3 +11,8 @@
 - migrate to mysql
 - email support
 - user notifications
+- add title to pages
+- favicon
+- set up prev/next/random in wiki
+- make wiki texteditarea larger
+- wiki preview?

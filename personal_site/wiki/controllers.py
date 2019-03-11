@@ -4,7 +4,7 @@ import flask
 import flask_login
 import flask_mail
 
-from personal_site import db, mail
+from personal_site import constants, db, mail
 from personal_site.wiki import forms, models
 
 import personal_site.auth.models as auth_models
@@ -14,10 +14,34 @@ import personal_site.admin.utils as admin_utils
 wiki = flask.Blueprint("wiki", __name__, url_prefix="/wiki")
 
 
+@wiki.before_request
+def load_search_form():
+    flask.g.search_form = forms.SearchForm()
+
+
 @wiki.route("/search")
 def search():
     # TODO - set up elasticsearch
-    pass
+    data = flask.g.search_form.q.data
+    if not flask.g.search_form.validate():
+        return flask.redirect(flask.url_for("wiki.index"))
+    page = flask.request.args.get("page", 1, type=int)
+    wikipages, total = models.WikiPage.search(data, page, constants.ES_PAGE_SIZE)
+
+    prev_url = None
+    next_url = None
+    if total > page * constants.ES_PAGE_SIZE:
+        next_url = flask.url_for("wiki.search", q=data, page=page + 1)
+    if page > 1:
+        prev_url = flask.url_for("wiki.search", q=data, page=page - 1)
+
+    return flask.render_template(
+        "wiki/search.html",
+        title="Search",
+        wikipages=wikipages,
+        prev_url=prev_url,
+        next_url=next_url,
+    )
 
 
 @wiki.route("/")

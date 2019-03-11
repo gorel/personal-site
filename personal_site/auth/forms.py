@@ -36,7 +36,7 @@ class RegisterForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
@@ -81,7 +81,7 @@ class LoginForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
@@ -111,7 +111,7 @@ class ForgotPasswordForm(flask_wtf.Form):
     )
 
     def __init__(self, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(ForgotPasswordForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):

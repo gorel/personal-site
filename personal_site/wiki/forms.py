@@ -1,5 +1,6 @@
 import datetime
 
+import flask
 import flask_login
 import flask_wtf
 import wtforms
@@ -9,7 +10,7 @@ from personal_site.wiki import models
 
 
 class AddWikiPageForm(flask_wtf.Form):
-    page_name = wtforms.TextField(
+    page_name = wtforms.StringField(
         "Page name",
         validators=[
             wtforms.validators.DataRequired(),
@@ -25,7 +26,7 @@ class AddWikiPageForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(AddWikiPageForm, self).__init__(*args, **kwargs)
         self.page = None
 
     def validate(self):
@@ -47,7 +48,7 @@ class AddWikiPageForm(flask_wtf.Form):
 
 
 class EditWikiPageForm(flask_wtf.Form):
-    page_name = wtforms.TextField(
+    page_name = wtforms.StringField(
         "Page name",
         validators=[
             wtforms.validators.DataRequired(),
@@ -63,7 +64,7 @@ class EditWikiPageForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, page, *args, **kwargs):
-        flask_wtf.Form.__init__(self, *args, **kwargs)
+        super(EditWikiPageForm, self).__init__(*args, **kwargs)
         self.page = page
 
     def validate(self):
@@ -83,3 +84,17 @@ class EditWikiPageForm(flask_wtf.Form):
         self.page.last_editor = flask_login.current_user
         self.page.last_modified_at = datetime.datetime.utcnow()
         return True
+
+
+class SearchForm(flask_wtf.Form):
+    q = wtforms.StringField(
+        "Search",
+        validators=[wtforms.validators.DataRequired()],
+    )
+
+    def __init__(self, *args, **kwargs):
+        if "formdata" not in kwargs:
+            kwargs["formdata"] = flask.request.args
+        if "csrf_enabled" not in kwargs:
+            kwargs["csrf_enabled"] = False
+        super(SearchForm, self).__init__(*args, **kwargs)
