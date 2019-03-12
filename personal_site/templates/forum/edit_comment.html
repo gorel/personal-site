@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+  <h1>Edit comment</h1>
+  <div class="row col-md-12">
+    {% include "partials/forum/_post.html" %}
+  </div>
+  <div class="row col-md-12">
+    {{ wtf.quick_form(form) }}
+  </div>
+{% endblock %}

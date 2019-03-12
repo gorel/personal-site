@@ -1,5 +1,28 @@
-{% extends "base.html" %}
+{% extends "forum/base.html" %}
 
-{% block app_content %}
-  <h1>Under construction</h1>
+{% block forum_content %}
+  <table class="table">
+    <tr>
+      <th>Poster</th>
+      <th>Title</th>
+      <th>Posted at</th>
+      <th>Last activity</th>
+    </tr>
+    {% for post_preview in posts.items %}
+      {% include "partials/forum/_post_preview.html" %}
+    {% endfor %}
+  </table>
+
+  <nav aria-label="...">
+    <ul class="pager">
+      <li class="previous {% if not posts.has_prev %} disabled {% endif %}">
+        Prev
+        <!-- TODO: Make controller for previous/next pages -->
+      </li>
+      <li class="next {% if not posts.has_next %} disabled {% endif %}">
+        Next
+        <!-- TODO: Make controller for previous/next pages -->
+      </li>
+    </ul>
+  </nav>
 {% endblock %}

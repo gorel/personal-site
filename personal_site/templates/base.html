@@ -1,7 +1,11 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}
-  {% if title %}{{ title }}{% else %}Logan Gore{% endif %}
+  {% if title %}{{ title }}{% else %}Logan Gore's webpage{% endif %}
+{% endblock %}
+
+{% block macros %}
+  {% include "partials/utils.html" %}
 {% endblock %}
 
 {% block head %}

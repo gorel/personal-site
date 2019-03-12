@@ -16,16 +16,18 @@ class Notification(db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    poster_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     comments = db.relationship("Comment", backref="parent_post", lazy="dynamic")
     num_comments = db.Column(db.Integer)
     title = db.Column(db.String(constants.POST_TITLE_MAX_LEN))
     body = db.Column(db.Text)
     posted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    edited_at = db.Column(db.DateTime)
+    edited_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
+    last_activity = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
 
-    def __init__(self, poster, body):
-        self.poster_id = poster.id
+    def __init__(self, author, title, body):
+        self.author_id = author.id
+        self.title = title
         self.body = body
         self.num_comments = 0
 
@@ -34,19 +36,20 @@ class Post(db.Model):
             return
         self.body = new_body
         self.edited_at = datetime.datetime.now()
+        self.last_activity = datetime.datetime.now()
 
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
-    poster_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     body = db.Column(db.Text)
-    posted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    posted_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     edited_at = db.Column(db.DateTime)
 
-    def __init__(self, post, poster, body):
+    def __init__(self, post, author, body):
         self.post_id = post.id
-        self.poster_id = poster.id
+        self.author_id = author.id
         self.body = body
 
     def edit(self, new_body):

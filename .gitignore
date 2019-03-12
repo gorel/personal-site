@@ -106,5 +106,7 @@ venv.bak/
 # swp files from vim
 .*.swp
 
-# sqlite3 test db
+# sqlite3 test db and related files
 app.db
+app_backup.db
+migrations/

@@ -18,3 +18,4 @@
 - wiki preview?
 - better wiki 404 page
 - git-backed wiki
+- new/edit comment links to comment instead of parent post

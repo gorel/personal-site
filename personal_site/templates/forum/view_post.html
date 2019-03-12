@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  {% include "partials/forum/_post.html" %}
+
+  <div class="container">
+    {% for comment in comments.items %}
+      {% include "partials/forum/_comment.html" %}
+    {% endfor %}
+  </div>
+
+  <nav aria-label="...">
+    <ul class="pager">
+      <li class="previous {% if not comments.has_prev %} disabled {% endif %}">
+        Prev
+        <!-- TODO: Make controller for previous/next pages -->
+      </li>
+      <li class="next {% if not comments.has_next %} disabled {% endif %}">
+        Next
+        <!-- TODO: Make controller for previous/next pages -->
+      </li>
+    </ul>
+  </nav>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
+    {% if comment.edited_at != comment.posted_at %}
+    <div class="row">
+      <small>Last edited {{ moment(comment.edited_at).fromNow() }}</small>
+    </div>
+    {% endif %}
+  </div>
+  <div class="row">
+    {{ comment.body }}
+  </div>
+</div>

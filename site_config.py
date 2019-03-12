@@ -8,9 +8,9 @@ dotenv.load_dotenv(os.path.join(basedir, ".env"))
 
 class Config(object):
     SERVER_HOST = os.environ.get("SERVER_HOST")
-    SERVER_PORT = int(os.environ.get("SERVER_PORT")) or 9999
+    FLASK_RUN_PORT = int(os.environ.get("FLASK_RUN_PORT")) or 9999
     SITE_URL = os.environ.get("SITE_URL")
-    DEBUG = True
+    DEBUG = bool(os.environ.get("FLASK_DEBUG")) or False
 
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
