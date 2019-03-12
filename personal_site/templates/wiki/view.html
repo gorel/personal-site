@@ -1,18 +1,30 @@
 {% extends "wiki/base.html" %}
 
+{% block lhs_content %}
+  <div class="row content">
+    <b>Table of contents</b>
+    {{ page.toc|safe }}
+  </div>
+{% endblock %}
+
 {% block wiki_content %}
   <div class="row">
       <h1>
           {{ page.name }}
           {% if current_user.is_admin %}
-              <small>
+              <p class="small">
                   <a href="{{ url_for("wiki.edit", page_idname=page.idname) }}" class="btn btn-small btn-default">Edit this page</a>
                   <a href="{{ url_for("wiki.delete", page_idname=page.idname) }}" data-method="post" data-confirm="Are you sure you want to delete this page?" class="btn btn-small btn-danger">Delete this page</a>
-              </small>
+              </p>
           {% endif %}
       </h1>
-      <p>{{ page.creator.username }} created this page on {{ moment(page.created_at).format("LLL") }}</p>
-      <small>Last modified: {{ moment(page.last_modified_at).fromNow() }} by {{ page.last_editor.username }}</small>
+      <p class="small">
+        {{ page.creator.username }} created this page on {{ moment(page.created_at).format("LLL") }}
+        {% if page.last_modified_at != page.created_at %}
+          <br>
+          Last modified: {{ moment(page.last_modified_at).fromNow() }} by {{ page.last_editor.username }}
+        {% endif %}
+      </p>
 
       <div class="container">
           {{ page.html|safe }}

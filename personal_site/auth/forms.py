@@ -12,6 +12,7 @@ class RegisterForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.USERNAME_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     email = wtforms.TextField(
         "Email",

@@ -3,7 +3,7 @@
     <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
     {% if comment.edited_at != comment.posted_at %}
     <div class="row">
-      <small>Last edited {{ moment(comment.edited_at).fromNow() }}</small>
+      <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
     </div>
     {% endif %}
   </div>

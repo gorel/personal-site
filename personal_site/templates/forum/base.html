@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
-{% block app_content %}
-  <div class="row">
-    <span class="col-md-8">
-      <h1>Forum</h1>
-    </span>
+{% block center_content %}
+  <span>
+    <h1 class="col-sm-4">Forum</h1>
+
     <!-- TODO: Post search? -->
-    <span class="row col-md-4 pull-right">
-      <a href="{{ url_for("forum.new_post") }}" class="btn btn-primary">New post</a>
-    </span>
+    <a href="{{ url_for("forum.new_post") }}" class="btn btn-primary pull-right">New post</a>
+  </span>
   {% block forum_content %}{% endblock %}
 {% endblock %}

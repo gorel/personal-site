@@ -4,23 +4,24 @@
   Wiki{% if title %} - {{ title }}{% endif %}
 {% endblock %}
 
-{%  block app_content %}
+{%  block center_content %}
   <div class="row">
-    {% if current_user.is_admin %}
-      <small>
-        <a class="btn btn-small btn-default" href="{{ url_for("wiki.new") }}">Create a new page</a>
-      </small>
-    {% endif %}
+    <div class="col-sm-4">
+      {% if current_user.is_admin %}
+        <a class="btn btn-small btn-primary" href="{{ url_for("wiki.new") }}">Create a new page</a>
+      {% endif %}
+    </div>
 
-    {% if g.search_form %}
-        <form class="col-md-4 pull-right" method="get" action="{{ url_for("wiki.search") }}">
-          <div class="form-group">
-            {{ g.search_form.q(size=20, class="form-control", placeholder=g.search_form.q.label.text) }}
-          </div>
+    <div class="offset-sm-4 col-sm-4">
+      {% if g.search_form %}
+        <form class="form-group" method="get" action="{{ url_for("wiki.search") }}">
+          {{ g.search_form.q(size=20, class="form-control", placeholder=g.search_form.q.label.text) }}
         </form>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
 
-  {% block wiki_content %}{% endblock %}
+  <div class="row">
+    {% block wiki_content %}{% endblock %}
+  </div>
 {% endblock %}

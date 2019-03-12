@@ -16,12 +16,14 @@ class AddWikiPageForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.WIKIPAGE_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     page_content = wtforms.TextAreaField(
         "Content",
         validators=[
             wtforms.validators.DataRequired(),
         ],
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
     submit = wtforms.SubmitField("Submit")
 
@@ -53,12 +55,14 @@ class EditWikiPageForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.WIKIPAGE_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     page_content = wtforms.TextAreaField(
         "Content",
         validators=[
             wtforms.validators.DataRequired(),
         ],
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
     submit = wtforms.SubmitField("Submit")
 
@@ -95,5 +99,5 @@ class SearchForm(flask_wtf.Form):
         if "formdata" not in kwargs:
             kwargs["formdata"] = flask.request.args
         if "csrf_enabled" not in kwargs:
-            kwargs["csrf_enabled"] = False
+            kwargs["meta"] = {"csrf": False}
         super(SearchForm, self).__init__(*args, **kwargs)

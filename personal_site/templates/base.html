@@ -14,10 +14,9 @@
 {% endblock %}
 
 {% block styles %}
-  {{ super() }}
-
-  <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+  <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap-darkly.min.css") }}">
+  <link rel="stylesheet" href="{{ url_for("static", filename="custom.min.css") }}">
 {% endblock %}
 
 {% block navbar %}
@@ -26,32 +25,45 @@
 
 {% block content %}
   <div class="container">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-          <div class="container">
-              <div class="alert-list">
-                  {% for category, message in messages %}
-                  <div class="alert {{ category }} fade in">
-                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      {% if category == "alert-success" %}
-                          <span class="fa fa-check"></span>
-                      {% elif category == "alert-warning" %}
-                          <span class="fa fa-question"></span>
-                      {% elif category == "alert-danger" %}
-                          <span class="fa fa-exclamation"></span>
-                      {% endif %}
-                      {{ message }}
-                  </div>
-                  {% endfor %}
-      {% endif %}
-      {% endwith %}
+    <div class="row content">
 
-      {% block no_container %}
-          <div class="container" style="padding-bottom:50px">
-              {% block app_content %}{% endblock %}
-          </div>
-      {% endblock %}
+      <div class="col-sm-2 sidenav">
+        {% block lhs_content %}{% endblock %}
+      </div>
+
+      <div class="col-sm-8 text-left">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                <div class="alert-list">
+                    {% for category, message in messages %}
+                    <div class="alert {{ category }} fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {% if category == "alert-success" %}
+                            <span class="fa fa-check"></span>
+                        {% elif category == "alert-warning" %}
+                            <span class="fa fa-question"></span>
+                        {% elif category == "alert-danger" %}
+                            <span class="fa fa-exclamation"></span>
+                        {% endif %}
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block center_content %}{% endblock %}
+      </div>
+
+      <div class="col-sm-2 sidenav">
+        {% block rhs_content %}{% endblock %}
+      </div>
+    </div>
   </div>
+
+  <footer class="container-fluid text-center" style="padding-bottom: 50px">
+    {% block footer %}{% endblock %}
+  </footer>
 {% endblock %}
 
 {% block scripts %}

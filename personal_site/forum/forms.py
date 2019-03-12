@@ -16,8 +16,12 @@ class NewPostForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.POST_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
-    body = wtforms.TextAreaField("Body")
+    body = wtforms.TextAreaField(
+        "Body",
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
+    )
     submit = wtforms.SubmitField("Submit")
 
 
@@ -38,7 +42,10 @@ class NewPostForm(flask_wtf.Form):
 
 
 class EditPostForm(flask_wtf.Form):
-    body = wtforms.TextAreaField("Body")
+    body = wtforms.TextAreaField(
+        "Body",
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
+    )
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, *args, **kwargs):
@@ -59,7 +66,10 @@ class EditPostForm(flask_wtf.Form):
 
 
 class NewCommentForm(flask_wtf.Form):
-    body = wtforms.TextAreaField("Body")
+    body = wtforms.TextAreaField(
+        "Body",
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
+    )
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, *args, **kwargs):
@@ -83,7 +93,10 @@ class NewCommentForm(flask_wtf.Form):
 
 
 class EditCommentForm(flask_wtf.Form):
-    body = wtforms.TextAreaField("Body")
+    body = wtforms.TextAreaField(
+        "Body",
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
+    )
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, comment, *args, **kwargs):

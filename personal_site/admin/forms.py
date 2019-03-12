@@ -29,6 +29,7 @@ class ErrorReportForm(flask_wtf.Form):
         validators=[
             wtforms.validators.DataRequired(),
         ],
+        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
     submit = wtforms.SubmitField("Submit")
 

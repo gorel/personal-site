@@ -63,14 +63,13 @@ class WikiPage(db.Model, search.SearchableMixin):
         self.last_modified_at = datetime.datetime.utcnow()
 
     @property
+    def toc(self):
+        contents = MD.convert(self.content)
+        return MD.toc
+
+    @property
     def html(self):
-        content_with_toc = "\n".join([
-            "<h2>Table of Contents</h2>",
-            "[TOC]",
-            "",
-            self.content,
-        ])
-        return MD.convert(content_with_toc)
+        return MD.convert(self.content)
 
     @property
     def preview(self):
