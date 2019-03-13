@@ -62,7 +62,7 @@ def new_comment(post_id):
         db.session.commit()
         return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
     else:
-        return flask.render_template("forum/new_comment.html", form=form)
+        return flask.render_template("forum/new_comment.html", form=form, post=post)
 
 
 @forum.route("/<int:post_id>/<int:comment_id>/edit", methods=["GET", "POST"])
@@ -77,4 +77,4 @@ def edit_comment(post_id, comment_id):
         return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
     else:
         form.body.data = comment.body
-        return flask.render_template("forum/edit_comment.html", form=form)
+        return flask.render_template("forum/edit_comment.html", form=form, post=post)

@@ -1,0 +1,36 @@
+<div class="row" style="padding-bottom: 10px">
+  <div class="col-sm-8">
+    <div class="border border-secondary" style="padding: 10px">
+      <div class="row">
+        <div class="offset-sm-9 col-sm-3">
+          {% if current_user.id == comment.author.id %}
+            <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id,
+                comment_id=comment.id) }}" class="btn btn-small btn-warning pull-right">
+              Edit
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8">
+        <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
+        </div>
+      </div>
+
+      {% if comment.edited_at != comment.posted_at %}
+        <div class="row">
+          <div class="col-sm-8">
+            <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col">
+          {{ comment.body }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

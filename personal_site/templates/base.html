@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block macros %}
-  {% include "partials/utils.html" %}
+  {% include "partials/_utils.html" %}
 {% endblock %}
 
 {% block head %}
@@ -16,7 +16,8 @@
 {% block styles %}
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
   <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap-darkly.min.css") }}">
-  <link rel="stylesheet" href="{{ url_for("static", filename="custom.min.css") }}">
+  <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap-custom.min.css") }}">
+  <link rel="stylesheet" href="{{ url_for("static", filename="custom.css") }}">
 {% endblock %}
 
 {% block navbar %}
@@ -25,7 +26,7 @@
 
 {% block content %}
   <div class="container">
-    <div class="row content">
+    <div class="row">
 
       <div class="col-sm-2 sidenav">
         {% block lhs_content %}{% endblock %}
@@ -34,21 +35,23 @@
       <div class="col-sm-8 text-left">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <div class="container">
-                <div class="alert-list">
-                    {% for category, message in messages %}
-                    <div class="alert {{ category }} fade in">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        {% if category == "alert-success" %}
-                            <span class="fa fa-check"></span>
-                        {% elif category == "alert-warning" %}
-                            <span class="fa fa-question"></span>
-                        {% elif category == "alert-danger" %}
-                            <span class="fa fa-exclamation"></span>
-                        {% endif %}
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+          <div class="row">
+            <div class="alert-list">
+              {% for category, message in messages %}
+                <div class="alert {{ category }} fade in">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  {% if category == "alert-success" %}
+                    <span class="fa fa-check"></span>
+                  {% elif category == "alert-warning" %}
+                    <span class="fa fa-question"></span>
+                  {% elif category == "alert-danger" %}
+                    <span class="fa fa-exclamation"></span>
+                  {% endif %}
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         {% endif %}
         {% endwith %}
 
@@ -60,6 +63,35 @@
       </div>
     </div>
   </div>
+
+  <!-- Prev/next page -->
+  {% block prevnext_nav %}
+    {% if prev_url or next_url %}
+      <div class="row">
+        <div class="col-sm-2">
+          <ul class="pager navbar-nav">
+            <li class="nav-item">
+              <a href="{{  prev_url or "#" }}" {% if prev_url %} class="disabled" {% endif %}>
+                <span aria-hidden="true">&larr;</span>
+                Previous
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="offset-sm-8 col-sm-2">
+          <ul class="pager navbar-nav">
+            <li class="nav-item">
+              <a href="{{ next_url or "#"}}" {% if next_url %} class="disabled" {% endif %}>
+                Next
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
 
   <footer class="container-fluid text-center" style="padding-bottom: 50px">
     {% block footer %}{% endblock %}

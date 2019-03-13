@@ -1,10 +1,17 @@
 {% extends "wiki/base.html" %}
 
 {% block wiki_content %}
-  <h1>Wiki</h1>
-  <div class="container">
-      {% for wikipage_preview in most_popular %}
-        {% include "partials/wiki/_wikipage_preview.html" %}
-      {% endfor %}
+  <div class="row">
+    <div class="col">
+      <h1>Wiki</h1>
+    </div>
   </div>
+
+  {% for wikipage_preview in most_popular %}
+    <div class="row">
+      <div class="col">
+        {% include "wiki/partials/_wikipage_preview.html" %}
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}

@@ -68,9 +68,9 @@ class EditPostForm(flask_wtf.Form):
 class NewCommentForm(flask_wtf.Form):
     body = wtforms.TextAreaField(
         "Body",
-        render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
+        render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
     )
-    submit = wtforms.SubmitField("Submit")
+    submit = wtforms.SubmitField("Save")
 
     def __init__(self, post, *args, **kwargs):
         super(NewCommentForm, self).__init__(*args, **kwargs)
@@ -100,15 +100,15 @@ class EditCommentForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, comment, *args, **kwargs):
-        super(NewcommentForm, self).__init__(*args, **kwargs)
+        super(EditCommentForm, self).__init__(*args, **kwargs)
         self.post = post
         self.comment = comment
 
     def validate(self):
-        if not super(NewCommentForm, self).validate():
+        if not super(EditCommentForm, self).validate():
             return False
 
-        if not self.comment.post.id != post.id:
+        if self.comment.parent_post.id != self.post.id:
             # TODO: Throw a bigger error here?
             self.body.errors.append("You can't move this comment to another post")
             self.body.errors.append("I'm really not sure how this even happened.")

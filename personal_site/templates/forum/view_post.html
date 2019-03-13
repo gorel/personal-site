@@ -1,24 +1,27 @@
-{% extends "base.html" %}
+{% extends "forum/base.html" %}
 
-{% block center_content %}
-  {% include "partials/forum/_post.html" %}
-
-  <div class="container">
-    {% for comment in comments.items %}
-      {% include "partials/forum/_comment.html" %}
-    {% endfor %}
+{% block forum_content %}
+  <div class="row">
+    <div class="col">
+      {% include "forum/partials/_post.html" %}
+    </div>
   </div>
 
-  <nav aria-label="...">
-    <ul class="pager">
-      <li class="previous {% if not comments.has_prev %} disabled {% endif %}">
-        Prev
-        <!-- TODO: Make controller for previous/next pages -->
-      </li>
-      <li class="next {% if not comments.has_next %} disabled {% endif %}">
-        Next
-        <!-- TODO: Make controller for previous/next pages -->
-      </li>
-    </ul>
-  </nav>
+  {% if current_user.is_authenticated %}
+  <div class="row" style="padding-bottom: 10px">
+    <div class="col">
+      <a href="{{ url_for("forum.new_comment", post_id=post.id) }}" class="btn btn-small btn-primary">
+        Add a comment
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  {% for comment in comments.items %}
+    <div class="row">
+      <div class="col">
+        {% include "forum/partials/_comment.html" %}
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}

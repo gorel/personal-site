@@ -1,12 +1,39 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends "forum/base.html" %}
 
-{% block center_content %}
-  <h1>Edit comment</h1>
-  <div class="row col-md-12">
-    {% include "partials/forum/_post.html" %}
+{% block forum_content %}
+  <div class="row">
+    <div class="col">
+      <h1>Edit comment</h1>
+    </div>
   </div>
-  <div class="row col-md-12">
-    {{ wtf.quick_form(form) }}
+
+  <div class="row">
+    <div class="col">
+      <b>Original post</b>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <p class="jumbotron">
+        {{ post.body }}
+      </p>
+    </div>
+  </div>
+
+  <form method="post">
+    {{ form.csrf_token }}
+
+    <div class="row" style="padding-bottom: 10px">
+      <div class="col">
+        {{ form.body(class="form-control bg-secondary text-white") }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </div>
+  </form>
 {% endblock %}

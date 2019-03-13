@@ -56,4 +56,4 @@ class Comment(db.Model):
         if self.body == new_body:
             return
         self.body = new_body
-        self.edited_at = datetime.datetime.now()
+        self.edited_at = datetime.datetime.utcnow()

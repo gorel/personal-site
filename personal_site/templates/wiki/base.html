@@ -6,13 +6,13 @@
 
 {%  block center_content %}
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       {% if current_user.is_admin %}
         <a class="btn btn-small btn-primary" href="{{ url_for("wiki.new") }}">Create a new page</a>
       {% endif %}
     </div>
 
-    <div class="offset-sm-4 col-sm-4">
+    <div class="offset-sm-5 col-sm-4">
       {% if g.search_form %}
         <form class="form-group" method="get" action="{{ url_for("wiki.search") }}">
           {{ g.search_form.q(size=20, class="form-control", placeholder=g.search_form.q.label.text) }}
@@ -21,7 +21,5 @@
     </div>
   </div>
 
-  <div class="row">
-    {% block wiki_content %}{% endblock %}
-  </div>
+  {% block wiki_content %}{% endblock %}
 {% endblock %}

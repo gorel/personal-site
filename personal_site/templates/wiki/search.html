@@ -1,25 +1,17 @@
 {% extends "wiki/base.html" %}
 
 {% block wiki_content %}
-  <h1>Search Results</h1>
-  {% for wikipage_preview in wikipages %}
-    {% include "partials/wiki/_wikipage_preview.html" %}
-  {% endfor %}
+  <div class="row">
+    <div class="col">
+      <h1>Search Results</h1>
+    </div>
+  </div>
 
-  <nav aria-label="...">
-    <ul class="pager">
-      <li class="previous{% if not prev_url %} disabled {% endif %}">
-        <a href="{{ prev_url or "#"}}">
-          <span aria-hidden="true">&larr;</span>
-          Previous results
-        </a>
-      </li>
-      <li class="next{% if not prev_url %} disabled {% endif %}">
-        <a href="{{ prev_url or "#"}}">
-          Next results
-          <span aria-hidden="true">&rarr;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  {% for wikipage_preview in wikipages %}
+    <div class="row">
+      <div class="col">
+        {% include "wiki/partials/_wikipage_preview.html" %}
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}
