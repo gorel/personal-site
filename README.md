@@ -6,15 +6,15 @@
 - admin panel
 - homepage?
 - about
-- forum
-- make the site not look like garbage
+- ~forum~
+- ~make the site not look like garbage~
 - migrate to mysql
 - email support
 - user notifications
-- add title to pages
-- favicon
+- ~add title to pages~
+- ~favicon~
 - set up prev/next/random in wiki
-- make wiki texteditarea larger
+- ~make wiki texteditarea larger~
 - wiki preview?
 - better wiki 404 page
 - git-backed wiki

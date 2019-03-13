@@ -1,8 +1,8 @@
 <div class="row" style="padding-bottom: 10px">
   <div class="col-sm-8">
     <div class="border border-secondary" style="padding: 10px">
-      <div class="row">
-        <div class="offset-sm-9 col-sm-3">
+      <div class="row" style="margin: auto">
+        <div class="offset-sm-10 col-sm-2">
           {% if current_user.id == comment.author.id %}
             <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id,
                 comment_id=comment.id) }}" class="btn btn-small btn-warning pull-right">
