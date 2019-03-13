@@ -38,6 +38,11 @@ class Post(db.Model):
         self.edited_at = datetime.datetime.now()
         self.last_activity = datetime.datetime.now()
 
+    @property
+    def was_edited(self):
+        diff = abs(self.posted_at - self.edited_at)
+        return diff.seconds > 0
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -57,3 +62,8 @@ class Comment(db.Model):
             return
         self.body = new_body
         self.edited_at = datetime.datetime.utcnow()
+
+    @property
+    def was_edited(self):
+        diff = abs(self.posted_at - self.edited_at)
+        return diff.seconds > 0

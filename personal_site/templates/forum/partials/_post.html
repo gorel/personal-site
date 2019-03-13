@@ -11,7 +11,7 @@
       <p class="small">
         Posted by {{ post.author.username }} {{ moment(post.posted_at).fromNow() }}
         <!-- TODO this if isn't working properly -->
-        {% if post.edited_at != post.posted_at %}
+        {% if post.was_edited %}
           <br>
           Last edited {{ moment(post.edited_at).fromNow() }}
         {% endif %}

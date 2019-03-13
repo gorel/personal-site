@@ -33,7 +33,7 @@
     <div class="col">
       <p class="small">
         {{ page.creator.username }} created this page on {{ moment(page.created_at).format("LLL") }}
-        {% if page.last_modified_at != page.created_at %}
+        {% if page.was_edited %}
           <br>
           Last modified: {{ moment(page.last_modified_at).fromNow() }} by {{ page.last_editor.username }}
         {% endif %}

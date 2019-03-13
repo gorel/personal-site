@@ -63,6 +63,11 @@ class WikiPage(db.Model, search.SearchableMixin):
         self.last_modified_at = datetime.datetime.utcnow()
 
     @property
+    def was_edited(self):
+        diff = abs(self.created_at - self.last_modified_at)
+        return diff.seconds > 0
+
+    @property
     def toc(self):
         contents = MD.convert(self.content)
         return MD.toc

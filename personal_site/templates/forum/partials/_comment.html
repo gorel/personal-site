@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      {% if comment.edited_at != comment.posted_at %}
+      {% if comment.was_edited %}
         <div class="row">
           <div class="col-sm-8">
             <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
