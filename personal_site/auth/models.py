@@ -1,53 +1,22 @@
 import datetime
 import hashlib
 import random
+import string
+import time
 
+import flask
 import flask_login
+import jwt
 
 from personal_site import bcrypt, db, login_manager, mail
 import personal_site.forum.models as forum_models
 
-
-RESET_LEN = 32
+from personal_site.auth import emailutil
 
 
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
-
-
-class PasswordReset(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    key = db.Column(db.String(RESET_LEN))
-    expiration = db.Column(db.DateTime)
-
-    def __init__(self, user, key=None):
-        if key is None:
-            key_exists_in_db = True
-            while key_exists_in_db:
-                key = ''.join(
-                    random.choice(string.ascii_letters + string.digits)
-                    for _ in range(RESET_LEN)
-                )
-                # Ensure key is unique
-                pw_reset = self.__class__.query.filter_by(key=key).first()
-                key_exists_in_db = pw_reset is not None
-
-        self.user = user
-        self.key = key
-        # 48 hour expiration
-        self.expiration = datetime.datetime.now() + datetime.timedelta(days=2)
-
-    def __repr__(self):
-        return f"<PasswordReset {self.id}>"
-
-    @classmethod
-    def get_by_key(cls, key):
-        pw_reset = cls.query.filter_by(key=key).first()
-        if pw_reset is not None:
-            return pw_reset.user
-        return None
 
 
 class User(db.Model, flask_login.UserMixin):
@@ -57,7 +26,6 @@ class User(db.Model, flask_login.UserMixin):
     pw_hash = db.Column(db.String(64))
     email_verified = db.Column(db.Boolean)
     is_admin = db.Column(db.Boolean)
-    pw_reset = db.relationship(PasswordReset, backref="user")
 
     notifications = db.relationship("Notification", backref="recipient", lazy="dynamic")
     posts = db.relationship("Post", backref="author", lazy="dynamic")
@@ -74,7 +42,7 @@ class User(db.Model, flask_login.UserMixin):
         pw_bytes = bytes(password, encoding="utf-8")
         sha256 = hashlib.sha256(pw_bytes).hexdigest()
         self.pw_hash = bcrypt.generate_password_hash(sha256).decode("utf-8")
-
+        self.send_verify_account_email()
 
     def set_password(self, new_password):
         pw_bytes = bytes(new_password, encoding="utf-8")
@@ -86,12 +54,73 @@ class User(db.Model, flask_login.UserMixin):
         sha256 = hashlib.sha256(pw_bytes).hexdigest()
         return bcrypt.check_password_hash(self.pw_hash, sha256)
 
+    def gen_token(self, kind, exp_seconds=None):
+        blob = {kind: self.id}
+        if exp_seconds is not None:
+            blob["exp"] = time.time() + exp_seconds
+        return jwt.encode(
+            blob,
+            flask.current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        ).decode("utf-8")
+
+
+    @classmethod
+    def gen_user_for_token(cls, kind, token):
+        try:
+            user_id = jwt.decode(
+                token,
+                app.config["SECRET_KEY"],
+                algorithm="HS256",
+            )[kind]
+        except:
+            return None
+        return cls.query.get(user_id)
+
+    def send_verify_account_email(self):
+        # TODO - Magic constant
+        token = self.gen_token("verify_account")
+
+        emailutil.send_email(
+            subject="[LoganGore] Verify your email",
+            sender=flask.current_app.config["ADMINS"][0],
+            recipients=[self.email],
+            text_body=flask.render_template(
+                "auth/email/verify_account.txt",
+                user=user,
+                token=token,
+            ),
+            html_body=flask.render_template(
+                "auth/email/verify_account.html",
+                user=self,
+                token=token,
+            ),
+        )
+
     def verify_email(self):
         self.email_verified = True
 
-    def send_email_verification_link(self):
-        # TODO - send email verification
-        pass
+    def send_password_reset_email(self):
+        # 24 hours
+        exp_seconds = 60 * 60 * 24
+        # TODO: Magic constant
+        token = self.gen_token("password_reset", exp_seconds=exp_seconds)
+
+        emailutil.send_email(
+            subject="[LoganGore] Reset your password",
+            sender=flask.current_app.config["ADMINS"][0],
+            recipients=[self.email],
+            text_body=flask.render_template(
+                "auth/email/reset_password.txt",
+                user=self,
+                token=token,
+            ),
+            html_body=flask.render_template(
+                "auth/email/reset_password.html",
+                user=self,
+                token=token,
+            ),
+        )
 
     def get_new_notifications(self):
         last_read_time = self.last_notification_read_time or datetime.datetime(1900, 1, 1)

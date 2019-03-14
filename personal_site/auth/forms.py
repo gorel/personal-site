@@ -39,6 +39,7 @@ class RegisterForm(flask_wtf.Form):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
+        self.show_forgot = False
 
     def validate(self):
         if not flask_wtf.Form.validate(self):
@@ -53,6 +54,7 @@ class RegisterForm(flask_wtf.Form):
                 return True
             else:
                 self.email.errors.append("Email already registered. Did you forget your password?")
+                self.show_forgot = True
                 return False
 
         # Create new user
@@ -110,6 +112,7 @@ class ForgotPasswordForm(flask_wtf.Form):
             wtforms.validators.Email(),
         ],
     )
+    submit = wtforms.SubmitField("Send email")
 
     def __init__(self, *args, **kwargs):
         super(ForgotPasswordForm, self).__init__(*args, **kwargs)
@@ -141,3 +144,4 @@ class SetNewPasswordForm(flask_wtf.Form):
         ],
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
+    submit = wtforms.SubmitField("Send email")

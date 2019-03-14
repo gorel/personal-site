@@ -26,7 +26,6 @@ def load_search_form():
 
 @wiki.route("/search")
 def search():
-    # TODO - set up elasticsearch
     data = flask.g.search_form.q.data
     if not flask.g.search_form.validate():
         return flask.redirect(flask.url_for("wiki.index"))

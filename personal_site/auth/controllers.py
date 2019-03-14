@@ -49,46 +49,36 @@ def logout():
 def forgot_password():
     form = forms.ForgotPasswordForm()
     if form.validate_on_submit():
-        email = form.email.data
-        pw_reset = models.PasswordReset(user=User.get_by_email(email))
-
-        db.session.add(pw_reset)
-        db.session.commit()
-
-        email_title = "Reset your password"
-        site = flask.current_app.config["SITE_URL"]
-        url = f"{site}/auth/reset_password/{pw_reset.key}"
-        email_content = f"Click this link to reset your password: {url}"
-        email_content += "\nThis link will expire in 48 hours."
-
-        msg = flask_mail.Message(email_title, recipients=[email])
-        msg.body = email_content
-        mail.send(msg)
-
+        form.user.send_password_reset_email()
         flask.flash("Sent password reset email", "alert-success")
         return flask.redirect(flask.url_for("auth.login"))
     else:
         return flask.render_template("auth/forgot.html", form=form, title="Forgot your password?")
 
 
-@auth.route("/reset_password/<reset_key>", methods=["GET", "POST"])
-def reset_password(reset_key):
-    user = models.PasswordReset.get_by_key(reset_key)
+@auth.route("/verify_account/<token>")
+def verify_account(token):
+    user = models.User.gen_user_for_token("verify_account", token)
+    if user is not None:
+        user.verify_email()
+        flask.flash("Verified email successfully. Welcome!", "alert-success")
+    return flask.redirect(flask.url_for("default.home"))
+
+
+@auth.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if flask_login.current_user.is_authenticated():
+        # User should be going through account flow
+        return flask.redirect(flask.url_for("default.home"))
+    user = models.User.gen_user_for_token("reset_password", token)
     if user is None:
-        flask.flash("Invalid password reset key (did it expire?)", "alert-warning")
         return flask.redirect(flask.url_for("default.home"))
 
     form = forms.SetNewPasswordForm()
     if form.validate_on_submit():
-        password = form.password.data
-        # Invalidate all open password resets
-        for pw_reset in user.pw_reset:
-            db.session.delete(pw_reset)
-        user.set_password(password)
+        user.set_password(form.password.data)
         db.session.commit()
-
         flask_login.login_user(user)
-
         flask.flash("Password reset successfully", "alert-success")
         return flask.redirect(flask.url_for("default.home"))
     else:
