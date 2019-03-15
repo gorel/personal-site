@@ -38,7 +38,7 @@ class ErrorReportForm(flask_wtf.Form):
         self.error_report = None
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(ErrorReportForm, self).validate():
             return False
 
         self.error_report = models.ErrorReport(

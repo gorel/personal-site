@@ -103,3 +103,24 @@ class WikiPage(db.Model, search.SearchableMixin):
     @classmethod
     def get_by_idname_or_404(cls, idname):
         return cls.query.filter_by(idname=idname).first_or_404()
+
+
+class Question(db.Model, search.SearchableMixin):
+    __searchable__ = ["question", "answer"]
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.Text)
+    answer = db.Column(db.Text)
+    asker_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    asker = db.relationship("User", foreign_keys=[asker_id])
+    good_question = db.Column(db.Boolean, index=True, default=False)
+
+    def __init__(self, name, question, asker):
+        self.question = question
+        self.asker = asker
+
+    def submit_answer(self, answer_text, mark_as_good=False):
+        self.answer = answer_text
+        self.good_question = mark_as_good
+
+    def __repr__(self):
+        return f"<Question {self.id}>"

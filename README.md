@@ -9,7 +9,8 @@
 - ~forum~
 - ~make the site not look like garbage~
 - migrate to mysql
-- email support
+- ~email support~
+- Make async email less laggy (task queue?)
 - user notifications
 - ~add title to pages~
 - ~favicon~
@@ -19,3 +20,6 @@
 - better wiki 404 page
 - git-backed wiki
 - new/edit comment links to comment instead of parent post
+- Don't use wtf.quick_form
+- Anonymous posts/questions
+- Form to submit new ideas for wiki pages

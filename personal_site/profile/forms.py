@@ -36,7 +36,7 @@ class EditAccountForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(EditAccountForm, self).validate():
             return False
 
         user = flask_login.current_user

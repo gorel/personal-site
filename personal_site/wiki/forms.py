@@ -32,7 +32,7 @@ class AddWikiPageForm(flask_wtf.Form):
         self.page = None
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(AddWikiPageForm, self).validate():
             return False
 
         idname = models.WikiPage.name_to_idname(self.page_name.data)
@@ -71,7 +71,7 @@ class EditWikiPageForm(flask_wtf.Form):
         self.page = page
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(EditWikiPageForm, self).validate():
             return False
 
         idname = models.WikiPage.name_to_idname(self.page_name.data)
@@ -85,6 +85,29 @@ class EditWikiPageForm(flask_wtf.Form):
             editor=flask_login.current_user,
             new_name=self.page_name.data,
             new_content=self.page_content.data,
+        )
+        return True
+
+
+class AskQuestionForm(flask_wtf.Form):
+    question = wtforms.TextAreaField(
+        "What's your question?",
+        validators=[wtforms.validators.DataRequired()],
+        render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
+    )
+    submit = wtforms.SubmitField("Submit", render_kw={"class": "btn btn-primary"})
+
+    def __init__(self, *args, **kwargs):
+        super(AskQuestionForm, self).__init__(*args, **kwargs)
+        self.wiki_question = None
+
+    def validate(self):
+        if not super(AskQuestionForm, self).validate():
+            return False
+
+        self.question = Question(
+            question=self.question.data,
+            asker=flask_login.current_user,
         )
         return True
 

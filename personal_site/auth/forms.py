@@ -42,7 +42,7 @@ class RegisterForm(flask_wtf.Form):
         self.show_forgot = False
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(RegisterForm, self).validate():
             return False
 
         # Check if the user has already registered before
@@ -88,7 +88,7 @@ class LoginForm(flask_wtf.Form):
         self.user = None
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(LoginForm, self).validate():
             return False
 
         user = models.User.get_by_email(self.email.data)
@@ -119,7 +119,7 @@ class ForgotPasswordForm(flask_wtf.Form):
         self.user = None
 
     def validate(self):
-        if not flask_wtf.Form.validate(self):
+        if not super(ForgotPasswordForm, self).validate():
             return False
 
         user = models.User.get_by_email(self.email.data)
