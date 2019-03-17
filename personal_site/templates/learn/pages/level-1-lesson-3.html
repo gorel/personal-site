@@ -1,0 +1,153 @@
+{% extends "learn/pages/level-1-base.html" %}
+{% block lhs_toc %}
+  <div class="row">
+    <div class="col">
+      <b>Table of contents</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="toc">
+        <ul>
+          <li><a href="#top-of-page">Back to top</a></li>
+          <li><a href="#vocab">Vocab</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+    <h1 id="back-to-top">Lesson 3: Conditionals and more functions</h1>
+    <p><strong>Before the lecture, please read the following chapters:</strong></p>
+    <ul>
+      <li>Chapter 5.1 to 5.7: Conditionals (stop at 5.8, don't worry about recursion yet)</li>
+      <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
+      <li>Chapter 6: Fruitful functions (you can skip 6.5: More recursion)</li>
+    </ul>
+    <h2 id="vocab">Vocab</h2>
+    <ul>
+      <li>Boolean expression</li>
+      <li>logical operator</li>
+      <li>condition</li>
+      <li>and</li>
+      <li>or</li>
+      <li>not</li>
+      <li>return value</li>
+    </ul>
+    <h2 id="quiz">Quiz</h2>
+    <p>Question 1: What will be printed after running the following program?</p>
+    <pre><code class="python">result = &quot;&quot;
+  if 3 &lt;= 4:
+    result += &quot;yes&quot;
+  else:
+    result += &quot;no&quot;
+  print(result)
+    </code></pre>
+
+    <p><strong>a.</strong> yes<br />
+    <strong>b.</strong> no<br />
+    <strong>c.</strong> yesno<br />
+    <strong>d.</strong> <em>(error)</em></p>
+    <p>Question 2: What will be printed after running the following program?</p>
+    <pre><code class="python">result = &quot;&quot;
+  bmi = 24
+
+  if bmi &lt; 18.5:
+    result += &quot;underweight&quot;
+  if bmi &lt; 25:
+    result += &quot;normal&quot;
+  if bmi &lt; 30:
+    result += &quot;overweight&quot;
+  else:
+    result += &quot;obese&quot;
+
+  print(result)
+    </code></pre>
+
+    <p><strong>a.</strong> normaloverweight<br />
+    <strong>b.</strong> normal<br />
+    <strong>c.</strong> overweight<br />
+    <strong>d.</strong> obese<br />
+    <strong>e.</strong> <em>(error)</em></p>
+    <p>Question 3: What will be printed after running the following program?</p>
+    <pre><code class="python">result = &quot;&quot;
+  bmi = 24
+
+  if bmi &lt; 18.5:
+    result += &quot;underweight&quot;
+  elif bmi &lt; 25:
+    result += &quot;normal&quot;
+  elif bmi &lt; 30:
+    result += &quot;overweight&quot;
+  else:
+    result += &quot;obese&quot;
+
+  print(result)
+    </code></pre>
+
+    <p><strong>a.</strong> normaloverweight<br />
+    <strong>b.</strong> normal<br />
+    <strong>c.</strong> overweight<br />
+    <strong>d.</strong> obese<br />
+    <strong>e.</strong> <em>(error)</em></p>
+    <h2 id="exercises">Exercises</h2>
+    <ul>
+      <li>From section <strong>5.14</strong>, do exercises <strong>5.2</strong> and <strong>5.3</strong></li>
+      <li>[movies] Write a program called movies.py that asks the user for their five favorite movies then shows them the list like so:</li>
+    </ul>
+    <pre><code class="no-hlighlight">What is your favorite movie?
+  &gt; movie1
+  What is your second favorite movie?
+  &gt; movie2
+  What is your third favorite movie?
+  &gt; movie3
+  What is your fourth favorite movie?
+  &gt; movie4
+  What is your fifth favorite movie?
+  &gt; movie5
+
+  So your movie rankings are:
+  1. movie1
+  2. movie2
+  3. movie3
+  4. movie4
+  5. movie5
+    </code></pre>
+
+    <ul>
+      <li>[censor] You're a secret agent! Write a function called <code>censor(text, word)</code> that replaces all occurrences of <code>word</code> in <code>text</code> with <code>CENSORED</code>. After making all relevant replacements, output the final result in the terminal.<br />
+      Use this as your input text:</li>
+    </ul>
+    <pre><code class="no-highlight">Dear family,
+
+  The president of our government has sent me on a secret mission.
+  I flew to Antarctica on a huge airplane to get to my secret location.
+  I'm staying in a fancy hotel! Being a secret spy is so fun!
+  I really hope the enemy doesn't find this letter, because I reveal so many top-secret details in my letters to you.
+  Luckily, I have full faith in our government programmers that they will censor any important details.
+  I'll see you soon!
+
+  Love,
+  Your favorite spy
+    </code></pre>
+
+    <p>Your program should censor the following words:</p>
+    <ul>
+      <li>president</li>
+      <li>government</li>
+      <li>Antarctica</li>
+      <li>secret</li>
+      <li>airplane</li>
+      <li>hotel</li>
+      <li>spy</li>
+      <li>enemy</li>
+    </ul>
+    </div>
+  </div>
+{% endblock %}

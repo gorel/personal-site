@@ -1,0 +1,62 @@
+{% extends "learn/pages/level-1-base.html" %}
+
+{% block lhs_toc %}
+  <div class="row">
+    <div class="col">
+      <b>Table of contents</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="toc">
+        <ul>
+          <li><a href="#top-of-page">Back to top</a></li>
+          <li><a href="#setup">Setup</a></li>
+          <li><a href="#textbook">Textbook</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+      <h1 id="back-to-top">Programming Beginners: Introduction</h1>
+      <p>Ever wanted to learn to program but not sure where to begin? This class will help guide you through some topics you might learn about in a first semester CS course.</p>
+      <p>No prior programming experience required or expected.</p>
+
+      <h2 id="setup">Setup</h2>
+      <p>At a minimum, you should install <a href="https://www.python.org/downloads/">Python 3</a> and a text editor. If you're using a mac, there's a good chance you have these by default. Open a terminal (search for Terminal in finder) and type python3. If you don't get an error message, you have Python 3! For a text editor, I personally enjoy Atom, but there are many different options.</p>
+      <p>If you're on Windows, you will likely have to install these yourself. Check out the link above to install <a href="https://www.python.org/downloads/">Python 3</a> and for a text editor, I highly recommend <a href="https://notepad-plus-plus.org/">Notepad++</a>, but again, there are many viable options.</p>
+      <p><strong>1. Install a text editor</strong></p>
+      <p>You only need to install one of these. I personally recommend Atom, but any one of them will work fine. Just take a look and choose the one you think looks best.</p>
+      <p>For Mac: Atom, Sublime Text 2 or 3, TextMate</p>
+      <p>For Windows: Notepad++, Crimson Editor, Sublime Text 2 or 3, Atom</p>
+      <p><strong>2. Read this command line tutorial</strong></p>
+      <p>Read this short tutorial: <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">https://tutorial.djangogirls.org/en/intro_to_command_line/</a></p>
+      <p>Please note that even if you're on Windows, you should follow the instructions for OS X and Linux since you will be using powershell.</p>
+      <p>Again, <strong>if you're on Windows, you should follow the instructions for OS X and Linux since you will be using powershell.</strong></p>
+      <p>For Mac: iTerm or Terminal (both already installed by default)</p>
+      <p>For Windows: powershell (already installed by default)</p>
+      <p>From now on, we will call the command line window "the terminal".</p>
+      <p><strong>3. Install Python 3</strong></p>
+      <p>There's a small chance that Python 3 may already installed on your machine. To test this, open Terminal on Mac (or powershell on Windows) and run <code>python3</code>. If you see a message like "python3: command not found" you <strong>do not</strong> have it installed.</p>
+      <p>If it is not installed already, navigate to <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a> and follow the instructions to install the latest version of Python 3 on your machine.</p>
+
+      <div class="card text-white mb-3 bg-danger">
+        <div class="card-body">
+          <p class="card-text">
+            <b style="font-size: 1.1em">IMPORTANT:</b>
+            You will not be able to perform the exercises without this setup!
+          </p>
+        </div>
+      </div>
+
+      <h2 id="textbook">Textbook</h2>
+      <p>We will loosely follow the textbook "Think Python - How to Think Like a Computer Scientist"</p>
+      <p>It is available for free online: <a href="http://greenteapress.com/thinkpython2/thinkpython2.pdf">http://greenteapress.com/thinkpython2/thinkpython2.pdf</a></p>
+    </div>
+  </div>
+{% endblock %}

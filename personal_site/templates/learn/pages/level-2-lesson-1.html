@@ -1,0 +1,187 @@
+{% extends "learn/pages/level-2-base.html" %}
+
+{% block lhs_toc %}
+  <div class="row">
+    <div class="col">
+      <b>Table of contents</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="toc">
+        <ul>
+          <li><a href="#top-of-page">Back to top</a></li>
+          <li><a href="#refresher-quiz">Refresher quiz</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+      <h1 id="top-of-page">Lesson 1: Programming Refresher (and the Python interpreter)</h1>
+      <p>Read the following chapters to refresh your knowledge on some basic programming tools at your disposal.</p>
+      <p><strong>Before the lecture, please read the following chapters:</strong></p>
+      <ul>
+        <li>Chapter 3: Functions</li>
+        <li>Chapter 5.1 to 5.7: Conditionals and recursion (stop at 5.7; don't worry about recursion yet)</li>
+        <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
+        <li>Chapter 6: Fruitful functions (skip over 6.5: More recursion)</li>
+        <li>Chapter 7: Iteration</li>
+        <li>Chapter 10: Lists</li>
+        <li>Chapter 11: Dictionaries</li>
+        <li>Chapter 12: Tuples</li>
+        <li>Chapter 14: Files</li>
+      </ul>
+
+      <h2 id="refresher-quiz">Refresher Quiz</h2>
+      <p>**Use the following program to answer questions 1-3.</p>
+      <pre><code class="python"># Covers chapters 3, 5, 6, 7
+  def foo(n):
+    if n &gt; 3:
+      return n * 2
+    else:
+      return n
+
+  def bar(n):
+    result = 0
+    while n &lt; 5:
+      result += foo(n)
+      n += 1
+    return result
+      </code></pre>
+
+      <ol>
+        <li>
+          <p>What would be returned when calling <code>foo(4)</code>?<br />
+          <strong>a.</strong> 0<br />
+          <strong>b.</strong> 8<br />
+          <strong>c.</strong> 4<br />
+          <strong>d.</strong> 18</p>
+        </li>
+        <li>
+          <p>What would be returned when calling <code>bar(4)</code>?<br />
+          <strong>a.</strong> 0<br />
+          <strong>b.</strong> 8<br />
+          <strong>c.</strong> 4<br />
+          <strong>d.</strong> 18</p>
+        </li>
+        <li>
+          <p>What would be returned when calling <code>bar(0)</code>?<br />
+          <strong>a.</strong> 24<br />
+          <strong>b.</strong> 01238<br />
+          <strong>c.</strong> 01268<br />
+          <strong>d.</strong> 14</p>
+        </li>
+        <li>
+          <p>[Chapter 14] What are the three modes in which you can open a file?<br />
+          <strong>a.</strong> read, write, and append<br />
+          <strong>b.</strong> read, write, and delete<br />
+          <strong>c.</strong> read, execute, and delete<br />
+          <strong>d.</strong> read, write, and mkdir  </p>
+        </li>
+        <li>
+          <p>[Chapters 10, 11] What symbols do you use to create a list inline? What about a dictionary?<br />
+          <strong>a.</strong> <code>[]</code> and <code>&lt;&gt;</code><br />
+          <strong>b.</strong> <code>[]</code> and <code>()</code><br />
+          <strong>c.</strong> <code>[]</code> and <code>{}</code><br />
+          <strong>d.</strong> <code>[]</code> for both</p>
+        </li>
+      </ol>
+      <p>**Use the following program to answer questions 6-8.</p>
+      <pre><code class="python"># Covers chapters 10 and 11
+  a = [2, 4, 6]
+  b = {'alpha': 1, 'bravo': 2, 'charlie': 3, 'echo': 5}
+      </code></pre>
+
+      <ol>
+        <li>
+          <p>What is <code>a[1]</code>?<br />
+          <strong>a.</strong> 2<br />
+          <strong>b.</strong> 4<br />
+          <strong>c.</strong> 6<br />
+          <strong>d.</strong> <code>[2]</code></p>
+        </li>
+        <li>
+          <p>What is <code>b['bravo']</code>?<br />
+          <strong>a.</strong> 2<br />
+          <strong>b.</strong> <code>['bravo', 2]</code><br />
+          <strong>c.</strong> <code>('bravo', 2)</code><br />
+          <strong>d.</strong> <code>{'bravo', 2}</code></p>
+        </li>
+        <li>
+          <p>What is <code>b['delta']</code>?<br />
+          <strong>a.</strong> 4<br />
+          <strong>b.</strong> <code>['delta']</code><br />
+          <strong>c.</strong> <code>('delta', 4)</code><br />
+          <strong>d.</strong> error</p>
+        </li>
+        <li>
+          <p>[Chapter 5.11] What function do we call to read input from the user?<br />
+          <strong>a.</strong> <code>print()</code><br />
+          <strong>b.</strong> <code>read()</code><br />
+          <strong>c.</strong> <code>input()</code><br />
+          <strong>d.</strong> <code>str()</code>, <code>int()</code>, and <code>float()</code></p>
+        </li>
+        <li>
+          <p>What is the result of the following program?</p>
+        </li>
+      </ol>
+      <pre><code class="python">def baz(character):
+    s = character + 'a'
+    return s * 7
+
+  secret = 'N'
+  print(baz(secret) + ' Batman!')
+      </code></pre>
+
+      <p><strong>a.</strong> Naaaaaaa Batman!<br />
+      <strong>b.</strong> Na7 Batman!<br />
+      <strong>c.</strong> TypeError: cannot add <code>str</code> and <code>int</code><br />
+      <strong>d.</strong> NaNaNaNaNaNaNa Batman!</p>
+
+      <h2 id="exercises">Exercises</h2>
+      <ul>
+        <li>[vowels] Write a function called <code>is_vowel(c)</code> that takes a character (a string of length 1) and returns True if the character is a vowel (recall that vowels are A, E, I, O, and U).</li>
+        <li>[divisors] Write a program that takes three <code>int</code>s on the command line (call them <code>lower</code> <code>upper</code> and <code>divisor</code>) then prints out all numbers between <code>lower</code> and <code>upper</code> that are divisible by <code>divisor</code>. For example:</li>
+      </ul>
+      <pre><code class="no-highlight">$ python3 divisors.py 1 100 11
+  11 22 33 44 55 66 77 88 99
+      </code></pre>
+
+      <ul>
+        <li>[letterfreq] Write a program that takes a filename on the command line and prints out how often each letter occurs in the file text. For example, if the file text was <code>the quick brown dog jumps over the lazy dog</code>, your output would look like this:</li>
+      </ul>
+      <pre><code class="no-highlight">$ python3 letterfreq.py sentence.txt
+  a 1
+  b 1
+  c 1
+  d 2
+  e 3
+  g 2
+  h 2
+  i 1
+  j 1
+  k 1
+  l 1
+  m 1
+  n 1
+  o 4
+  p 1
+  q 1
+  r 2
+  s 1
+  t 2
+  u 2
+  v 1
+  w 1
+  y 1
+  z 1
+      </code></pre>
+    </div>
+  </div>
+{% endblock %}

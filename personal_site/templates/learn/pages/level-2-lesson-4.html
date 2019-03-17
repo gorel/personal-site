@@ -1,0 +1,99 @@
+{% extends "learn/pages/level-2-base.html" %}
+
+{% block lhs_toc %}
+  <div class="row">
+    <div class="col">
+      <b>Table of contents</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="toc">
+        <ul>
+          <li><a href="#top-of-page">Back to top</a></li>
+          <li><a href="#vocab">Vocab</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+      <h1 id="top-of-page">Lesson 4: Data serialization and object references</h1>
+      <p><strong>Before the lecture, please read the following article:</strong></p>
+      <ul>
+        <li><a href="https://pythontips.com/2013/08/02/what-is-pickle-in-python/">https://pythontips.com/2013/08/02/what-is-pickle-in-python/</a></li>
+      </ul>
+
+      <h2 id="vocab">Vocab</h2>
+      <ul>
+        <li>serialize</li>
+        <li>deserialize</li>
+        <li>reference</li>
+        <li>mutable</li>
+        <li>immutable</li>
+        <li><strong>C.R.U.D.</strong></li>
+      </ul>
+
+      <h2 id="quiz">Quiz</h2>
+      <p>Use the following program to answer questions 1-3.</p>
+      <pre><code class="python">def foo(x):
+    x = 3
+
+  def bar(y):
+    y.append(4)
+
+  a = 1
+  mylist = [1, 2, 3]
+
+  print(foo(a))
+  print(foo(mylist))
+  print(bar(mylist))
+      </code></pre>
+
+      <ol>
+        <li>
+          <p>What will be printed by the first print statement?<br />
+          <strong>a.</strong> 1<br />
+          <strong>b.</strong> 3<br />
+          <strong>c.</strong> [1, 2, 3]<br />
+          <strong>d.</strong> InvalidAssignmentError</p>
+        </li>
+        <li>
+          <p>What will be printed by the second print statement?  <br />
+          <strong>a.</strong> 1<br />
+          <strong>b.</strong> 3<br />
+          <strong>c.</strong> [1, 2, 3]<br />
+          <strong>d.</strong> InvalidAssignmentError</p>
+        </li>
+        <li>
+          <p>What will be printed by the third print statement?  <br />
+          <strong>a.</strong> [1, 2, 3]<br />
+          <strong>b.</strong> [1, 2, 3, 4]<br />
+          <strong>c.</strong> 4<br />
+          <strong>d.</strong> InvalidAssignmentError</p>
+        </li>
+        <li>
+          <p>When sending an object to file through pickle, what <em>mode</em> should you open the output file in?  </p>
+        </li>
+        <li>What is the name of the pickle function that sends an object to a file?</li>
+      </ol>
+
+      <h2 id="exercises">Exercises</h2>
+      <ul>
+        <li>[phonebook] Write a phonebook application. Each entry in the book should have first name, last name, and a phone number. We're going to make a "CRUD" application that supports <strong>C</strong>reation of new contacts, <strong>R</strong>eading existing contacts, <strong>U</strong>pdating existing contacts, and <strong>D</strong>eletion of contacts. At the end of each program run, you should use pickle to persist the phonebook between runs. When looking up a contact, you should be able to search by first name, last name, or phone number.</li>
+        <li>[scoreboard] Write a program to store a generic scoreboard for a game. Each entry in the scoreboard should have a name and score. Your scoreboard class should take a parameter for how many scores it keeps (ex, top 5 versus top 10). Add the following methods:</li>
+        <li><code>record_score</code> -&gt; records a new score and updates the scoreboard if it's in the top N scores</li>
+        <li><code>clear</code> -&gt; delete all scores</li>
+        <li><code>save</code> -&gt; save the scoreboard to a file</li>
+        <li><code>load_from_file</code> -&gt; load a scoreboard from file</li>
+        <li><code>__str__</code> -&gt; neatly print out the scoreboard</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

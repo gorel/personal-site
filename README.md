@@ -23,3 +23,8 @@
 - Don't use wtf.quick_form
 - Anonymous posts/questions
 - Form to submit new ideas for wiki pages
+- Need a questions tab for wiki pages
+- Quiz support
+- MAJOR: Drop wiki in favor of raw html (this isn't a wiki product...)
+- Instead of wiki, "progbeg" blueprint
+- Idea of a "cohort" -> subscribe to new posts for five weeks

@@ -49,7 +49,7 @@ def logout():
 def forgot_password():
     form = forms.ForgotPasswordForm()
     if form.validate_on_submit():
-        form.user.send_password_reset_email()
+        form.user.send_reset_password_email()
         flask.flash("Sent password reset email", "alert-success")
         return flask.redirect(flask.url_for("auth.login"))
     else:
@@ -67,10 +67,11 @@ def verify_account(token):
 
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
-    if flask_login.current_user.is_authenticated():
+    if flask_login.current_user.is_authenticated:
         # User should be going through account flow
         return flask.redirect(flask.url_for("default.home"))
     user = models.User.gen_user_for_token("reset_password", token)
+    flask.current_app.logger.warning(f"->->->user is {user}")
     if user is None:
         return flask.redirect(flask.url_for("default.home"))
 

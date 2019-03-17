@@ -1,0 +1,17 @@
+{% extends "learn/base.html" %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+      <h1>Learn</h1>
+    </div>
+  </div>
+
+  {% for learn_page in most_popular %}
+    <div class="row">
+      <div class="col">
+        {% include "learn/partials/_learn_page.html" %}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

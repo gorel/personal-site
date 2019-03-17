@@ -68,12 +68,15 @@ class User(db.Model, flask_login.UserMixin):
     @classmethod
     def gen_user_for_token(cls, kind, token):
         try:
-            user_id = jwt.decode(
+            obj = jwt.decode(
                 token,
-                app.config["SECRET_KEY"],
-                algorithm="HS256",
-            )[kind]
-        except:
+                flask.current_app.config["SECRET_KEY"],
+                algorithms=["HS256"],
+            )
+            flask.current_app.logger.info(f"jwt decode: {obj}")
+            user_id = obj[kind]
+        except Exception as e:
+            flask.current_app.logger.warning(f"jwt decode exception: {e}")
             return None
         return cls.query.get(user_id)
 
@@ -100,11 +103,11 @@ class User(db.Model, flask_login.UserMixin):
     def verify_email(self):
         self.email_verified = True
 
-    def send_password_reset_email(self):
+    def send_reset_password_email(self):
         # 24 hours
         exp_seconds = 60 * 60 * 24
         # TODO: Magic constant
-        token = self.gen_token("password_reset", exp_seconds=exp_seconds)
+        token = self.gen_token("reset_password", exp_seconds=exp_seconds)
 
         emailutil.send_email(
             subject="[LoganGore] Reset your password",
@@ -129,7 +132,7 @@ class User(db.Model, flask_login.UserMixin):
             forum_models.Notification.timestamp > last_read_time).limit(10)
 
     def __repr__(self):
-        return f"<User {self.id}: {username}>"
+        return f"<User {self.id}: {self.username}>"
 
     @classmethod
     def get_by_email(cls, email):

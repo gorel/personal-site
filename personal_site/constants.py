@@ -1,3 +1,9 @@
+import os
+
+# Basepath constants
+__basepath = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(__basepath, "templates")
+
 # Admin
 ADMIN_USERS_PER_PAGE = 50
 
@@ -7,6 +13,14 @@ PASSWORD_MIN_LEN = 8
 
 # Wiki
 WIKIPAGE_MAX_LEN = 64
+
+# Learn
+LEARN_PAGE_TEMPLATE_DIR = os.path.join("learn", "pages")
+LEARNPAGE_MAX_LEN = 64
+PAGE_IDNAME_REGEX = "^([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+$"
+PAGE_IDNAME_REGEX_MSG = ("idname can only contain alphanumeric characters plus "
+                         "`-` and cannot start with, end with, or have "
+                         "multiple successive `-` characters")
 
 # Forum
 NOTIFICATION_MAX_LEN = 140

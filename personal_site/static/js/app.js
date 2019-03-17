@@ -25,6 +25,7 @@ $(function() {
     form.submit();
   });
 
+  // Add hljs to all pre blocks for better formatting
   $("pre").addClass("hljs");
 });
 

@@ -1,0 +1,51 @@
+{% extends "learn/base.html" %}
+
+{% block lhs_content %}
+  <div class="row" style="position: fixed">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+        <a class="btn btn-link" data-toggle="collapse" href="#level-1-toc" role="button"
+            aria-expanded="false" aria-controls="level-1-toc">
+          All level 1 lessons
+          <i id="lessons-dropdown-icon" class="fas fa-chevron-down"></i>
+        </a>
+        </div>
+      </div>
+
+      <div class="collapse" id="level-1-toc">
+        <div class="row">
+          <div class="col">
+            <div class="toc">
+              <ul>
+                <li><a href="level-1-foreword.html">Foreword</a></li>
+                <li><a href="level-1-lesson-1.html">Lesson 1</a></li>
+                <li><a href="level-1-lesson-2.html">Lesson 2</a></li>
+                <li><a href="level-1-lesson-3.html">Lesson 3</a></li>
+                <li><a href="level-1-lesson-4.html">Lesson 4</a></li>
+                <li><a href="level-1-lesson-5.html">Lesson 5</a></li>
+                <li><a href="level-1-final-exam.html">Final Exam</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% block lhs_toc %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  <script>
+    $("#level-1-toc").on("show.bs.collapse", function() {
+      $("#lessons-dropdown-icon").addClass("fa-chevron-up").removeClass("fa-chevron-down");
+    });
+
+    $("#level-1-toc").on("hide.bs.collapse", function() {
+      $("#lessons-dropdown-icon").addClass("fa-chevron-down").removeClass("fa-chevron-up");
+    });
+  </script>
+{% endblock %}

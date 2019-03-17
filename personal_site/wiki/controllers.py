@@ -2,12 +2,10 @@ import datetime
 
 import flask
 import flask_login
-import flask_mail
 
-from personal_site import constants, db, mail
+from personal_site import constants, db
 from personal_site.wiki import forms, models
 
-import personal_site.auth.models as auth_models
 import personal_site.admin.utils as admin_utils
 
 
@@ -68,13 +66,25 @@ def new():
         return flask.render_template("wiki/new.html", form=form, title="New page")
 
 
-@wiki.route("/<page_idname>")
+@wiki.route("/<page_idname>", methods=["GET", "POST"])
 def view(page_idname):
     page = models.WikiPage.get_by_idname_or_404(page_idname)
-    page.views += 1
-    db.session.commit()
+    question_form = forms.AskQuestionForm(page)
 
-    return flask.render_template("wiki/view.html", page=page, title=page.name)
+    if question_form.validate_on_submit():
+        db.session.add(question_form.wiki_question)
+        db.session.commit()
+
+        flask.redirect(flask.url_for("wiki.view", page_idname=page_idname))
+    else:
+        page.views += 1
+        db.session.commit()
+        return flask.render_template(
+            "wiki/view.html",
+            page=page,
+            question_form=question_form,
+            title=page.name,
+        )
 
 
 @wiki.route("/<page_idname>/edit", methods=["GET", "POST"])

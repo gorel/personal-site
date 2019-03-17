@@ -1,0 +1,147 @@
+{% extends "learn/pages/level-1-base.html" %}
+
+{% block lhs_toc %}
+  <div class="row">
+    <div class="col">
+      <b>Table of contents</b>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="toc">
+        <ul>
+          <li><a href="#top-of-page">Back to top</a></li>
+          <li><a href="#vocab">Vocab</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+          <li><a href="#final-exam">Final Exam</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block learn_content %}
+  <div class="row">
+    <div class="col">
+      <h1 id="back-to-top">Lesson 5: Data structures and files</h1>
+      <p><strong>Before the lecture, please read the following chapters:</strong></p>
+      <ul>
+        <li>Chapter 11: Dictionaries</li>
+        <li>Chapter 12: Tuples</li>
+        <li>Chapter 14: Files</li>
+      </ul>
+      <h2 id="vocab">Vocab</h2>
+      <ul>
+        <li>dictionary</li>
+        <li>key-value pair</li>
+        <li>tuple</li>
+        <li>relative path</li>
+        <li>absolute path</li>
+      </ul>
+      <h2 id="quiz">Quiz</h2>
+      <p>Question 1: What will be printed after running the following program?</p>
+      <pre><code class="python">d = {&quot;John&quot;: &quot;Adams&quot;}
+  d[&quot;John&quot;] = &quot;Smith&quot;
+  d[&quot;Samuel&quot;] = &quot;Adams&quot;
+
+  print(d[&quot;John&quot;])
+      </code></pre>
+
+      <p><strong>a.</strong> Adams<br />
+      <strong>b.</strong> Smith<br />
+      <strong>c.</strong> Samuel<br />
+      <strong>d.</strong> <em>(error)</em></p>
+      <p>Question 2: What will be printed after running the following program?</p>
+      <pre><code class="python">d = {&quot;John&quot;: &quot;Adams&quot;}
+  d[&quot;John&quot;] = &quot;Smith&quot;
+  d[&quot;Samuel&quot;] = &quot;Adams&quot;
+
+  print(d[&quot;Adams&quot;])
+      </code></pre>
+
+      <p><strong>a.</strong> John<br />
+      <strong>b.</strong> Samuel<br />
+      <strong>c.</strong> Smith<br />
+      <strong>d.</strong> <em>(error)</em></p>
+      <h2 id="exercises">Exercises</h2>
+      <ul>
+        <li>(I don't really care for any of the exercises in chapter 11)</li>
+        <li>From section <strong>12.10</strong>, do exercise <strong>12.1</strong></li>
+        <li>From section <strong>14.12</strong>, do exercise <strong>14.1</strong></li>
+        <li>
+          <p>[wordcount] Write a program that takes one filename as a command line parameter. Your program should read the file and get a count of how many times each word occurs. Print out the top 5 words from the filename. For a good sample input, check out <a href="https://bitbucket.org/lgore93/python_lvl1/src/8cf378dba7a6bbd7b8c406c7500a9b158e2b5496/week5/wikipedia.txt">this text from the wikipedia page for Python</a>.</p>
+        </li>
+        <li>
+          <p>[wordcount2] Hmm... those common words from the last problem weren't very interesting! Why is that? In programming, we would call these <a href="https://en.wikipedia.org/wiki/Stop_words">stop words</a>. They are words that are used in normal speech or writing, but aren't actually that useful for analyzing text. Examples of English stop words would be "a", "an", or "the". Change your program to take another filename argument on the command line which will represent our stop words. When creating your word counts, skip a word if it's in your stop word list. For a good stop word list, try <a href="https://bitbucket.org/lgore93/python_lvl1/src/a3b09449a4066e14011aa4fa6ee71bba9dbed047/old/week5/stopwords.txt">this file</a>.</p>
+        </li>
+        <li>
+          <p>[censor2] You're a secret agent again! You want to write a letter home to your family, but you need to censor certain words so your enemies can't accidentally discover you. Write a program called censor2.py that takes two filename arguments on the command line. The first file is the letter you will be censoring. The second file will contain a list of the sensitive words. You should write a function called censor(text, word) that replaces all occurrences of word in text with 'CENSORED'. Save the following files to your laptop and try running your program. Save the censored letter as censored_<filename>.</p>
+        </li>
+      </ul>
+      <pre><code class="no-highlight">Dear family,
+
+  The president of our government has sent me on yet another secret mission!
+  I went to our hidden underwater lair on a big submarine to get to my secret location.
+  I probably shouldn't tell you this, but we're about to infiltrate the mafia and steal everything!
+  Here I go blabbing again about all of our secret plans! Silly me, I really should be more careful.
+  Luckily, I have full faith in our government programmers that they will censor any important details once again.
+  I'll see you soon!
+
+  Love,
+  Your super secret spy son
+      </code></pre>
+
+      <p>And use this file as a sample censoring file:</p>
+      <pre><code class="no-highlight">government
+  secret
+  mission
+  hidden
+  underwater
+  mafia
+  lair
+  important
+  submarine
+  infiltrate
+  steal
+  enemy
+  president
+      </code></pre>
+
+      <ul>
+        <li>[censor3] Somehow you still haven't lost your job as a secret agent, and you must once again send a letter home to your family. This time you're going to be smarter about things, though! Instead of replacing the secret words with "CENSORED," you will create a <em>mapping</em> from sensitive words to acceptable replacements. For example, we can replace the word "president" with "mailman." To support these changes, we will change how our censor.txt file looks and have to <em>split</em> the lines into the "findword" and "replaceword."</li>
+      </ul>
+      <pre><code class="no-highlight">Dear family,
+
+  The United States president has sent me on a brand new mission!
+  As you read this, I am at the North Pole in a secret bunker.
+  You wouldn't believe how cold it is here!
+  This mission is so dangerous, I might not ever come back.
+  I'm afraid that the enemy may get the best of me this time.
+
+  I hope to see you soon!
+
+  Love,
+  Your super secret spy son
+      </code></pre>
+
+      <p>And use this file as a sample censoring file:</p>
+      <pre><code class="no-highlight">president=mailman
+  United States=USPS
+  on a brand new mission=a letter awarding me a free vacation
+  the North Pole=Florida
+  cold=warm
+  mission=vacation
+  secret=fancy
+  dangerous=fun
+  bunker=spa
+  enemy=all-you-can-eat shrimp
+  spy=vacation-loving
+      </code></pre>
+
+      <h2 id="final-exam">Final Exam</h2>
+      <p><a href="programming-beginners-level-1-final-exam.html">Try taking the final exam</a>! You don't need to get 100% to graduate, but hopefully all the concepts should feel familiar. What's important is that if you see a problem, you should know <em>how</em> to get the answer, even if you don't immediately know the answer.</p>
+    </div>
+  </div>
+{% endblock %}

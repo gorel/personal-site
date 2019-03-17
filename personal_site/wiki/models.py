@@ -110,13 +110,21 @@ class Question(db.Model, search.SearchableMixin):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.Text)
     answer = db.Column(db.Text)
+
+    page_id = db.Column(db.Integer, db.ForeignKey("wiki_page.id"))
+    page = db.relationship("WikiPage", foreign_keys=[page_id])
+
     asker_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     asker = db.relationship("User", foreign_keys=[asker_id])
+
+    show_anon = db.Column(db.Boolean)
     good_question = db.Column(db.Boolean, index=True, default=False)
 
-    def __init__(self, name, question, asker):
+    def __init__(self, name, question, page, asker, show_anon):
         self.question = question
+        self.page = page
         self.asker = asker
+        self.show_anon = show_anon
 
     def submit_answer(self, answer_text, mark_as_good=False):
         self.answer = answer_text

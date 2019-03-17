@@ -7,7 +7,6 @@ import logging.handlers
 
 import elasticsearch
 import flask
-import flask_bootstrap
 import flask_bcrypt
 import flask_login
 import flask_mail
@@ -21,7 +20,6 @@ import htmlmin.main
 import site_config
 
 
-bootstrap = flask_bootstrap.Bootstrap()
 db = flask_sqlalchemy.SQLAlchemy()
 login_manager = flask_login.LoginManager()
 bcrypt = flask_bcrypt.Bcrypt()
@@ -37,7 +35,6 @@ def create_app(config_class=site_config.Config):
     app.config.from_object(config_class)
 
     # Set up extensions
-    bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
@@ -89,6 +86,7 @@ def create_app(config_class=site_config.Config):
     from personal_site.admin.controllers import admin
     from personal_site.auth.controllers import auth
     from personal_site.forum.controllers import forum
+    from personal_site.learn.controllers import learn
     from personal_site.profile.controllers import profile
     from personal_site.wiki.controllers import wiki
 
@@ -97,6 +95,7 @@ def create_app(config_class=site_config.Config):
     app.register_blueprint(admin)
     app.register_blueprint(auth)
     app.register_blueprint(forum)
+    app.register_blueprint(learn)
     app.register_blueprint(profile)
     app.register_blueprint(wiki)
 

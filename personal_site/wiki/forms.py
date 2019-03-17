@@ -1,5 +1,3 @@
-import datetime
-
 import flask
 import flask_login
 import flask_wtf
@@ -95,19 +93,23 @@ class AskQuestionForm(flask_wtf.Form):
         validators=[wtforms.validators.DataRequired()],
         render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
     )
+    show_anon = wtforms.BooleanField("Show as anonymous?")
     submit = wtforms.SubmitField("Submit", render_kw={"class": "btn btn-primary"})
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, page, *args, **kwargs):
         super(AskQuestionForm, self).__init__(*args, **kwargs)
+        self.page = page
         self.wiki_question = None
 
     def validate(self):
         if not super(AskQuestionForm, self).validate():
             return False
 
-        self.question = Question(
+        self.question = models.Question(
             question=self.question.data,
+            page=self.page,
             asker=flask_login.current_user,
+            show_anon=self.show_anon.data,
         )
         return True
 
