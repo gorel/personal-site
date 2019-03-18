@@ -52,29 +52,35 @@ p1 = Point(3, 4)
 p2 = Point(y=2, x=1)
       </code></pre>
 
-      <ol>
-        <li>
-          <p>What would happen if you typed <code>print(p1)</code>?<br />
-          <strong>a.</strong> <code>Point(x = 3, y = 4)</code><br />
-          <strong>b.</strong> <code>Point(3, 4)</code><br />
-          <strong>c.</strong> <code>&lt;Point at 0x7eff85415980&gt;</code> (or something similar)<br />
-          <strong>d.</strong> <em>(error)</em></p>
-        </li>
-        <li>
-          <p>What do we call methods such as <code>__init__</code> or <code>__str__</code>?<br />
-          <strong>a.</strong> underscore functions<br />
-          <strong>b.</strong> magic methods<br />
-          <strong>c.</strong> funky functions <br />
-          <strong>d.</strong> quick methods</p>
-        </li>
-        <li>
-          <p>How can you implement equality checking (<code>==</code>) for a user-defined class?<br />
-          <strong>a.</strong> <code>def __equality__(self, other):</code><br />
-          <strong>b.</strong> <code>def equals(a, b):</code><br />
-          <strong>c.</strong> <code>def ==(self, other):</code><br />
-          <strong>d.</strong> <code>def __eq__(self, other):</code></p>
-        </li>
-      </ol>
+      <p>Question 1: What would happen if you typed <code>print(p1)</code>?</p>
+      {{
+        learn_pages_utils.render_question_responses(1, [
+          (False, "<code>Point(3, 4)</code>", "Incorrect. Close, but look again at the <code>__str__</code> magic method"),
+          (True, "<code>Point(x = 3, y = 4)</code>", "Correct!"),
+          (False, "<code>&lt;Point at 0x7eff85415980&gt;</code> (or something similar)", "Incorrect. Remember the <code>__str__</code> magic method"),
+          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+        ])
+      }}
+
+      <p>Question 2: What do we call methods such as <code>__init__</code> or <code>__str__</code>?</p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (False, "underscore functions", "Incorrect."),
+          (False, "funky functions ", "Incorrect."),
+          (True, "magic methods", "Incorrect."),
+          (False, "quick methods", "Incorrect."),
+        ])
+      }}
+
+      <p>Question 3: How can you implement equality checking (<code>==</code>) for a user-defined class?</p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (False, "<code>def __equality__(self, other):</code>", "Incorrect."),
+          (False, "<code>def equals(a, b):</code>", "Incorrect."),
+          (False, "<code>def ==(self, other):</code>", "Incorrect."),
+          (True, "<code>def __eq__(self, other):</code>", "Correct!"),
+        ])
+      }}
 
       <h2 id="exercises">Exercises</h2>
       <ul>
