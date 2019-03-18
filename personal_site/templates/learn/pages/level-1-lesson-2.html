@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <div class="row">
@@ -45,26 +46,35 @@
     print(&quot;Hello!&quot;)
       </code></pre>
 
-      <p><strong>a.</strong> Hello!<br />
-      <strong>b.</strong> "Hello!"<br />
-      <strong>c.</strong> <em>(nothing)</em><br />
-      <strong>d.</strong> <em>(error)</em></p>
+      {{
+        learn_pages_utils.render_question_responses(1, [
+          (False, "Hello!", "Incorrect. Remember the difference between a function definition and a function call"),
+          (False, "\"Hello!\"", "Incorrect. Remember that the quotes are just to denote the string - they aren't actually printed"),
+          (True, "<em>(nothing)</em>", "Correct!"),
+          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+        ])
+      }}
+
       <p>Question 2: What will be printed after running the following program?</p>
       <pre><code class="python">def print_hello():
     print(&quot;Hello!&quot;)
 
-  def print_twice():
+def print_twice():
     print_hello()
     print_hello()
 
-  print_twice()
+print_twice()
       </code></pre>
 
-      <p><strong>a.</strong> Hello!Hello!<br />
-      <strong>b.</strong>  Hello!<br />
-      Hello!<br />
-      <strong>c.</strong> <em>(nothing)</em><br />
-      <strong>d.</strong> <em>(error)</em></p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (False, "Hello!Hello!", "Incorrect. By default, each print will automatically insert a newline character"),
+          (True, "Hello!<br />Hello!", "Correct!"),
+          (False, "<em>(nothing)</em>", "Incorrect. Our function is actually getting called this time"),
+          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+        ])
+      }}
+
       <h2 id="exercises">Exercises</h2>
       <ul>
         <li>
@@ -78,16 +88,23 @@
         </li>
       </ul>
       <pre><code class="no-highlight">.
-  ..
-  ...
-  ....
-  .....
-  ......
-  .......
-  ........
-  .........
-  ..........
+..
+...
+....
+.....
+......
+.......
+........
+.........
+..........
       </code></pre>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
 {% endblock %}

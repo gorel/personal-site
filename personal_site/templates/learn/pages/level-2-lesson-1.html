@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <div class="row">
@@ -41,17 +42,17 @@
       <h2 id="refresher-quiz">Refresher Quiz</h2>
       <p>**Use the following program to answer questions 1-3.</p>
       <pre><code class="python"># Covers chapters 3, 5, 6, 7
-  def foo(n):
+def foo(n):
     if n &gt; 3:
-      return n * 2
+        return n * 2
     else:
-      return n
+        return n
 
-  def bar(n):
+def bar(n):
     result = 0
     while n &lt; 5:
-      result += foo(n)
-      n += 1
+        result += foo(n)
+        n += 1
     return result
       </code></pre>
 
@@ -94,8 +95,8 @@
       </ol>
       <p>**Use the following program to answer questions 6-8.</p>
       <pre><code class="python"># Covers chapters 10 and 11
-  a = [2, 4, 6]
-  b = {'alpha': 1, 'bravo': 2, 'charlie': 3, 'echo': 5}
+a = [2, 4, 6]
+b = {'alpha': 1, 'bravo': 2, 'charlie': 3, 'echo': 5}
       </code></pre>
 
       <ol>
@@ -135,8 +136,8 @@
     s = character + 'a'
     return s * 7
 
-  secret = 'N'
-  print(baz(secret) + ' Batman!')
+secret = 'N'
+print(baz(secret) + ' Batman!')
       </code></pre>
 
       <p><strong>a.</strong> Naaaaaaa Batman!<br />
@@ -150,37 +151,37 @@
         <li>[divisors] Write a program that takes three <code>int</code>s on the command line (call them <code>lower</code> <code>upper</code> and <code>divisor</code>) then prints out all numbers between <code>lower</code> and <code>upper</code> that are divisible by <code>divisor</code>. For example:</li>
       </ul>
       <pre><code class="no-highlight">$ python3 divisors.py 1 100 11
-  11 22 33 44 55 66 77 88 99
+11 22 33 44 55 66 77 88 99
       </code></pre>
 
       <ul>
         <li>[letterfreq] Write a program that takes a filename on the command line and prints out how often each letter occurs in the file text. For example, if the file text was <code>the quick brown dog jumps over the lazy dog</code>, your output would look like this:</li>
       </ul>
       <pre><code class="no-highlight">$ python3 letterfreq.py sentence.txt
-  a 1
-  b 1
-  c 1
-  d 2
-  e 3
-  g 2
-  h 2
-  i 1
-  j 1
-  k 1
-  l 1
-  m 1
-  n 1
-  o 4
-  p 1
-  q 1
-  r 2
-  s 1
-  t 2
-  u 2
-  v 1
-  w 1
-  y 1
-  z 1
+a 1
+b 1
+c 1
+d 2
+e 3
+g 2
+h 2
+i 1
+j 1
+k 1
+l 1
+m 1
+n 1
+o 4
+p 1
+q 1
+r 2
+s 1
+t 2
+u 2
+v 1
+w 1
+y 1
+z 1
       </code></pre>
     </div>
   </div>

@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <div class="row">
@@ -48,24 +49,31 @@
       <h2 id="quiz">Quiz</h2>
       <p>Question 1: What will be printed after running the following program?</p>
       <pre><code class="python">a = 2 * 2
-  b = a + 4
-  a = 1
-  print(b)
-      </code></pre>
+b = a + 4
+a = 1
+print(b)</code></pre>
 
-      <p><strong>a.</strong> 5<br />
-      <strong>b.</strong> 10<br />
-      <strong>c.</strong> 8<br />
-      <strong>d.</strong> <em>(error)</em></p>
+      {{
+        learn_pages_utils.render_question_responses(1, [
+          (False, "5", "Incorrect. Statements are executed in order, and Python won't go backwards to re-evaluate a variable again"),
+          (False, "10", "Incorrect. Go through the problem again and check your math"),
+          (True, "8", "Correct!"),
+          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python! Remember that <code>=</code> doesn't work exactly like it does in math"),
+        ])
+      }}
+
       <p>Question 2: What will be printed after running the following program?</p>
       <pre><code class="python">a = 5
-  print(a + &quot;5&quot;)
-      </code></pre>
+print(a + &quot;5&quot;) </code></pre>
 
-      <p><strong>a.</strong> 55<br />
-      <strong>b.</strong> 10<br />
-      <strong>c.</strong> 5"5"<br />
-      <strong>d.</strong> <em>(error)</em></p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (False, "55", "Incorrect. The types of the variables are very important here"),
+          (False, "10", "Incorrect. The types of the variables are very important here"),
+          (False, "5\"5\"", "Incorrect. We can't mix types this way in Python"),
+          (True, "<em>(error)</em>", "Correct! This is a <code>TypeError</code>"),
+        ])
+      }}
 
       <h2 id="exercises">Exercises</h2>
       <ul>
@@ -87,4 +95,11 @@
       </ul>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
 {% endblock %}

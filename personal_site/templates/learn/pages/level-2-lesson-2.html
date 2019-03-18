@@ -1,4 +1,6 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
+
 {% block lhs_toc %}
   <div class="row">
     <div class="col">
@@ -44,40 +46,46 @@
       <pre><code class="python">class Point:
     &quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
 
-  p1 = Point()
-  p1.x = 3
-  p1.y = 4
+p1 = Point()
+p1.x = 3
+p1.y = 4
 
-  p2 = Point()
-  p2.x = p1.x
-  p2.y = p1.y
+p2 = Point()
+p2.x = p1.x
+p2.y = p1.y
 
-  p2.y = 0
+p2.y = 0
       </code></pre>
 
-      <ol>
-        <li>
-          <p>What is the value of <code>p1.x</code>?<br />
-          <strong>a.</strong> 3<br />
-          <strong>b.</strong> 4<br />
-          <strong>c.</strong> 0<br />
-          <strong>d.</strong> <em>(error)</em></p>
-        </li>
-        <li>
-          <p>What is the value of <code>p2.x</code>?<br />
-          <strong>a.</strong> 3<br />
-          <strong>b.</strong> 4<br />
-          <strong>c.</strong> 0<br />
-          <strong>d.</strong> <em>(error)</em></p>
-        </li>
-        <li>
-          <p>What is the value of <code>p1.y</code>?<br />
-          <strong>a.</strong> 3<br />
-          <strong>b.</strong> 4<br />
-          <strong>c.</strong> 0<br />
-          <strong>d.</strong> <em>(error)</em></p>
-        </li>
-      </ol>
+      <p>Question 1: What is the value of <code>p1.x</code>?</p>
+      {{
+        learn_pages_utils.render_question_responses(1, [
+          (True, "3", "Correct!"),
+          (False, "4", "Incorrect. Look again at the value of <code>p1.x</code>"),
+          (False, "0", "Incorrect. We're looking at <code>p1.x</code>"),
+          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+        ])
+      }}
+
+      <p>Question 2: What is the value of <code>p2.x</code>?</p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (True, "3", "Correct!"),
+          (False, "4", "Incorrect. Look again at the value of <code>p2.x</code>"),
+          (False, "0", "Incorrect. We're looking at <code>p2.x</code>"),
+          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+        ])
+      }}
+
+      <p>Question 3: What is the value of <code>p1.y</code>?</p>
+      {{
+        learn_pages_utils.render_question_responses(3, [
+          (False, "3", "Incorrect. Look again at the value of <code>p1.y</code>"),
+          (True, "4", "Correct!"),
+          (False, "0", "Incorrect. <code>p1.y</code> doesn't get changed just because <code>p2.y</code> changed"),
+          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+        ])
+      }}
 
       <h2 id="exercises">Exercises</h2>
       <ul>
@@ -119,29 +127,29 @@
         <li>Parse the gameboard file into a list of lists (this is how we can represent a 2D game board). See the example below for how this would work.</li>
       </ul>
       <pre><code class="python"># Imagine the game board text file looks like this:
-  # (Don't worry about this being an invalid board for now)
-  file_contents = &quot;&quot;&quot;
-  1 2 3 4 5 6 7 8 9
-  2 3 4 5 6 7 8 9 1
-  3 4 5 6 7 8 9 1 2
-  4 5 6 7 8 9 1 2 3
-  5 6 7 8 9 1 2 3 4
-  6 7 8 9 1 2 3 4 5
-  7 8 9 1 2 3 4 5 6
-  8 9 1 2 3 4 5 6 7
-  9 1 2 3 4 5 6 7 8
-  &quot;&quot;&quot;
+# (Don't worry about this being an invalid board for now)
+file_contents = &quot;&quot;&quot;
+1 2 3 4 5 6 7 8 9
+2 3 4 5 6 7 8 9 1
+3 4 5 6 7 8 9 1 2
+4 5 6 7 8 9 1 2 3
+5 6 7 8 9 1 2 3 4
+6 7 8 9 1 2 3 4 5
+7 8 9 1 2 3 4 5 6
+8 9 1 2 3 4 5 6 7
+9 1 2 3 4 5 6 7 8
+&quot;&quot;&quot;
 
-  # We can represent this as a list of lists like so:
-  board = [[1, 2, 3, 4, 5, 6, 7, 8, 9],
-       [2, 3, 4, 5, 6, 7, 8, 9, 1],
-       [3, 4, 5, 6, 7, 8, 9, 1, 2],
-       [4, 5, 6, 7, 8, 9, 1, 2, 3],
-       [5, 6, 7, 8, 9, 1, 2, 3, 4],
-       [6, 7, 8, 9, 1, 2, 3, 4, 5],
-       [7, 8, 9, 1, 2, 3, 4, 5, 6],
-       [8, 9, 1, 2, 3, 4, 5, 6, 7],
-       [9, 1, 2, 3, 4, 5, 6, 7, 8]]
+# We can represent this as a list of lists like so:
+board = [[1, 2, 3, 4, 5, 6, 7, 8, 9],
+     [2, 3, 4, 5, 6, 7, 8, 9, 1],
+     [3, 4, 5, 6, 7, 8, 9, 1, 2],
+     [4, 5, 6, 7, 8, 9, 1, 2, 3],
+     [5, 6, 7, 8, 9, 1, 2, 3, 4],
+     [6, 7, 8, 9, 1, 2, 3, 4, 5],
+     [7, 8, 9, 1, 2, 3, 4, 5, 6],
+     [8, 9, 1, 2, 3, 4, 5, 6, 7],
+     [9, 1, 2, 3, 4, 5, 6, 7, 8]]
       </code></pre>
 
       <p><strong>Bonuses:</strong><br />
@@ -149,4 +157,12 @@
       2. Think of a way that you could store high scores for a user (you would need to keep a "scores" file somewhere)</p>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
+  {{ learn_pages_utils.render_question_jquery(3) }}
 {% endblock %}

@@ -43,7 +43,7 @@ def create_app(config_class=site_config.Config):
     moment.init_app(app)
     csrf.init_app(app)
 
-    # Enable ElasticSearch for wiki pages
+    # Enable ElasticSearch for searchable pages
     app.elasticsearch = elasticsearch.Elasticsearch([app.config["ELASTICSEARCH_URL"]])
 
     # Set up logging if we aren't in debug/testing mode
@@ -88,7 +88,6 @@ def create_app(config_class=site_config.Config):
     from personal_site.forum.controllers import forum
     from personal_site.learn.controllers import learn
     from personal_site.profile.controllers import profile
-    from personal_site.wiki.controllers import wiki
 
     # Register blueprints
     app.register_blueprint(default)
@@ -97,6 +96,5 @@ def create_app(config_class=site_config.Config):
     app.register_blueprint(forum)
     app.register_blueprint(learn)
     app.register_blueprint(profile)
-    app.register_blueprint(wiki)
 
     return app

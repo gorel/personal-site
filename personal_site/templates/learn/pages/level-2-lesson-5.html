@@ -36,38 +36,37 @@
       <ul>
         <li>[filter] Write a function called <code>myfilter(lst, f)</code> that takes a <code>list</code> (lst) and a <code>function</code> (f) and returns a new list that represents a "filtered" list from calling <code>f</code> on each element. Your <code>myfilter</code> function should use a list comprehension. For example...</li>
       </ul>
-      <pre><code class="python">
-      def myfilter(lst, f):
-      # TODO
-      pass
+      <pre><code class="python">def myfilter(lst, f):
+    # TODO
+    pass
 
-      def is_odd(x):
-      return x % 2 == 1
+def is_odd(x):
+    return x % 2 == 1
 
-      my_list = [1, 2, 3, 4, 5]
-      new_list = myfilter(my_list, is_odd)
-      print(new_list)
-      # output: [1, 3, 5]
+my_list = [1, 2, 3, 4, 5]
+new_list = myfilter(my_list, is_odd)
+print(new_list)
+# output: [1, 3, 5]
       </code></pre>
 
       <ul>
         <li>[overlap] Write a program that takes two filenames on the command line. The program should output all lines that occur in both files. For example:</li>
       </ul>
       <pre><code class="no-highlight"># file: a.txt
-      This is line 1.
-      This is another line.
-      Here is a third line!
-      I love Python!
+This is line 1.
+This is another line.
+Here is a third line!
+I love Python!
 
-      # file: b.txt
-      I am another file
-      I love Python!
-      This is another line.
+# file: b.txt
+I am another file
+I love Python!
+This is another line.
 
-      # running our program
-      $ python3 overlap.py a.txt b.txt
-      This is another line.
-      I love Python!
+# running our program
+$ python3 overlap.py a.txt b.txt
+This is another line.
+I love Python!
       </code></pre>
 
       <h1 id="whats-next">What's next?</h1>

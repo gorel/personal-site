@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <div class="row">
@@ -45,44 +46,70 @@
       <pre><code class="python">def foo(x):
     x = 3
 
-  def bar(y):
+def bar(y):
     y.append(4)
 
-  a = 1
-  mylist = [1, 2, 3]
+a = 1
+mylist = [1, 2, 3]
 
-  print(foo(a))
-  print(foo(mylist))
-  print(bar(mylist))
+foo(a)
+print(a) # 1
+foo(mylist)
+print(mylist) # 2
+bar(mylist)
+print(mylist) # 3
       </code></pre>
 
-      <ol>
-        <li>
-          <p>What will be printed by the first print statement?<br />
-          <strong>a.</strong> 1<br />
-          <strong>b.</strong> 3<br />
-          <strong>c.</strong> [1, 2, 3]<br />
-          <strong>d.</strong> InvalidAssignmentError</p>
-        </li>
-        <li>
-          <p>What will be printed by the second print statement?  <br />
-          <strong>a.</strong> 1<br />
-          <strong>b.</strong> 3<br />
-          <strong>c.</strong> [1, 2, 3]<br />
-          <strong>d.</strong> InvalidAssignmentError</p>
-        </li>
-        <li>
-          <p>What will be printed by the third print statement?  <br />
-          <strong>a.</strong> [1, 2, 3]<br />
-          <strong>b.</strong> [1, 2, 3, 4]<br />
-          <strong>c.</strong> 4<br />
-          <strong>d.</strong> InvalidAssignmentError</p>
-        </li>
-        <li>
-          <p>When sending an object to file through pickle, what <em>mode</em> should you open the output file in?  </p>
-        </li>
-        <li>What is the name of the pickle function that sends an object to a file?</li>
-      </ol>
+      <p>Question 1: What will be printed by the first print statement?</p>
+      {{
+        learn_pages_utils.render_question_responses(1, [
+          (True, "1", "Correct!"),
+          (False, "3", "Incorrect. The assignment <code>x = 3</code> will not affect the outer-scoped variable <code>a</code>"),
+          (False, "<code>[1, 2, 3]</code>", "Incorrect. We're printing <code>a</code>, not <code>mylist</code>"),
+          (False, "<code>InvalidAssignmentError</code>", "Incorrect. This is perfectly valid code"),
+        ])
+      }}
+
+      <p>Question 2: What will be printed by the second print statement?</p>
+      {{
+        learn_pages_utils.render_question_responses(2, [
+          (False, 1, "Incorrect. We're printing <code>mylist</code>not <code>a</code>"),
+          (False, 3, "Incorrect. The assignment <code>x = 3</code> will not affect the outer-scoped variable <code>mylist</code>"),
+          (True, "<code>[1, 2, 3]</code>", "Correct!"),
+          (False, "<code>InvalidAssignmentError</code>", "Incorrect. This is perfectly valid code"),
+        ])
+      }}
+
+      <p>Question 3: What will be printed by the third print statement?</p>
+      {{
+        learn_pages_utils.render_question_responses(3, [
+          (False, "<code>[1, 2, 3]</code>", "Incorrect. <code>.append()</code> will actually modify the base object"),
+          (True, "<code>[1, 2, 3, 4]</code>", "Correct!"),
+          (False, "4", "Incorrect. Remember, we are operating on <code>mylist</code>"),
+          (False, "<code>InvalidAssignmentError</code>", "Incorrect. This is perfectly valid code"),
+        ])
+      }}
+
+      <p>Question 4: When sending an object to file through pickle, what <em>mode</em> should you open the output file in?</p>
+      {{
+        learn_pages_utils.render_question_responses(4, [
+          (False, "<code>r</code>", "Incorrect"),
+          (False, "<code>w</code>", "Incorrect. Close, but pickle is a binary protocol, so we need something else"),
+          (False, "<code>a</code>", "Incorrect"),
+          (False, "<code>rb</code>", "Incorrect. Remember, we're sending an object <em>to</em> file"),
+          (True, "<code>wb</code>", "Correct!"),
+        ])
+      }}
+
+      <p>Question 5: What is the name of the pickle function that sends an object to a file?</p>
+      {{
+        learn_pages_utils.render_question_responses(5, [
+          (False, "<code>pickle.load()</code>", "Incorrect. The <code>load</code> function is for loading data from a file"),
+          (True, "<code>pickle.dump()</code>", "Correct!"),
+          (False, "<code>pickle.dumps()</code>", "Incorrect. Close, but <code>dumps</code> writes data to a bytes object, not a file"),
+          (False, "<code>pickle.loads()</code>", "Incorrect. The <code>loads</code> function is for loading data from a bytes object"),
+        ])
+      }}
 
       <h2 id="exercises">Exercises</h2>
       <ul>
@@ -96,4 +123,14 @@
       </ul>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
+  {{ learn_pages_utils.render_question_jquery(3) }}
+  {{ learn_pages_utils.render_question_jquery(4) }}
+  {{ learn_pages_utils.render_question_jquery(5) }}
 {% endblock %}

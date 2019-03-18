@@ -1,4 +1,6 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
+
 {% block lhs_toc %}
   <div class="row">
     <div class="col">
@@ -43,81 +45,96 @@
     <h2 id="quiz">Quiz</h2>
     <p>Question 1: What will be printed after running the following program?</p>
     <pre><code class="python">result = &quot;&quot;
-  if 3 &lt;= 4:
-    result += &quot;yes&quot;
-  else:
-    result += &quot;no&quot;
-  print(result)
+if 3 &lt;= 4:
+  result += &quot;yes&quot;
+else:
+  result += &quot;no&quot;
+print(result)
     </code></pre>
 
-    <p><strong>a.</strong> yes<br />
-    <strong>b.</strong> no<br />
-    <strong>c.</strong> yesno<br />
-    <strong>d.</strong> <em>(error)</em></p>
+    {{
+      learn_pages_utils.render_question_responses(1, [
+        (True, "yes", "Correct!"),
+        (False, "no", "Incorrect. Think about how <code><=</code> works"),
+        (False, "yesno", "Incorrect. Remember conditional logic (<code>if/elif/else</code>)"),
+        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+      ])
+    }}
+
     <p>Question 2: What will be printed after running the following program?</p>
     <pre><code class="python">result = &quot;&quot;
-  bmi = 24
+bmi = 24
 
-  if bmi &lt; 18.5:
-    result += &quot;underweight&quot;
-  if bmi &lt; 25:
-    result += &quot;normal&quot;
-  if bmi &lt; 30:
-    result += &quot;overweight&quot;
-  else:
-    result += &quot;obese&quot;
+if bmi &lt; 18.5:
+  result += &quot;underweight&quot;
+if bmi &lt; 25:
+  result += &quot;normal&quot;
+if bmi &lt; 30:
+  result += &quot;overweight&quot;
+else:
+  result += &quot;obese&quot;
 
-  print(result)
+print(result)
     </code></pre>
 
-    <p><strong>a.</strong> normaloverweight<br />
-    <strong>b.</strong> normal<br />
-    <strong>c.</strong> overweight<br />
-    <strong>d.</strong> obese<br />
-    <strong>e.</strong> <em>(error)</em></p>
+    {{
+      learn_pages_utils.render_question_responses(2, [
+        (False, "normal", "Incorrect. Look at our condition usage (hint: do you see an <code>elif</code>?)"),
+        (False, "overweight", "Incorrect. Try going through the conditions one by one"),
+        (False, "obese", "Incorrect. There should be a condition that passes before the <code>else</code>"),
+        (True, "normaloverweight", "Correct!"),
+        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+      ])
+    }}
+
     <p>Question 3: What will be printed after running the following program?</p>
     <pre><code class="python">result = &quot;&quot;
-  bmi = 24
+bmi = 24
 
-  if bmi &lt; 18.5:
-    result += &quot;underweight&quot;
-  elif bmi &lt; 25:
-    result += &quot;normal&quot;
-  elif bmi &lt; 30:
-    result += &quot;overweight&quot;
-  else:
-    result += &quot;obese&quot;
+if bmi &lt; 18.5:
+  result += &quot;underweight&quot;
+elif bmi &lt; 25:
+  result += &quot;normal&quot;
+elif bmi &lt; 30:
+  result += &quot;overweight&quot;
+else:
+  result += &quot;obese&quot;
 
-  print(result)
+print(result)
     </code></pre>
 
-    <p><strong>a.</strong> normaloverweight<br />
-    <strong>b.</strong> normal<br />
-    <strong>c.</strong> overweight<br />
-    <strong>d.</strong> obese<br />
-    <strong>e.</strong> <em>(error)</em></p>
+    {{
+      learn_pages_utils.render_question_responses(3, [
+        (True, "normal", "Correct!"),
+        (False, "overweight", "Incorrect. Check the condition boundaries again"),
+        (False, "obese", "Incorrect. At least one of these conditions should be true"),
+        (False, "normaloverweight", "Incorrect. Remember how <code>elif</code> works"),
+        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+      ])
+    }}
+
     <h2 id="exercises">Exercises</h2>
     <ul>
       <li>From section <strong>5.14</strong>, do exercises <strong>5.2</strong> and <strong>5.3</strong></li>
       <li>[movies] Write a program called movies.py that asks the user for their five favorite movies then shows them the list like so:</li>
     </ul>
     <pre><code class="no-hlighlight">What is your favorite movie?
-  &gt; movie1
-  What is your second favorite movie?
-  &gt; movie2
-  What is your third favorite movie?
-  &gt; movie3
-  What is your fourth favorite movie?
-  &gt; movie4
-  What is your fifth favorite movie?
-  &gt; movie5
+&gt; movie1
+What is your second favorite movie?
+&gt; movie2
+What is your third favorite movie?
+&gt; movie3
+What is your fourth favorite movie?
+&gt; movie4
+What is your fifth favorite movie?
+&gt; movie5
 
-  So your movie rankings are:
-  1. movie1
-  2. movie2
-  3. movie3
-  4. movie4
-  5. movie5
+So your movie rankings are:
+1. movie1
+2. movie2
+3. movie3
+4. movie4
+5. movie5
     </code></pre>
 
     <ul>
@@ -126,15 +143,15 @@
     </ul>
     <pre><code class="no-highlight">Dear family,
 
-  The president of our government has sent me on a secret mission.
-  I flew to Antarctica on a huge airplane to get to my secret location.
-  I'm staying in a fancy hotel! Being a secret spy is so fun!
-  I really hope the enemy doesn't find this letter, because I reveal so many top-secret details in my letters to you.
-  Luckily, I have full faith in our government programmers that they will censor any important details.
-  I'll see you soon!
+The president of our government has sent me on a secret mission.
+I flew to Antarctica on a huge airplane to get to my secret location.
+I'm staying in a fancy hotel! Being a secret spy is so fun!
+I really hope the enemy doesn't find this letter, because I reveal so many top-secret details in my letters to you.
+Luckily, I have full faith in our government programmers that they will censor any important details.
+I'll see you soon!
 
-  Love,
-  Your favorite spy
+Love,
+Your favorite spy
     </code></pre>
 
     <p>Your program should censor the following words:</p>
@@ -150,4 +167,11 @@
     </ul>
     </div>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
+  {{ learn_pages_utils.render_question_jquery(3) }}
 {% endblock %}

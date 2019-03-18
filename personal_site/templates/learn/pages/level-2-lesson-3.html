@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <div class="row">
@@ -41,14 +42,14 @@
       <pre><code class="python">class Point:
     &quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
     def __init__(self, x, y):
-      self.x = x
-      self.y = y
+        self.x = x
+        self.y = y
 
     def __str__(self):
-      return f&quot;Point(x = {self.x}, y = {self.y})&quot;
+        return f&quot;Point(x = {self.x}, y = {self.y})&quot;
 
-  p1 = Point(3, 4)
-  p2 = Point(y=2, x=1)
+p1 = Point(3, 4)
+p2 = Point(y=2, x=1)
       </code></pre>
 
       <ol>

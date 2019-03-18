@@ -1,0 +1,36 @@
+{% macro render_question_responses(qid, opts) %}
+  <div class="form-group">
+    {% for is_correct, response, help_text in opts %}
+      {% set target %}collapse-{{ qid }}-{{ loop.index0 }}{% endset %}
+      <div class="radio">
+        <label data-toggle="collapse" data-target="#{{ target }}"
+            aria-expanded="false" aria-controls="{{ target }}">
+          <input type="radio" name="question-{{ qid }}" value={{ loop.index0 }} style="margin-right: 10px">{{ response|safe }}</input>
+          <div id="{{ target }}" aria-expanded="false" class="collapse">
+            <div class="card {% if is_correct %}bg-success{% else %}bg-secondary{% endif %}">
+              <div class="card-body">
+                <p class="card-text">{{ help_text|safe }}</p>
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro render_question_jquery(qid) %}
+  <script>
+    $('[name="question-{{ qid }}"]').on('change', function() {
+      q = $('[name="question-{{ qid }}"]')
+      for (i = 0; i < q.length; i++) {
+        target = "#collapse-{{ qid }}-" + i;
+        if ($(this).val() === i.toString()) {
+          $(target).collapse("show");
+        } else {
+          $(target).collapse("hide");
+        }
+      }
+    });
+  </script>
+{% endmacro %}
