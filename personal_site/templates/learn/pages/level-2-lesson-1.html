@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -193,6 +194,14 @@ v 1
 w 1
 y 1
 z 1 </code></pre>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-2-foreword.html", "Foreword") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-2-lesson-2.html", "Lesson 2") }}
 {% endblock %}
 
 {% block scripts %}

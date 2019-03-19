@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "partials/_utils.html" as utils %}
 
 {% block lhs_toc %}
   <b>Table of contents</b>
@@ -47,4 +48,8 @@
   <h2 id="textbook">Textbook</h2>
   <p>We will loosely follow the textbook "Think Python - How to Think Like a Computer Scientist"</p>
   <p>It is available for free online: <a href="http://greenteapress.com/thinkpython2/thinkpython2.pdf">http://greenteapress.com/thinkpython2/thinkpython2.pdf</a></p>
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-1-lesson-1.html", msg="Lesson 1") }}
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "partials/_utils.html" as utils %}
 
 {% block lhs_toc %}
   <b>Table of contents</b>
@@ -251,4 +252,12 @@ print(d[&quot;John&quot;]) </code></pre>
       </tr>
     </tbody>
   </table>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-1-lesson-5.html", "Lesson 5") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-2-foreword.html", "Continue to level 2") }}
 {% endblock %}

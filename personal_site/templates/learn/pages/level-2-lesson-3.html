@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -113,4 +114,12 @@ p2 = Point(y=2, x=1)
   1. Add a "check" input that will remove any wrong guesses from the current board state<br />
   2. Add an index to the x and y axis so the user can easily see what row and column they wish to fill in next<br />
   3. Add color! Have starting values in the grid be white, user input be blue, and if you've added the "check" command, have correct cells be green and incorrect cells be red after a call to check.</p>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-2-lesson-2.html", "Lesson 2") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-2-lesson-4.html", "Lesson 4") }}
 {% endblock %}

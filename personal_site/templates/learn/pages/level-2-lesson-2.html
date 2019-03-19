@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -145,6 +146,14 @@ board = [[1, 2, 3, 4, 5, 6, 7, 8, 9],
   <p><strong>Bonuses:</strong><br />
   1. Add a random difficulty option (select any board from easy/medium/hard)<br />
   2. Think of a way that you could store high scores for a user (you would need to keep a "scores" file somewhere)</p>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-2-lesson-1.html", "Lesson 1") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-2-lesson-3.html", "Lesson 3") }}
 {% endblock %}
 
 {% block scripts %}

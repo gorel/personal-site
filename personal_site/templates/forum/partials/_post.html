@@ -1,19 +1,22 @@
-<!-- Start _post -->
+<div style="padding-bottom: 10px">
+  <div class="border border-primary rounded" style="padding: 10px; border-width: 5px !important">
+    <h1 class="">{{ post.title }}</h1>
 
-<h1>{{ post.title }}</h1>
+    <b>Posted by {{ post.author.username }}</b> {{ moment(post.posted_at).fromNow() }}
 
-<!-- TODO: Need a way to edit -->
-<p>
-  <p class="small">
-    Posted by {{ post.author.username }} {{ moment(post.posted_at).fromNow() }}
-    <!-- TODO this if isn't working properly -->
     {% if post.was_edited %}
-      <br>
-      Last edited {{ moment(post.edited_at).fromNow() }}
+      <p class="small">Last edited {{ moment(post.edited_at).fromNow() }}</p>
     {% endif %}
-  </p>
-</p>
 
-<!-- TODO - markdown formatting for body maybe? -->
-<p class="jumbotron">{{ post.body }}</p>
-<!-- End _post -->
+    <hr />
+
+    <p>{{ post.html_body|safe }}</p>
+
+    {% if current_user.id == post.author.id %}
+      <hr class="border border-secondary rounded" style="margin-bottom: 0rem" />
+      <a href="{{ url_for("forum.edit_post", post_id=post.id) }}" class="btn btn-link">
+        <b>Edit post</b>
+      </a>
+    {% endif %}
+  </div>
+</div>

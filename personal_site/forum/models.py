@@ -1,5 +1,7 @@
 import datetime
 
+import markdown
+
 from personal_site import constants, db
 
 
@@ -39,6 +41,10 @@ class Post(db.Model):
         self.last_activity = datetime.datetime.now()
 
     @property
+    def html_body(self):
+        return markdown.markdown(self.body, extensions=["extra", "codehilite"])
+
+    @property
     def was_edited(self):
         diff = abs(self.posted_at - self.edited_at)
         return diff.seconds > 0
@@ -50,7 +56,7 @@ class Comment(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     body = db.Column(db.Text)
     posted_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
-    edited_at = db.Column(db.DateTime)
+    edited_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, post, author, body):
         self.post_id = post.id
@@ -62,6 +68,10 @@ class Comment(db.Model):
             return
         self.body = new_body
         self.edited_at = datetime.datetime.utcnow()
+
+    @property
+    def html_body(self):
+        return markdown.markdown(self.body, extensions=["extra", "codehilite"])
 
     @property
     def was_edited(self):

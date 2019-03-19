@@ -4,11 +4,12 @@
     <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
 
     {% if comment.was_edited %}
-      <!-- TODO: I really want this on the row above -->
       <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
     {% endif %}
 
-    <p>{{ comment.body }}</p>
+    <hr />
+
+    <p>{{ comment.html_body|safe }}</p>
 
     {% if current_user.id == comment.author.id %}
       <hr class="border-secondary" style="margin-bottom: 0rem" />

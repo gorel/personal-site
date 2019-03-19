@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-2-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -159,6 +160,10 @@ I love Python!
     <li>write a program that gives you all the words you can make from a scrabble set of letters</li>
     <li>write a program that downloads all the facebook posts on a user's timeline (python-facebook)</li>
   </ul>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-2-lesson-4.html", "Lesson 4") }}
 {% endblock %}
 
 {% block scripts %}

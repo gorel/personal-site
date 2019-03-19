@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -83,6 +84,14 @@ print(a + &quot;5&quot;) </code></pre>
       <p>[commute] Write a file called commute.py that estimates how many hours you spend commuting each week, month, and year. (Hint: Remember that you probably don't commute on weekends!)</p>
     </li>
   </ul>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-1-foreword.html", "Foreword") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-1-lesson-2.html", "Lesson 2") }}
 {% endblock %}
 
 {% block scripts %}

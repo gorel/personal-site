@@ -1,15 +1,13 @@
-{% macro render_pagination(pagination, endpoint) %}
-<div class="pagination">
-  {% for page in pagination.iter_pages() %}
-    {% if page %}
-      {% if page != pagination.page %}
-        <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
-      {% else %}
-        <strong>{{ page }}</strong>
-      {% endif %}
-    {% else %}
-      <span class="ellipsis">...</span>
-    {% endif %}
-  {% endfor %}
-</div>
-{% endmacro %}
+{% macro paginate_prev(page=None, msg="Previous") -%}
+  <a class="btn btn-primary" href="{{ page }}">
+    <span aria-hidden="true">&larr;</span>
+    {{ msg }}
+  </a>
+{%- endmacro %}
+
+{% macro paginate_next(page=None, msg="Next") -%}
+  <a class="btn btn-primary float-right" href="{{ page }}">
+    {{ msg }}
+    <span aria-hidden="true">&rarr;</span>
+  </a>
+{%- endmacro %}

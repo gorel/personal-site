@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -150,6 +151,14 @@ Your favorite spy </code></pre>
     <li>spy</li>
     <li>enemy</li>
   </ul>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-1-lesson-2.html", "Lesson 2") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-1-lesson-4.html", "Lesson 4") }}
 {% endblock %}
 
 {% block scripts %}

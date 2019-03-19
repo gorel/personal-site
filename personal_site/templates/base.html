@@ -1,11 +1,8 @@
 {% extends "bootstrap/base.html" %}
+{% import "partials/_utils.html" as utils %}
 
 {% block title %}
   {% if title %}{{ title }}{% else %}Logan Gore's webpage{% endif %}
-{% endblock %}
-
-{% block macros %}
-  {% include "partials/_utils.html" %}
 {% endblock %}
 
 {% block head %}
@@ -61,6 +58,36 @@
         {% endwith %}
 
         {% block center_content %}{% endblock %}
+
+        <hr />
+
+        <!-- Prev/next page -->
+        <div class="row">
+          <div class="col-sm-2">
+            <ul class="pager navbar-nav">
+              <li class="nav-item">
+                {% block pagination_prev %}
+                  {% if prev_url %}
+                    {{ utils.paginate_prev(prev_url) }}
+                  {% endif %}
+                {% endblock %}
+              </li>
+            </ul>
+          </div>
+
+          <div class="offset-sm-8 col-sm-2">
+            <ul class="pager navbar-nav">
+              <li class="nav-item">
+                {% block pagination_next -%}
+                  {% if next_url -%}
+                    {{ utils.paginate_next(next_url) }}
+                  {%- endif %}
+                {%- endblock %}
+              </li>
+            </ul>
+          </div>
+        </div>
+
       </div>
 
       <div class="col-sm-2 sidenav">
@@ -68,35 +95,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Prev/next page -->
-  {% block prevnext_nav %}
-    {% if prev_url or next_url %}
-      <div class="row">
-        <div class="col-sm-2">
-          <ul class="pager navbar-nav">
-            <li class="nav-item">
-              <a href="{{  prev_url or "#" }}" {% if prev_url %} class="disabled" {% endif %}>
-                <span aria-hidden="true">&larr;</span>
-                Previous
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="offset-sm-8 col-sm-2">
-          <ul class="pager navbar-nav">
-            <li class="nav-item">
-              <a href="{{ next_url or "#"}}" {% if next_url %} class="disabled" {% endif %}>
-                Next
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    {% endif %}
-  {% endblock %}
 
   <footer class="container-fluid text-center" style="padding-bottom: 50px">
     {% block footer %}{% endblock %}

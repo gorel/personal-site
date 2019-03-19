@@ -1,4 +1,5 @@
 {% extends "learn/pages/level-1-base.html" %}
+{% import "partials/_utils.html" as utils %}
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
@@ -137,6 +138,14 @@ spy=vacation-loving </code></pre>
 
   <h2 id="final-exam">Final Exam</h2>
   <p><a href="programming-beginners-level-1-final-exam.html">Try taking the final exam</a>! You don't need to get 100% to graduate, but hopefully all the concepts should feel familiar. What's important is that if you see a problem, you should know <em>how</em> to get the answer, even if you don't immediately know the answer.</p>
+{% endblock %}
+
+{% block pagination_prev %}
+  {{ utils.paginate_prev("level-1-lesson-4.html", "Lesson 4") }}
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("level-1-final-exam.html", "Final Exam") }}
 {% endblock %}
 
 {% block scripts %}
