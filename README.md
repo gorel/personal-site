@@ -15,7 +15,7 @@
 - ~add title to pages~
 - ~favicon~
 - ~set up prev/next/random in wiki~ wiki deprecated
-- ~make wiki texteditarea larger~
+- ~make wiki texteditarea larger~ wiki deprecated
 - ~wiki preview?~ wiki deprecated
 - ~better wiki 404 page~ wiki deprecated
 - ~git-backed wiki~ wiki deprecated
@@ -29,3 +29,4 @@
 - ~Instead of wiki, "progbeg" blueprint~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - Save progress on completed lessons + "next page" button
+- In learn.index, set a cookie and only increment views if last view was 1+ hr ago

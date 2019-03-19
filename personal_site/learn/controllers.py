@@ -26,7 +26,7 @@ def view(name):
     if not os.path.exists(template_fullpath):
         flask.abort(404)
 
-    page_stats = models.LearnPageStats.query.get(name)
+    page_stats = models.LearnPageStats.get_by_name(name)
     if page_stats is None and os.path.exists(template_fullpath):
         page_stats = models.LearnPageStats(name)
         db.session.add(page_stats)

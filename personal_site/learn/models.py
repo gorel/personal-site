@@ -14,6 +14,10 @@ class LearnPageStats(db.Model):
         self.page_name = page_name
         self.views = 0
 
+    @classmethod
+    def get_by_name(cls, name):
+        return cls.query.filter_by(page_name=name).first()
+
 
 class LearnQuestion(db.Model, search.SearchableMixin):
     __searchable__ = ["question", "answer"]
