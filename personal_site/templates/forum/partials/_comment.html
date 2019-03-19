@@ -1,36 +1,21 @@
-<div class="row" style="padding-bottom: 10px">
-  <div class="col-sm-8">
-    <div class="border border-secondary" style="padding: 10px">
-      <div class="row" style="margin: auto">
-        <div class="offset-sm-10 col-sm-2">
-          {% if current_user.id == comment.author.id %}
-            <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id,
-                comment_id=comment.id) }}" class="btn btn-small btn-warning pull-right">
-              Edit
-            </a>
-          {% endif %}
-        </div>
-      </div>
+<div style="padding-bottom: 10px">
+  <div class="border border-secondary" style="padding: 10px">
 
-      <div class="row">
-        <div class="col-sm-8">
-        <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
-        </div>
-      </div>
+    <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
 
-      {% if comment.was_edited %}
-        <div class="row">
-          <div class="col-sm-8">
-            <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
-          </div>
-        </div>
-      {% endif %}
+    {% if comment.was_edited %}
+      <!-- TODO: I really want this on the row above -->
+      <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>
+    {% endif %}
 
-      <div class="row">
-        <div class="col">
-          {{ comment.body }}
-        </div>
-      </div>
-    </div>
+    <p>{{ comment.body }}</p>
+
+    {% if current_user.id == comment.author.id %}
+      <hr class="border-secondary" style="margin-bottom: 0rem" />
+      <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id,
+          comment_id=comment.id) }}" class="btn btn-link">
+        <b>Edit comment</b>
+      </a>
+    {% endif %}
   </div>
 </div>

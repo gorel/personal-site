@@ -2,107 +2,97 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-          <li><a href="#whats-next">What's next</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+      <li><a href="#whats-next">What's next</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Lesson 5: Miscellaneous</h1>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 19.2: List comprehensions</li>
-        <li>Chapter 19.3: Generator expressions</li>
-        <li>Chapter 19.5: Sets</li>
-        <li><a href="https://www.programiz.com/python-programming/anonymous-function">Lambda Functions</a></li>
-      </ul>
+  <h1 id="top-of-page">Lesson 5: Miscellaneous</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 19.2: List comprehensions</li>
+    <li>Chapter 19.3: Generator expressions</li>
+    <li>Chapter 19.5: Sets</li>
+    <li><a href="https://www.programiz.com/python-programming/anonymous-function">Lambda Functions</a></li>
+  </ul>
 
-      <h2 id="vocab">Vocab</h2>
-      <!-- TODO -->
+  <h2 id="vocab">Vocab</h2>
+  <!-- TODO -->
 
-      <h2 id="quiz">Quiz</h2>
-      <p>Question 1: Which of the following is a valid list comprehension?</p>
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (False, "<code>x = [append(2 * x) for x in range(5)]</code>", "Incorrect. We don't need <code>append</code>"),
-          (False, "<code>x = listcomp(2 * x, min=0, max=10)</code>", "Incorrect."),
-          (True, "<code>x = [2 * x for x in range(5)]</code>", "Correct!"),
-        ])
-      }}
-      <!-- TODO -->
-      <p>Question 2: What is the result of executing following program?</p>
-      <pre><code class="python">a = [1, 1, 2, 3]
+  <h2 id="quiz">Quiz</h2>
+  <p>Question 1: Which of the following is a valid list comprehension?</p>
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "<code>x = [append(2 * x) for x in range(5)]</code>", "Incorrect. We don't need <code>append</code>"),
+      (False, "<code>x = listcomp(2 * x, min=0, max=10)</code>", "Incorrect."),
+      (True, "<code>x = [2 * x for x in range(5)]</code>", "Correct!"),
+    ])
+  }}
+  <!-- TODO -->
+  <p>Question 2: What is the result of executing following program?</p>
+  <pre><code class="python">a = [1, 1, 2, 3]
 b = [1, 3, 5, 7]
 print(set(a) - set(b)) </code></pre>
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (True, "<code>{2}</code>", "Correct!"),
-          (False, "<code>{1, 2}</code>", "Incorrect. Close, but remember how <code>set()</code> works"),
-          (False, "<code>{2, 5, 7}</code>", "Incorrect. We're subtracting <code>b</code> from <code>a</code> (you did the opposite way)"),
-          (False, "<code>{1, 2, 3, 5, 7}</code>", "Incorrect. Look again, we're doing set subtraction, not addition"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (True, "<code>{2}</code>", "Correct!"),
+      (False, "<code>{1, 2}</code>", "Incorrect. Close, but remember how <code>set()</code> works"),
+      (False, "<code>{2, 5, 7}</code>", "Incorrect. We're subtracting <code>b</code> from <code>a</code> (you did the opposite way)"),
+      (False, "<code>{1, 2, 3, 5, 7}</code>", "Incorrect. Look again, we're doing set subtraction, not addition"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+    ])
+  }}
 
-      <p>Question 3: What will be printed by the following program?</p>
-      <pre><code class="python">def my_generator(start, end, step_size):
-    current = start
-    while current < end:
-        yield current
-        current += step_size
+  <p>Question 3: What will be printed by the following program?</p>
+  <pre><code class="python">def my_generator(start, end, step_size):
+current = start
+while current < end:
+    yield current
+    current += step_size
 
 gen = my_generator(5, 50, 10)
 next(gen)
 print(next(gen))</code></pre>
-      {{
-        learn_pages_utils.render_question_responses(3, [
-          (False, "5", "Incorrect. Remember that generator objects have a concept of internal state"),
-          (False, "10", "Incorrect. Try tracing through the code again"),
-          (True, "15", "Correct!"),
-          (False, "50", "Incorrect. Try tracing through the code again"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(3, [
+      (False, "5", "Incorrect. Remember that generator objects have a concept of internal state"),
+      (False, "10", "Incorrect. Try tracing through the code again"),
+      (True, "15", "Correct!"),
+      (False, "50", "Incorrect. Try tracing through the code again"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>[filter] Write a function called <code>myfilter(lst, f)</code> that takes a <code>list</code> (lst) and a <code>function</code> (f) and returns a new list that represents a "filtered" list from calling <code>f</code> on each element. Your <code>myfilter</code> function should use a list comprehension. For example...</li>
-      </ul>
-      <pre><code class="python">def myfilter(lst, f):
-    # TODO
-    pass
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>[filter] Write a function called <code>myfilter(lst, f)</code> that takes a <code>list</code> (lst) and a <code>function</code> (f) and returns a new list that represents a "filtered" list from calling <code>f</code> on each element. Your <code>myfilter</code> function should use a list comprehension. For example...</li>
+  </ul>
+  <pre><code class="python">def myfilter(lst, f):
+# TODO
+pass
 
 def is_odd(x):
-    return x % 2 == 1
+return x % 2 == 1
 
 my_list = [1, 2, 3, 4, 5]
 new_list = myfilter(my_list, is_odd)
 print(new_list)
 # output: [1, 3, 5]
-      </code></pre>
+  </code></pre>
 
-      <ul>
-        <li>[overlap] Write a program that takes two filenames on the command line. The program should output all lines that occur in both files. For example:</li>
-      </ul>
-      <pre><code class="no-highlight"># file: a.txt
+  <ul>
+    <li>[overlap] Write a program that takes two filenames on the command line. The program should output all lines that occur in both files. For example:</li>
+  </ul>
+  <pre><code class="no-highlight"># file: a.txt
 This is line 1.
 This is another line.
 Here is a third line!
@@ -117,60 +107,58 @@ This is another line.
 $ python3 overlap.py a.txt b.txt
 This is another line.
 I love Python!
-      </code></pre>
+  </code></pre>
 
-      <h1 id="whats-next">What's next?</h1>
-      <p>Congratulations! You've now finished the content of the level 2 course. You should have a solid understanding (or at least familiarity) with all of the major tools and concepts used as the building blocks for programming. Depending on your interests, there are many different ways you could go from here to extend your learning.</p>
-      <p><strong>I want to learn more Python specifically</strong></p>
-      <ul>
-        <li>Named parameters and default values</li>
-        <li>Functions as parameters</li>
-        <li>Exceptions and exception handling</li>
-        <li>Lambda functions</li>
-        <li>Decorators</li>
-      </ul>
-      <p><strong>I want to learn more computer science</strong></p>
-      <ul>
-        <li>Data structures (sets, stacks, trees, maps)</li>
-        <li>Inheritance</li>
-        <li>Recursion</li>
-        <li>Regular expressions (regex)</li>
-      </ul>
-      <p><strong>I want to learn some specific libraries for practical use</strong></p>
-      <ul>
-        <li>numpy (scientific computing / data science)</li>
-        <li>scipy (mathematics, science, engineering, data science)</li>
-        <li>wxPython (desktop applications)</li>
-        <li>tkinter (applications with a graphical component -- not just terminal-based)</li>
-        <li>flask or django (web development)</li>
-        <li>nltk (natural language toolkit -- parsing and working with human language)</li>
-        <li>scrapy (scraping websites -- ex, doing something fun with wikipedia links)</li>
-        <li>sklearn (machine learning)</li>
-      </ul>
-      <p><strong>I want to take online courses to reinforce my learning</strong></p>
-      <ul>
-        <li><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/">MIT OCW - assumes no programming background</a></li>
-        <li><a href="https://www.edx.org/course/introduction-computer-science-mitx-6-00-1x-0#.VJw5pv-kAA">edx - Slightly faster-paced than the MIT course</a></li>
-        <li><a href="https://www.coursera.org/learn/python">Coursera course for python beginners</a></li>
-        <li><a href="https://www.udacity.com/course/programming-foundations-with-python--ud036">Udacity - Focuses on object-oriented programming</a></li>
-        <li><a href="https://www.coursera.org/learn/principles-of-computing-1">Coursera - Principles of Computing Part 1</a></li>
-        <li><a href="https://www.coursera.org/learn/principles-of-computing-2">Coursera - Principles of Computing Part 2</a></li>
-      </ul>
-      <p><strong>I just want to practice writing more projects</strong></p>
-      <ul>
-        <li>write a "magic 8 ball" program</li>
-        <li>create a text adventure game</li>
-        <li>write a program for a simple game (ex, rock-paper-scissors or checkers) and create a "bot" program to play against you</li>
-        <li>write a program that connects to your gmail account and reads your emails (libgmail)</li>
-        <li>write a program that connects to your twitter account and reads posts (python-twitter)</li>
-        <li>write a program that sends sms messages (twilio)</li>
-        <li>write a program that download web pages once a day and alerts you if the page changes (urllib2)</li>
-        <li>write a program that downloads a random wikipedia article (urllib2)</li>
-        <li>write a program that gives you all the words you can make from a scrabble set of letters</li>
-        <li>write a program that downloads all the facebook posts on a user's timeline (python-facebook)</li>
-      </ul>
-    </div>
-  </div>
+  <h1 id="whats-next">What's next?</h1>
+  <p>Congratulations! You've now finished the content of the level 2 course. You should have a solid understanding (or at least familiarity) with all of the major tools and concepts used as the building blocks for programming. Depending on your interests, there are many different ways you could go from here to extend your learning.</p>
+  <p><strong>I want to learn more Python specifically</strong></p>
+  <ul>
+    <li>Named parameters and default values</li>
+    <li>Functions as parameters</li>
+    <li>Exceptions and exception handling</li>
+    <li>Lambda functions</li>
+    <li>Decorators</li>
+  </ul>
+  <p><strong>I want to learn more computer science</strong></p>
+  <ul>
+    <li>Data structures (sets, stacks, trees, maps)</li>
+    <li>Inheritance</li>
+    <li>Recursion</li>
+    <li>Regular expressions (regex)</li>
+  </ul>
+  <p><strong>I want to learn some specific libraries for practical use</strong></p>
+  <ul>
+    <li>numpy (scientific computing / data science)</li>
+    <li>scipy (mathematics, science, engineering, data science)</li>
+    <li>wxPython (desktop applications)</li>
+    <li>tkinter (applications with a graphical component -- not just terminal-based)</li>
+    <li>flask or django (web development)</li>
+    <li>nltk (natural language toolkit -- parsing and working with human language)</li>
+    <li>scrapy (scraping websites -- ex, doing something fun with wikipedia links)</li>
+    <li>sklearn (machine learning)</li>
+  </ul>
+  <p><strong>I want to take online courses to reinforce my learning</strong></p>
+  <ul>
+    <li><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-189-a-gentle-introduction-to-programming-using-python-january-iap-2011/">MIT OCW - assumes no programming background</a></li>
+    <li><a href="https://www.edx.org/course/introduction-computer-science-mitx-6-00-1x-0#.VJw5pv-kAA">edx - Slightly faster-paced than the MIT course</a></li>
+    <li><a href="https://www.coursera.org/learn/python">Coursera course for python beginners</a></li>
+    <li><a href="https://www.udacity.com/course/programming-foundations-with-python--ud036">Udacity - Focuses on object-oriented programming</a></li>
+    <li><a href="https://www.coursera.org/learn/principles-of-computing-1">Coursera - Principles of Computing Part 1</a></li>
+    <li><a href="https://www.coursera.org/learn/principles-of-computing-2">Coursera - Principles of Computing Part 2</a></li>
+  </ul>
+  <p><strong>I just want to practice writing more projects</strong></p>
+  <ul>
+    <li>write a "magic 8 ball" program</li>
+    <li>create a text adventure game</li>
+    <li>write a program for a simple game (ex, rock-paper-scissors or checkers) and create a "bot" program to play against you</li>
+    <li>write a program that connects to your gmail account and reads your emails (libgmail)</li>
+    <li>write a program that connects to your twitter account and reads posts (python-twitter)</li>
+    <li>write a program that sends sms messages (twilio)</li>
+    <li>write a program that download web pages once a day and alerts you if the page changes (urllib2)</li>
+    <li>write a program that downloads a random wikipedia article (urllib2)</li>
+    <li>write a program that gives you all the words you can make from a scrabble set of letters</li>
+    <li>write a program that downloads all the facebook posts on a user's timeline (python-facebook)</li>
+  </ul>
 {% endblock %}
 
 {% block scripts %}

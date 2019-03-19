@@ -1,19 +1,15 @@
 {% extends "forum/base.html" %}
 
 {% block forum_content %}
-  <div class="row">
-    <div class="col">
-      <table class="table">
-        <tr>
-          <th>Poster</th>
-          <th>Title</th>
-          <th>Posted at</th>
-          <th>Last activity</th>
-        </tr>
-        {% for post_preview in posts.items %}
-          {% include "forum/partials/_post_preview.html" %}
-        {% endfor %}
-      </table>
-    </div>
-  </div>
+  <table class="table">
+    <tr>
+      <th>Poster</th>
+      <th>Title</th>
+      <th>Posted at</th>
+      <th>Last activity</th>
+    </tr>
+    {% for post_preview in posts.items %}
+      {% include "forum/partials/_post_preview.html" %}
+    {% endfor %}
+  </table>
 {% endblock %}

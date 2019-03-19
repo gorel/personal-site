@@ -2,99 +2,87 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Lesson 1: Introduction and variables</h1>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 1: The way of the program</li>
-        <li>Chapter 2: Variables, expressions, and statements</li>
-      </ul>
+  <h1 id="top-of-page">Lesson 1: Introduction and variables</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 1: The way of the program</li>
+    <li>Chapter 2: Variables, expressions, and statements</li>
+  </ul>
 
-      <h2 id="vocab">Vocab</h2>
-      <ul>
-        <li>program</li>
-        <li>variable</li>
-        <li>expression</li>
-        <li>statement</li>
-        <li>interpreter</li>
-        <li>string</li>
-        <li>integer</li>
-        <li>float</li>
-        <li>keyword</li>
-        <li>comment</li>
-      </ul>
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>program</li>
+    <li>variable</li>
+    <li>expression</li>
+    <li>statement</li>
+    <li>interpreter</li>
+    <li>string</li>
+    <li>integer</li>
+    <li>float</li>
+    <li>keyword</li>
+    <li>comment</li>
+  </ul>
 
-      <h2 id="quiz">Quiz</h2>
-      <p>Question 1: What will be printed after running the following program?</p>
-      <pre><code class="python">a = 2 * 2
+  <h2 id="quiz">Quiz</h2>
+  <p>Question 1: What will be printed after running the following program?</p>
+  <pre><code class="python">a = 2 * 2
 b = a + 4
 a = 1
 print(b)</code></pre>
 
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (False, "5", "Incorrect. Statements are executed in order, and Python won't go backwards to re-evaluate a variable again"),
-          (False, "10", "Incorrect. Go through the problem again and check your math"),
-          (True, "8", "Correct!"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python! Remember that <code>=</code> doesn't work exactly like it does in math"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "5", "Incorrect. Statements are executed in order, and Python won't go backwards to re-evaluate a variable again"),
+      (False, "10", "Incorrect. Go through the problem again and check your math"),
+      (True, "8", "Correct!"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python! Remember that <code>=</code> doesn't work exactly like it does in math"),
+    ])
+  }}
 
-      <p>Question 2: What will be printed after running the following program?</p>
-      <pre><code class="python">a = 5
+  <p>Question 2: What will be printed after running the following program?</p>
+  <pre><code class="python">a = 5
 print(a + &quot;5&quot;) </code></pre>
 
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (False, "55", "Incorrect. The types of the variables are very important here"),
-          (False, "10", "Incorrect. The types of the variables are very important here"),
-          (False, "5\"5\"", "Incorrect. We can't mix types this way in Python"),
-          (True, "<em>(error)</em>", "Correct! This is a <code>TypeError</code>"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "55", "Incorrect. The types of the variables are very important here"),
+      (False, "10", "Incorrect. The types of the variables are very important here"),
+      (False, "5\"5\"", "Incorrect. We can't mix types this way in Python"),
+      (True, "<em>(error)</em>", "Correct! This is a <code>TypeError</code>"),
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>
-          <p>Do the exercises in <strong>1.9</strong> from the book</p>
-        </li>
-        <li>
-          <p>Do the exercises in <strong>2.10</strong> from the book</p>
-        </li>
-        <li>
-          <p>[favorites] Write a file called favorites.py that outputs your favorite color on line 1, your favorite animal on line 2, and your favorite book or movie on line 3.</p>
-        </li>
-        <li>
-          <p>[age] Write a file called age.py that outputs your age in months and days. (Hint: Assume 365 days in a year for simplicity)</p>
-        </li>
-        <li>
-          <p>[commute] Write a file called commute.py that estimates how many hours you spend commuting each week, month, and year. (Hint: Remember that you probably don't commute on weekends!)</p>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>
+      <p>Do the exercises in <strong>1.9</strong> from the book</p>
+    </li>
+    <li>
+      <p>Do the exercises in <strong>2.10</strong> from the book</p>
+    </li>
+    <li>
+      <p>[favorites] Write a file called favorites.py that outputs your favorite color on line 1, your favorite animal on line 2, and your favorite book or movie on line 3.</p>
+    </li>
+    <li>
+      <p>[age] Write a file called age.py that outputs your age in months and days. (Hint: Assume 365 days in a year for simplicity)</p>
+    </li>
+    <li>
+      <p>[commute] Write a file called commute.py that estimates how many hours you spend commuting each week, month, and year. (Hint: Remember that you probably don't commute on weekends!)</p>
+    </li>
+  </ul>
 {% endblock %}
 
 {% block scripts %}

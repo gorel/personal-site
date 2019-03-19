@@ -2,120 +2,110 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-    <h1 id="back-to-top">Lesson 3: Conditionals and more functions</h1>
-    <p><strong>Before the lecture, please read the following chapters:</strong></p>
-    <ul>
-      <li>Chapter 5.1 to 5.7: Conditionals (stop at 5.8, don't worry about recursion yet)</li>
-      <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
-      <li>Chapter 6: Fruitful functions (you can skip 6.5: More recursion)</li>
-    </ul>
-    <h2 id="vocab">Vocab</h2>
-    <ul>
-      <li>Boolean expression</li>
-      <li>logical operator</li>
-      <li>condition</li>
-      <li>and</li>
-      <li>or</li>
-      <li>not</li>
-      <li>return value</li>
-    </ul>
-    <h2 id="quiz">Quiz</h2>
-    <p>Question 1: What will be printed after running the following program?</p>
-    <pre><code class="python">result = &quot;&quot;
+  <h1 id="back-to-top">Lesson 3: Conditionals and more functions</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 5.1 to 5.7: Conditionals (stop at 5.8, don't worry about recursion yet)</li>
+    <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
+    <li>Chapter 6: Fruitful functions (you can skip 6.5: More recursion)</li>
+  </ul>
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>Boolean expression</li>
+    <li>logical operator</li>
+    <li>condition</li>
+    <li>and</li>
+    <li>or</li>
+    <li>not</li>
+    <li>return value</li>
+  </ul>
+  <h2 id="quiz">Quiz</h2>
+  <p>Question 1: What will be printed after running the following program?</p>
+  <pre><code class="python">result = &quot;&quot;
 if 3 &lt;= 4:
-  result += &quot;yes&quot;
+result += &quot;yes&quot;
 else:
-  result += &quot;no&quot;
+result += &quot;no&quot;
 print(result) </code></pre>
 
-    {{
-      learn_pages_utils.render_question_responses(1, [
-        (True, "yes", "Correct!"),
-        (False, "no", "Incorrect. Think about how <code><=</code> works"),
-        (False, "yesno", "Incorrect. Remember conditional logic (<code>if/elif/else</code>)"),
-        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
-      ])
-    }}
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (True, "yes", "Correct!"),
+      (False, "no", "Incorrect. Think about how <code><=</code> works"),
+      (False, "yesno", "Incorrect. Remember conditional logic (<code>if/elif/else</code>)"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+    ])
+  }}
 
-    <p>Question 2: What will be printed after running the following program?</p>
-    <pre><code class="python">result = &quot;&quot;
+  <p>Question 2: What will be printed after running the following program?</p>
+  <pre><code class="python">result = &quot;&quot;
 bmi = 24
 
 if bmi &lt; 18.5:
-  result += &quot;underweight&quot;
+result += &quot;underweight&quot;
 if bmi &lt; 25:
-  result += &quot;normal&quot;
+result += &quot;normal&quot;
 if bmi &lt; 30:
-  result += &quot;overweight&quot;
+result += &quot;overweight&quot;
 else:
-  result += &quot;obese&quot;
+result += &quot;obese&quot;
 
 print(result) </code></pre>
 
-    {{
-      learn_pages_utils.render_question_responses(2, [
-        (False, "normal", "Incorrect. Look at our condition usage (hint: do you see an <code>elif</code>?)"),
-        (False, "overweight", "Incorrect. Try going through the conditions one by one"),
-        (False, "obese", "Incorrect. There should be a condition that passes before the <code>else</code>"),
-        (True, "normaloverweight", "Correct!"),
-        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
-      ])
-    }}
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "normal", "Incorrect. Look at our condition usage (hint: do you see an <code>elif</code>?)"),
+      (False, "overweight", "Incorrect. Try going through the conditions one by one"),
+      (False, "obese", "Incorrect. There should be a condition that passes before the <code>else</code>"),
+      (True, "normaloverweight", "Correct!"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+    ])
+  }}
 
-    <p>Question 3: What will be printed after running the following program?</p>
-    <pre><code class="python">result = &quot;&quot;
+  <p>Question 3: What will be printed after running the following program?</p>
+  <pre><code class="python">result = &quot;&quot;
 bmi = 24
 
 if bmi &lt; 18.5:
-  result += &quot;underweight&quot;
+result += &quot;underweight&quot;
 elif bmi &lt; 25:
-  result += &quot;normal&quot;
+result += &quot;normal&quot;
 elif bmi &lt; 30:
-  result += &quot;overweight&quot;
+result += &quot;overweight&quot;
 else:
-  result += &quot;obese&quot;
+result += &quot;obese&quot;
 
 print(result) </code></pre>
 
-    {{
-      learn_pages_utils.render_question_responses(3, [
-        (True, "normal", "Correct!"),
-        (False, "overweight", "Incorrect. Check the condition boundaries again"),
-        (False, "obese", "Incorrect. At least one of these conditions should be true"),
-        (False, "normaloverweight", "Incorrect. Remember how <code>elif</code> works"),
-        (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
-      ])
-    }}
+  {{
+    learn_pages_utils.render_question_responses(3, [
+      (True, "normal", "Correct!"),
+      (False, "overweight", "Incorrect. Check the condition boundaries again"),
+      (False, "obese", "Incorrect. At least one of these conditions should be true"),
+      (False, "normaloverweight", "Incorrect. Remember how <code>elif</code> works"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine"),
+    ])
+  }}
 
-    <h2 id="exercises">Exercises</h2>
-    <ul>
-      <li>From section <strong>5.14</strong>, do exercises <strong>5.2</strong> and <strong>5.3</strong></li>
-      <li>[movies] Write a program called movies.py that asks the user for their five favorite movies then shows them the list like so:</li>
-    </ul>
-    <pre><code class="no-hlighlight">What is your favorite movie?
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>From section <strong>5.14</strong>, do exercises <strong>5.2</strong> and <strong>5.3</strong></li>
+    <li>[movies] Write a program called movies.py that asks the user for their five favorite movies then shows them the list like so:</li>
+  </ul>
+  <pre><code class="no-hlighlight">What is your favorite movie?
 &gt; movie1
 What is your second favorite movie?
 &gt; movie2
@@ -133,11 +123,11 @@ So your movie rankings are:
 4. movie4
 5. movie5 </code></pre>
 
-    <ul>
-      <li>[censor] You're a secret agent! Write a function called <code>censor(text, word)</code> that replaces all occurrences of <code>word</code> in <code>text</code> with <code>CENSORED</code>. After making all relevant replacements, output the final result in the terminal.<br />
-      Use this as your input text:</li>
-    </ul>
-    <pre><code class="no-highlight">Dear family,
+  <ul>
+    <li>[censor] You're a secret agent! Write a function called <code>censor(text, word)</code> that replaces all occurrences of <code>word</code> in <code>text</code> with <code>CENSORED</code>. After making all relevant replacements, output the final result in the terminal.<br />
+    Use this as your input text:</li>
+  </ul>
+  <pre><code class="no-highlight">Dear family,
 
 The president of our government has sent me on a secret mission.
 I flew to Antarctica on a huge airplane to get to my secret location.
@@ -149,19 +139,17 @@ I'll see you soon!
 Love,
 Your favorite spy </code></pre>
 
-    <p>Your program should censor the following words:</p>
-    <ul>
-      <li>president</li>
-      <li>government</li>
-      <li>Antarctica</li>
-      <li>secret</li>
-      <li>airplane</li>
-      <li>hotel</li>
-      <li>spy</li>
-      <li>enemy</li>
-    </ul>
-    </div>
-  </div>
+  <p>Your program should censor the following words:</p>
+  <ul>
+    <li>president</li>
+    <li>government</li>
+    <li>Antarctica</li>
+    <li>secret</li>
+    <li>airplane</li>
+    <li>hotel</li>
+    <li>spy</li>
+    <li>enemy</li>
+  </ul>
 {% endblock %}
 
 {% block scripts %}

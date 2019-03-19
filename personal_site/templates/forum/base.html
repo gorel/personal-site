@@ -1,20 +1,10 @@
 {% extends "base.html" %}
 
 {% block center_content %}
-  <div class="row">
-    <div class="col">
-      <h1>Forum</h1>
-    </div>
-  </div>
+  <h1>Forum</h1>
 
-  <div class="row" style="padding-bottom: 10px">
-    <div class="col-sm-2">
-      <a href="{{ url_for("forum.new_post") }}" class="btn btn-primary pull-right">New post</a>
-    </div>
-
-    <div class="offset-sm-6 col-sm-4 text-right">
-      TODO search?
-    </div>
+  <div style="padding-bottom: 10px">
+    <a href="{{ url_for("forum.new_post") }}" class="btn btn-primary pull-right">New post</a>
   </div>
 
   {% block forum_content %}{% endblock %}

@@ -2,49 +2,39 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-          <li><a href="#project-part-1">Project part 1</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+      <li><a href="#project-part-1">Project part 1</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Lesson 2: Classes and objects</h1>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 15: Classes and objects</li>
-        <li>Chapter 16: Classes and functions</li>
-      </ul>
+  <h1 id="top-of-page">Lesson 2: Classes and objects</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 15: Classes and objects</li>
+    <li>Chapter 16: Classes and functions</li>
+  </ul>
 
-      <h2 id="vocab">Vocab</h2>
-      <ul>
-        <li>class</li>
-        <li>object</li>
-        <li>instance</li>
-        <li>attribute</li>
-      </ul>
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>class</li>
+    <li>object</li>
+    <li>instance</li>
+    <li>attribute</li>
+  </ul>
 
-      <h2 id="quiz">Quiz</h2>
-      <p>**Use the following program to answer questions 1-3.</p>
-      <pre><code class="python">class Point:
-    &quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
+  <h2 id="quiz">Quiz</h2>
+  <p>**Use the following program to answer questions 1-3.</p>
+  <pre><code class="python">class Point:
+&quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
 
 p1 = Point()
 p1.x = 3
@@ -55,78 +45,78 @@ p2.x = p1.x
 p2.y = p1.y
 
 p2.y = 0
-      </code></pre>
+  </code></pre>
 
-      <p>Question 1: What is the value of <code>p1.x</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (True, "3", "Correct!"),
-          (False, "4", "Incorrect. Look again at the value of <code>p1.x</code>"),
-          (False, "0", "Incorrect. We're looking at <code>p1.x</code>"),
-          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
-        ])
-      }}
+  <p>Question 1: What is the value of <code>p1.x</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (True, "3", "Correct!"),
+      (False, "4", "Incorrect. Look again at the value of <code>p1.x</code>"),
+      (False, "0", "Incorrect. We're looking at <code>p1.x</code>"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+    ])
+  }}
 
-      <p>Question 2: What is the value of <code>p2.x</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (True, "3", "Correct!"),
-          (False, "4", "Incorrect. Look again at the value of <code>p2.x</code>"),
-          (False, "0", "Incorrect. We're looking at <code>p2.x</code>"),
-          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
-        ])
-      }}
+  <p>Question 2: What is the value of <code>p2.x</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (True, "3", "Correct!"),
+      (False, "4", "Incorrect. Look again at the value of <code>p2.x</code>"),
+      (False, "0", "Incorrect. We're looking at <code>p2.x</code>"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+    ])
+  }}
 
-      <p>Question 3: What is the value of <code>p1.y</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(3, [
-          (False, "3", "Incorrect. Look again at the value of <code>p1.y</code>"),
-          (True, "4", "Correct!"),
-          (False, "0", "Incorrect. <code>p1.y</code> doesn't get changed just because <code>p2.y</code> changed"),
-          (False, "<em>(error)</em>", "Incorrect. This code should run fine")
-        ])
-      }}
+  <p>Question 3: What is the value of <code>p1.y</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(3, [
+      (False, "3", "Incorrect. Look again at the value of <code>p1.y</code>"),
+      (True, "4", "Correct!"),
+      (False, "0", "Incorrect. <code>p1.y</code> doesn't get changed just because <code>p2.y</code> changed"),
+      (False, "<em>(error)</em>", "Incorrect. This code should run fine")
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>[circle] Write a <code>Circle</code> class that has a center point and a radius.</li>
-        <li>[vector] Write a <code>Vector</code> class that represents a 2D vector (If you'd like a quick refresher on vectors, <a href="https://en.wikipedia.org/wiki/Euclidean_vector">check out this Wikipedia article</a>, but you don't have to be an expert). A vector has both direction and magnitude. Assume that our vectors always originate at the origin (point (0, 0)) and have a single terminal point. Create functions <code>vector_length(v)</code>, <code>vector_add(v1, v2)</code>, <code>vector_sub(v1, v2)</code>, <code>vector_scale(v, d)</code> (scalar multiplication), and <code>vector_dot(v1, v2)</code>. <a href="https://en.wikipedia.org/wiki/Euclidean_vector#Addition_and_subtraction">You can find definitions for these operations here</a>.</li>
-      </ul>
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>[circle] Write a <code>Circle</code> class that has a center point and a radius.</li>
+    <li>[vector] Write a <code>Vector</code> class that represents a 2D vector (If you'd like a quick refresher on vectors, <a href="https://en.wikipedia.org/wiki/Euclidean_vector">check out this Wikipedia article</a>, but you don't have to be an expert). A vector has both direction and magnitude. Assume that our vectors always originate at the origin (point (0, 0)) and have a single terminal point. Create functions <code>vector_length(v)</code>, <code>vector_add(v1, v2)</code>, <code>vector_sub(v1, v2)</code>, <code>vector_scale(v, d)</code> (scalar multiplication), and <code>vector_dot(v1, v2)</code>. <a href="https://en.wikipedia.org/wiki/Euclidean_vector#Addition_and_subtraction">You can find definitions for these operations here</a>.</li>
+  </ul>
 
-      <div class="card text-white mb-3 bg-info">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">NOTE:</b>
-            You may also want to define a Point class for this exercise.
-          </p>
-        </div>
-      </div>
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        You may also want to define a Point class for this exercise.
+      </p>
+    </div>
+  </div>
 
-      <h2 id="project-part-1">Project Part 1</h2>
-      <p>For this project, we will be creating a terminal-based Sudoku game. As part 1 of this project, you should create a new <code>class SudokuGame</code> that stores the current state of the game Recall that a sudoku game is played on a 9x9 grid. For this first part, you can assume the board is initialized as completely blank (pretty useless for a real sudoku game, but this will be okay for now).</p>
-      <p>We'll also create the game setup here. A user should run your program with <code>python sudoku.py</code>. Upon startup, ask the user what difficulty they'd like to play: easy, medium, or hard. You should have three folders in your game directory: <code>easy_boards</code>, <code>medium_boards</code>, and <code>hard_boards</code>. After the user makes a selection, pick a random game board for them to play. We don't necessarily need to think about how to load this as a new <code>SudokuGame</code> object yet. Just select the correct file for now.</p>
-      <p>In this first step, our game won't be very fun, but that's okay. We'll build it out in parts 2 and 3 to provide more functionality.</p>
-      <p><strong>INSTRUCTIONS BEFORE STARTING:</strong></p>
-      <p>You are encouraged to start from a completely blank file so you can get more exposure to starting projects from scratch, but if you're not sure where to begin, feel free to start from <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku1.py">the template I've provided on my bitbucket page here</a>. This is the <em>skeleton code</em> for part 1.</p>
+  <h2 id="project-part-1">Project Part 1</h2>
+  <p>For this project, we will be creating a terminal-based Sudoku game. As part 1 of this project, you should create a new <code>class SudokuGame</code> that stores the current state of the game Recall that a sudoku game is played on a 9x9 grid. For this first part, you can assume the board is initialized as completely blank (pretty useless for a real sudoku game, but this will be okay for now).</p>
+  <p>We'll also create the game setup here. A user should run your program with <code>python sudoku.py</code>. Upon startup, ask the user what difficulty they'd like to play: easy, medium, or hard. You should have three folders in your game directory: <code>easy_boards</code>, <code>medium_boards</code>, and <code>hard_boards</code>. After the user makes a selection, pick a random game board for them to play. We don't necessarily need to think about how to load this as a new <code>SudokuGame</code> object yet. Just select the correct file for now.</p>
+  <p>In this first step, our game won't be very fun, but that's okay. We'll build it out in parts 2 and 3 to provide more functionality.</p>
+  <p><strong>INSTRUCTIONS BEFORE STARTING:</strong></p>
+  <p>You are encouraged to start from a completely blank file so you can get more exposure to starting projects from scratch, but if you're not sure where to begin, feel free to start from <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku1.py">the template I've provided on my bitbucket page here</a>. This is the <em>skeleton code</em> for part 1.</p>
 
-      <div class="card text-white mb-3 bg-info">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">NOTE:</b>
-            If you'd like my solution for this part of the project, <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku1_solution.py" class="text-white font-weight-bold">you can check out my solution here</a>. Please try not to look until you've attempted this yourself, though!
-          </p>
-        </div>
-      </div>
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        If you'd like my solution for this part of the project, <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku1_solution.py" class="text-white font-weight-bold">you can check out my solution here</a>. Please try not to look until you've attempted this yourself, though!
+      </p>
+    </div>
+  </div>
 
-      <p>You should also <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku_boards.zip">download this file</a> and run <code>unzip sudoku_boards.zip</code> in the terminal to get a bunch of premade sudoku boards.</p>
-      <p><strong>Here are the objectives for part 1:</strong></p>
-      <ul>
-        <li>Create <code>SudokuGame</code> class with relevant fields</li>
-        <li>Ask the user what difficulty they'd like to play</li>
-        <li>Pick a random game board from that difficulty</li>
-        <li>Parse the gameboard file into a list of lists (this is how we can represent a 2D game board). See the example below for how this would work.</li>
-      </ul>
-      <pre><code class="python"># Imagine the game board text file looks like this:
+  <p>You should also <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku_boards.zip">download this file</a> and run <code>unzip sudoku_boards.zip</code> in the terminal to get a bunch of premade sudoku boards.</p>
+  <p><strong>Here are the objectives for part 1:</strong></p>
+  <ul>
+    <li>Create <code>SudokuGame</code> class with relevant fields</li>
+    <li>Ask the user what difficulty they'd like to play</li>
+    <li>Pick a random game board from that difficulty</li>
+    <li>Parse the gameboard file into a list of lists (this is how we can represent a 2D game board). See the example below for how this would work.</li>
+  </ul>
+  <pre><code class="python"># Imagine the game board text file looks like this:
 # (Don't worry about this being an invalid board for now)
 file_contents = &quot;&quot;&quot;
 1 2 3 4 5 6 7 8 9
@@ -142,21 +132,19 @@ file_contents = &quot;&quot;&quot;
 
 # We can represent this as a list of lists like so:
 board = [[1, 2, 3, 4, 5, 6, 7, 8, 9],
-     [2, 3, 4, 5, 6, 7, 8, 9, 1],
-     [3, 4, 5, 6, 7, 8, 9, 1, 2],
-     [4, 5, 6, 7, 8, 9, 1, 2, 3],
-     [5, 6, 7, 8, 9, 1, 2, 3, 4],
-     [6, 7, 8, 9, 1, 2, 3, 4, 5],
-     [7, 8, 9, 1, 2, 3, 4, 5, 6],
-     [8, 9, 1, 2, 3, 4, 5, 6, 7],
-     [9, 1, 2, 3, 4, 5, 6, 7, 8]]
-      </code></pre>
+ [2, 3, 4, 5, 6, 7, 8, 9, 1],
+ [3, 4, 5, 6, 7, 8, 9, 1, 2],
+ [4, 5, 6, 7, 8, 9, 1, 2, 3],
+ [5, 6, 7, 8, 9, 1, 2, 3, 4],
+ [6, 7, 8, 9, 1, 2, 3, 4, 5],
+ [7, 8, 9, 1, 2, 3, 4, 5, 6],
+ [8, 9, 1, 2, 3, 4, 5, 6, 7],
+ [9, 1, 2, 3, 4, 5, 6, 7, 8]]
+  </code></pre>
 
-      <p><strong>Bonuses:</strong><br />
-      1. Add a random difficulty option (select any board from easy/medium/hard)<br />
-      2. Think of a way that you could store high scores for a user (you would need to keep a "scores" file somewhere)</p>
-    </div>
-  </div>
+  <p><strong>Bonuses:</strong><br />
+  1. Add a random difficulty option (select any board from easy/medium/hard)<br />
+  2. Think of a way that you could store high scores for a user (you would need to keep a "scores" file somewhere)</p>
 {% endblock %}
 
 {% block scripts %}

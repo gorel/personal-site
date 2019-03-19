@@ -3,17 +3,10 @@
 
 {% block center_content %}
   <h1>Register</h1>
-  <div class="row">
-      <div class="col">
-          {{ wtf.quick_form(form) }}
-      </div>
-  </div>
+
+  {{ wtf.quick_form(form) }}
 
   {% if form.show_forgot %}
-    <div class="row">
-      <div class="col">
-        <a class="btn btn-primary" href="{{ url_for("auth.forgot_password") }}">
-      </div>
-    </div>
+    <a class="btn btn-primary" href="{{ url_for("auth.forgot_password") }}">
   {% endif %}
 {% endblock %}

@@ -1,61 +1,49 @@
 {% extends "learn/pages/level-2-base.html" %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#setup">Setup</a></li>
-          <li><a href="#textbook">Textbook</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#textbook">Textbook</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <div class="card text-white mb-3 bg-info">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">NOTE:</b>
-            Unsure if you should start in level 1 or level 2? Try taking the level 1 final exam. You don't need to get a 100%, but all the concepts should be familiar.
-          </p>
-          <a class="btn btn-dark" href="level-1-final-exam.html">Click here for final exam</a>
-        </div>
-      </div>
-
-      <h1 id="top-of-page">Introduction</h1>
-      <p>Ever wanted to learn to program but not sure where to begin? This class will help guide you through some topics you might learn about in a first semester CS course. You should have completed the lessons from Programming Beginners Level 1 or have prior experience with basic programming concepts such as strings, integers, arrays, for loops, and while loops.</p>
-
-      <h2 id="setup">Setup</h2>
-      <p>At a minimum, you should install <a href="https://www.python.org/downloads/">Python 3</a> and a text editor. If you're using a mac, there's a good chance you have these by default. Open a terminal (search for Terminal in finder) and type python3. If you don't get an error message, you have Python 3! For a text editor, I personally enjoy Atom, but there are many different options.</p>
-      <p>If you're on Windows, you will likely have to install these yourself. Check out the link above to install <a href="https://www.python.org/downloads/">Python 3</a> and for a text editor, I highly recommend <a href="https://notepad-plus-plus.org/">Notepad++</a>, but again, there are many viable options.</p>
-      <p>For more information on setting up your development environment, please see the setup instructions from <a href="level-1-foreword.html">the level 1 class</a>.</p>
-
-      <div class="card text-white mb-3 bg-danger">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">IMPORTANT:</b>
-            You will not be able to perform the exercises without this setup!
-          </p>
-        </div>
-      </div>
-
-      <h2 id="textbook">Textbook</h2>
-      <p>We will loosely follow the textbook "Think Python - How to Think Like a Computer Scientist"</p>
-      <p>This is a different book than has commonly been taught in the level 1 class, so it may teach you some concepts in different ways that make more sense.</p>
-      <p>It is available for free online:<br />
-      PDF: <a href="http://greenteapress.com/thinkpython2/thinkpython2.pdf">http://greenteapress.com/thinkpython2/thinkpython2.pdf</a><br />
-      HTML: <a href="http://greenteapress.com/thinkpython2/html/index.html">http://greenteapress.com/thinkpython2/html/index.html</a></p>
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        Unsure if you should start in level 1 or level 2? Try taking the level 1 final exam. You don't need to get a 100%, but all the concepts should be familiar.
+      </p>
+      <a class="btn btn-dark" href="level-1-final-exam.html">Click here for final exam</a>
     </div>
   </div>
+
+  <h1 id="top-of-page">Introduction</h1>
+  <p>Ever wanted to learn to program but not sure where to begin? This class will help guide you through some topics you might learn about in a first semester CS course. You should have completed the lessons from Programming Beginners Level 1 or have prior experience with basic programming concepts such as strings, integers, arrays, for loops, and while loops.</p>
+
+  <h2 id="setup">Setup</h2>
+  <p>At a minimum, you should install <a href="https://www.python.org/downloads/">Python 3</a> and a text editor. If you're using a mac, there's a good chance you have these by default. Open a terminal (search for Terminal in finder) and type python3. If you don't get an error message, you have Python 3! For a text editor, I personally enjoy Atom, but there are many different options.</p>
+  <p>If you're on Windows, you will likely have to install these yourself. Check out the link above to install <a href="https://www.python.org/downloads/">Python 3</a> and for a text editor, I highly recommend <a href="https://notepad-plus-plus.org/">Notepad++</a>, but again, there are many viable options.</p>
+  <p>For more information on setting up your development environment, please see the setup instructions from <a href="level-1-foreword.html">the level 1 class</a>.</p>
+
+  <div class="card text-white mb-3 bg-danger">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">IMPORTANT:</b>
+        You will not be able to perform the exercises without this setup!
+      </p>
+    </div>
+  </div>
+
+  <h2 id="textbook">Textbook</h2>
+  <p>We will loosely follow the textbook "Think Python - How to Think Like a Computer Scientist"</p>
+  <p>This is a different book than has commonly been taught in the level 1 class, so it may teach you some concepts in different ways that make more sense.</p>
+  <p>It is available for free online:<br />
+  PDF: <a href="http://greenteapress.com/thinkpython2/thinkpython2.pdf">http://greenteapress.com/thinkpython2/thinkpython2.pdf</a><br />
+  HTML: <a href="http://greenteapress.com/thinkpython2/html/index.html">http://greenteapress.com/thinkpython2/html/index.html</a></p>
 {% endblock %}

@@ -1,29 +1,19 @@
 <!-- Start _post -->
-<div class="row">
-  <div class="col-md-8">
-    <h1>{{ post.title }}</h1>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-md-8">
-    <p>
-      <p class="small">
-        Posted by {{ post.author.username }} {{ moment(post.posted_at).fromNow() }}
-        <!-- TODO this if isn't working properly -->
-        {% if post.was_edited %}
-          <br>
-          Last edited {{ moment(post.edited_at).fromNow() }}
-        {% endif %}
-      </p>
-    </p>
-  </div>
-</div>
+<h1>{{ post.title }}</h1>
 
-<div class="row">
-  <div class="col-md-8">
-    <!-- TODO - markdown formatting for body maybe? -->
-    <p class="jumbotron">{{ post.body }}</p>
-  </div>
-</div>
+<!-- TODO: Need a way to edit -->
+<p>
+  <p class="small">
+    Posted by {{ post.author.username }} {{ moment(post.posted_at).fromNow() }}
+    <!-- TODO this if isn't working properly -->
+    {% if post.was_edited %}
+      <br>
+      Last edited {{ moment(post.edited_at).fromNow() }}
+    {% endif %}
+  </p>
+</p>
+
+<!-- TODO - markdown formatting for body maybe? -->
+<p class="jumbotron">{{ post.body }}</p>
 <!-- End _post -->

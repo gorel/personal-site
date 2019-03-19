@@ -1,270 +1,254 @@
 {% extends "learn/pages/level-1-base.html" %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#lesson-1-material">Lesson 1 material</a></li>
-          <li><a href="#lesson-2-material">Lesson 2 material</a></li>
-          <li><a href="#lesson-3-material">Lesson 3 material</a></li>
-          <li><a href="#lesson-4-material">Lesson 4 material</a></li>
-          <li><a href="#lesson-5-material">Lesson 5 material</a></li>
-          <li><a href="#answer-key">Answer key</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#lesson-1-material">Lesson 1 material</a></li>
+      <li><a href="#lesson-2-material">Lesson 2 material</a></li>
+      <li><a href="#lesson-3-material">Lesson 3 material</a></li>
+      <li><a href="#lesson-4-material">Lesson 4 material</a></li>
+      <li><a href="#lesson-5-material">Lesson 5 material</a></li>
+      <li><a href="#answer-key">Answer key</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Programming Beginners: Level 1 - Final Exam</h1>
-    </div>
-  </div>
+  <h1 id="top-of-page">Programming Beginners: Level 1 - Final Exam</h1>
 
-  <div class="row">
-    <div class="col">
-      <h2 id="lesson-1-material">Lesson 1 Material</h2>
-      <p><strong>Question 1</strong>: What will be printed after running the following program?</p>
-      <pre><code class="python">a = 2 * 3
+  <h2 id="lesson-1-material">Lesson 1 Material</h2>
+  <p><strong>Question 1</strong>: What will be printed after running the following program?</p>
+  <pre><code class="python">a = 2 * 3
 b = a + 1
 a = 1
 print(b) </code></pre>
 
-      <p><strong>a.</strong> 7<br />
-      <strong>b.</strong> 2<br />
-      <strong>c.</strong> 6<br />
-      <strong>d.</strong> AssignmentError</p>
-      <p><strong>Question 2</strong>: Name three types.</p>
-      <p><strong>Question 3</strong>: What is the result of <code>3.0 / 4.0</code>?<br />
-      <strong>a.</strong> 0<br />
-      <strong>b.</strong> 0.0<br />
-      <strong>c.</strong> 0.75<br />
-      <strong>d.</strong> TypeError</p>
-      <p><strong>Question 4</strong>: What is the result of <code>3 / 4</code>?<br />
-      <strong>a.</strong> 0<br />
-      <strong>b.</strong> 0.0<br />
-      <strong>c.</strong> 0.75<br />
-      <strong>d.</strong> TypeError</p>
-      <p><strong>Question 5</strong>: What is the result of <code>3 // 4</code>?<br />
-      <strong>a.</strong> 0<br />
-      <strong>b.</strong> 0.0<br />
-      <strong>c.</strong> 0.75<br />
-      <strong>d.</strong> TypeError</p>
+  <p><strong>a.</strong> 7<br />
+  <strong>b.</strong> 2<br />
+  <strong>c.</strong> 6<br />
+  <strong>d.</strong> AssignmentError</p>
+  <p><strong>Question 2</strong>: Name three types.</p>
+  <p><strong>Question 3</strong>: What is the result of <code>3.0 / 4.0</code>?<br />
+  <strong>a.</strong> 0<br />
+  <strong>b.</strong> 0.0<br />
+  <strong>c.</strong> 0.75<br />
+  <strong>d.</strong> TypeError</p>
+  <p><strong>Question 4</strong>: What is the result of <code>3 / 4</code>?<br />
+  <strong>a.</strong> 0<br />
+  <strong>b.</strong> 0.0<br />
+  <strong>c.</strong> 0.75<br />
+  <strong>d.</strong> TypeError</p>
+  <p><strong>Question 5</strong>: What is the result of <code>3 // 4</code>?<br />
+  <strong>a.</strong> 0<br />
+  <strong>b.</strong> 0.0<br />
+  <strong>c.</strong> 0.75<br />
+  <strong>d.</strong> TypeError</p>
 
-      <h2 id="lesson-2-material">Lesson 2 Material</h2>
-      <p><strong>Question 6</strong>: True or False: It is valid to write a function that takes no parameters.</p>
-      <p><strong>Question 7</strong>: True or False: It is valid to write a function that has no return value.</p>
-      <p><strong>Question 8</strong>: What will be printed after running the following program?</p>
-      <pre><code class="python">def print_hello():
-    print(&quot;Hello&quot;)
+  <h2 id="lesson-2-material">Lesson 2 Material</h2>
+  <p><strong>Question 6</strong>: True or False: It is valid to write a function that takes no parameters.</p>
+  <p><strong>Question 7</strong>: True or False: It is valid to write a function that has no return value.</p>
+  <p><strong>Question 8</strong>: What will be printed after running the following program?</p>
+  <pre><code class="python">def print_hello():
+print(&quot;Hello&quot;)
 
 def print_twice():
-    print_hello()
-    print_hello()
+print_hello()
+print_hello()
 
 print_twice() </code></pre>
 
-      <p><strong>a.</strong> <code>HelloHello</code><br />
-      <strong>b.</strong> <em>(nothing)</em><br />
-      <strong>c.</strong></p>
-      <pre><code class="no-highlight">Hello
+  <p><strong>a.</strong> <code>HelloHello</code><br />
+  <strong>b.</strong> <em>(nothing)</em><br />
+  <strong>c.</strong></p>
+  <pre><code class="no-highlight">Hello
 Hello </code></pre>
 
-      <p><strong>d.</strong> OutputError</p>
-      <p><strong>Question 9</strong>: How does Python know where a function definition starts and ends?</p>
-      <p><strong>Question 10</strong>: How do you differentiate <em>defining</em> a function versus <em>calling</em> a function?</p>
+  <p><strong>d.</strong> OutputError</p>
+  <p><strong>Question 9</strong>: How does Python know where a function definition starts and ends?</p>
+  <p><strong>Question 10</strong>: How do you differentiate <em>defining</em> a function versus <em>calling</em> a function?</p>
 
-      <h2 id="lesson-3-material">Lesson 3 Material</h2>
-      <p><strong>Question 11</strong>: Fill in the following table.<br />
-			<table class="table table-hover table-bordered table-dark table-striped table-sm">
-        <thead>
-          <tr class="bg-primary">
-            <th>a</th> <th>b</th> <th>a and b</th> <th>a or b</th> <th>not a</th>
-          </tr>
-          </thead>
-        <tbody>
-          <tr>
-            <td>True</td> <td>True</td> <td></td> <td></td> <td></td>
-          </tr>
-          <tr>
-            <td>True</td> <td>False</td> <td></td> <td></td> <td></td>
-          </tr>
-          <tr>
-            <td>False</td> <td>True</td> <td></td> <td></td> <td></td>
-          </tr>
-          <tr>
-            <td>False</td> <td>False</td> <td></td> <td></td> <td></td>
-          </tr>
-        </tbody>
-			</table>
-      <p><strong>Question 12</strong>: What is the output of the following program?</p>
-      <pre><code class="python">a = 3
+  <h2 id="lesson-3-material">Lesson 3 Material</h2>
+  <p><strong>Question 11</strong>: Fill in the following table.<br />
+                    <table class="table table-hover table-bordered table-dark table-striped table-sm">
+    <thead>
+      <tr class="bg-primary">
+        <th>a</th> <th>b</th> <th>a and b</th> <th>a or b</th> <th>not a</th>
+      </tr>
+      </thead>
+    <tbody>
+      <tr>
+        <td>True</td> <td>True</td> <td></td> <td></td> <td></td>
+      </tr>
+      <tr>
+        <td>True</td> <td>False</td> <td></td> <td></td> <td></td>
+      </tr>
+      <tr>
+        <td>False</td> <td>True</td> <td></td> <td></td> <td></td>
+      </tr>
+      <tr>
+        <td>False</td> <td>False</td> <td></td> <td></td> <td></td>
+      </tr>
+    </tbody>
+                    </table>
+  <p><strong>Question 12</strong>: What is the output of the following program?</p>
+  <pre><code class="python">a = 3
 if a &lt; 10:
-    print(&quot;Less than 10&quot;)
+print(&quot;Less than 10&quot;)
 elif a &lt; 5:
-    print(&quot;Less than 5&quot;)
+print(&quot;Less than 5&quot;)
 else:
-    print(&quot;Greater than 5 and 10&quot;) </code></pre>
+print(&quot;Greater than 5 and 10&quot;) </code></pre>
 
-      <p><strong>a.</strong> Greater than 5 and 10<br />
-      <strong>b.</strong> Less than 5<br />
-      <strong>c.</strong> Less than 10<br />
-      <strong>d.</strong></p>
-      <pre><code class="no-highlight">Less than 10
+  <p><strong>a.</strong> Greater than 5 and 10<br />
+  <strong>b.</strong> Less than 5<br />
+  <strong>c.</strong> Less than 10<br />
+  <strong>d.</strong></p>
+  <pre><code class="no-highlight">Less than 10
 Less than 5 </code></pre>
 
-      <p><strong>Question 13</strong>: The following program probably doesn't work as expected. Explain why.</p>
-      <pre><code class="python">user_number = input(&quot;Please type a number: &quot;)
+  <p><strong>Question 13</strong>: The following program probably doesn't work as expected. Explain why.</p>
+  <pre><code class="python">user_number = input(&quot;Please type a number: &quot;)
 print(user_number * 2) </code></pre>
 
-      <p><strong>Question 14</strong>: If you create a function that doesn't have a <code>return</code>, what happens?<br />
-      <strong>a.</strong> <code>None</code> is returned<br />
-      <strong>b.</strong> The value of the last statement is returned<br />
-      <strong>c.</strong> It is illegal to put the function on the right side of an assignment statement<br />
-      <strong>d.</strong> FunctionDefinitionError</p>
-      <p><strong>Question 15</strong>: What would make most sense to put in the <code>???</code> below?</p>
-      <pre><code class="python">def do_something(x):
-    if x &lt;= 50:
-        if x % 10 == 0:
-            print(&quot;Divisible by 10&quot;)
-    else:
-        print(???) </code></pre>
+  <p><strong>Question 14</strong>: If you create a function that doesn't have a <code>return</code>, what happens?<br />
+  <strong>a.</strong> <code>None</code> is returned<br />
+  <strong>b.</strong> The value of the last statement is returned<br />
+  <strong>c.</strong> It is illegal to put the function on the right side of an assignment statement<br />
+  <strong>d.</strong> FunctionDefinitionError</p>
+  <p><strong>Question 15</strong>: What would make most sense to put in the <code>???</code> below?</p>
+  <pre><code class="python">def do_something(x):
+if x &lt;= 50:
+    if x % 10 == 0:
+        print(&quot;Divisible by 10&quot;)
+else:
+    print(???) </code></pre>
 
-      <p><strong>a.</strong> "Greater than 50"<br />
-      <strong>b.</strong>  "Not divisible by 10"<br />
-      <strong>c.</strong>  "Greater than 50 and divisible by 10"<br />
-      <strong>d.</strong> DanglingElseError</p>
+  <p><strong>a.</strong> "Greater than 50"<br />
+  <strong>b.</strong>  "Not divisible by 10"<br />
+  <strong>c.</strong>  "Greater than 50 and divisible by 10"<br />
+  <strong>d.</strong> DanglingElseError</p>
 
-      <h2 id="lesson-4-material">Lesson 4 Material</h2>
-      <p><strong>Question 16</strong>: What will be printed after running the following program?</p>
-      <pre><code class="python">total = 0
+  <h2 id="lesson-4-material">Lesson 4 Material</h2>
+  <p><strong>Question 16</strong>: What will be printed after running the following program?</p>
+  <pre><code class="python">total = 0
 for num in range(8):
-    if num % 2 == 0:
-        total += num
+if num % 2 == 0:
+    total += num
 print(total) </code></pre>
 
-      <p><strong>a.</strong> 20<br />
-      <strong>b.</strong> 28<br />
-      <strong>c.</strong> 36<br />
-      <strong>d.</strong> 12</p>
-      <p><strong>Question 17</strong>: What will be printed after running the following program?</p>
-      <pre><code class="python">result = 0
+  <p><strong>a.</strong> 20<br />
+  <strong>b.</strong> 28<br />
+  <strong>c.</strong> 36<br />
+  <strong>d.</strong> 12</p>
+  <p><strong>Question 17</strong>: What will be printed after running the following program?</p>
+  <pre><code class="python">result = 0
 index = 0
 my_list = [1, 3, 5, 7, 9]
 while my_list[index] != 7:
-    result += my_list[index]
+result += my_list[index]
 print(result) </code></pre>
 
-      <p><strong>a.</strong> 9<br />
-      <strong>b.</strong> 16<br />
-      <strong>c.</strong> MaxRecursionError<br />
-      <strong>d.</strong> <em>(nothing)</em></p>
-      <p><strong>Question 18</strong>: Give an example when a <code>while</code> loop might work better than a <code>for</code> loop.</p>
-      <p><strong>Question 19</strong>: Give an example when a <code>for</code> loop might work better than a <code>while</code> loop.</p>
-      <p><strong>Question 20</strong>: What is the function to add an element to the end of a list?<br />
-      <strong>a.</strong> <code>mylist.add(val)</code><br />
-      <strong>b.</strong> <code>mylist.append(val)</code><br />
-      <strong>c.</strong> <code>mylist + val</code><br />
-      <strong>d.</strong> <code>[mylist, val]</code></p>
+  <p><strong>a.</strong> 9<br />
+  <strong>b.</strong> 16<br />
+  <strong>c.</strong> MaxRecursionError<br />
+  <strong>d.</strong> <em>(nothing)</em></p>
+  <p><strong>Question 18</strong>: Give an example when a <code>while</code> loop might work better than a <code>for</code> loop.</p>
+  <p><strong>Question 19</strong>: Give an example when a <code>for</code> loop might work better than a <code>while</code> loop.</p>
+  <p><strong>Question 20</strong>: What is the function to add an element to the end of a list?<br />
+  <strong>a.</strong> <code>mylist.add(val)</code><br />
+  <strong>b.</strong> <code>mylist.append(val)</code><br />
+  <strong>c.</strong> <code>mylist + val</code><br />
+  <strong>d.</strong> <code>[mylist, val]</code></p>
 
-      <h2 id="lesson-5-material">Lesson 5 Material</h2>
-      <p><strong>Question 21</strong>: What will be printed after running the following program?</p>
-      <pre><code class="python">d = {&quot;John&quot;: &quot;Smith&quot;}
+  <h2 id="lesson-5-material">Lesson 5 Material</h2>
+  <p><strong>Question 21</strong>: What will be printed after running the following program?</p>
+  <pre><code class="python">d = {&quot;John&quot;: &quot;Smith&quot;}
 d[&quot;John&quot;] = &quot;Adams&quot;
 d[&quot;Samuel&quot;] = &quot;Adams&quot;
 print(d[&quot;John&quot;]) </code></pre>
 
-      <p><strong>a.</strong> Smith<br />
-      <strong>b.</strong> Adams<br />
-      <strong>c.</strong> John: Adams<br />
-      <strong>d.</strong> KeyError</p>
-      <p><strong>Question 22</strong>: What's the difference between a tuple and a list?</p>
-      <p><strong>Question 23</strong>: What error will you get if you try to get a nonexistent dictionary reference (ex. <code>d["missing"]</code>)?<br />
-      <strong>a.</strong> ValueError<br />
-      <strong>b.</strong> TypeError<br />
-      <strong>c.</strong> MathError<br />
-      <strong>d.</strong> KeyError</p>
-      <p><strong>Question 24</strong>: Name the three primary modes of opening a file.</p>
-      <p><strong>Question 25</strong>: What happens if you open a file in <strong>write</strong> mode?</p>
+  <p><strong>a.</strong> Smith<br />
+  <strong>b.</strong> Adams<br />
+  <strong>c.</strong> John: Adams<br />
+  <strong>d.</strong> KeyError</p>
+  <p><strong>Question 22</strong>: What's the difference between a tuple and a list?</p>
+  <p><strong>Question 23</strong>: What error will you get if you try to get a nonexistent dictionary reference (ex. <code>d["missing"]</code>)?<br />
+  <strong>a.</strong> ValueError<br />
+  <strong>b.</strong> TypeError<br />
+  <strong>c.</strong> MathError<br />
+  <strong>d.</strong> KeyError</p>
+  <p><strong>Question 24</strong>: Name the three primary modes of opening a file.</p>
+  <p><strong>Question 25</strong>: What happens if you open a file in <strong>write</strong> mode?</p>
 
-      <h3 id="done-scroll-down-for-answer-key">Done! Scroll down for answer key.</h3>
-      <p>...<br />
-      ...<br />
-      ...<br />
-      ...<br />
-      ...  </p>
-      <p>...<br />
-      ...<br />
-      ...<br />
-      ...<br />
-      ...  </p>
-      <p>...<br />
-      ...<br />
-      ...<br />
-      ...<br />
-      ...  </p>
-      <hr />
+  <h3 id="done-scroll-down-for-answer-key">Done! Scroll down for answer key.</h3>
+  <p>...<br />
+  ...<br />
+  ...<br />
+  ...<br />
+  ...  </p>
+  <p>...<br />
+  ...<br />
+  ...<br />
+  ...<br />
+  ...  </p>
+  <p>...<br />
+  ...<br />
+  ...<br />
+  ...<br />
+  ...  </p>
+  <hr />
 
-      <h2 id="answer-key">Answer Key</h2>
-      <ol>
-        <li>a</li>
-        <li>Typical answers: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>list</code>, <code>tuple</code>, <code>dict</code></li>
-        <li>c</li>
-        <li>c (Explanation: In python3, division defaults to floating point division)</li>
-        <li>a (Explanation: <code>//</code> means integer division and truncates the decimal)</li>
-        <li>True</li>
-        <li>True</li>
-        <li>c</li>
-        <li>Python uses indentation to mark the start and end of a function</li>
-        <li>Functions are defined by using <code>def func_name(parameter_list):</code>. When calling a function, you omit the <code>def</code> and <code>:</code>. Furthermore, a function must have been previously defined before it can be called.</li>
-        <li>See below* (I don't want to screw up inline formatting)</li>
-        <li>c (Explanation: As soon as the first True conditional is reached, execution continues after the entire conditional block)</li>
-        <li><code>input()</code> returns a <code>str</code> by default, so without an explicit cast with <code>int()</code> or <code>float()</code>, it will just print the string twice (so 2 -&gt; 22)</li>
-        <li>a</li>
-        <li>a</li>
-        <li>d (Explanation: the parameter to range is the upper limit, but the range will not go up to the value; it stops before it. So our range is [0, 1, 2, 3, 4, 5, 6, 7]. When filtering to numbers that num % 2 == 0 (even numbers), we are just adding [0, 2, 4, 6])</li>
-        <li>d (Explanation: We never advance <code>index</code> so the program will continue forever -- we call this an infinite loop)</li>
-        <li>When you don't know how many times you will loop -- example, getting input from the user until they give you a valid input</li>
-        <li>When you know exactly how many times you will loop -- example, iterating over the values in a list</li>
-        <li>b</li>
-        <li>b (Explanation: keys are unique, so we overwrote the initial value of <code>"Smith"</code>)</li>
-        <li>A tuple is immutable -- it can't be resized or modified ever</li>
-        <li>d</li>
-        <li>read, write, append</li>
-        <li>The file contents are completely erased first, then new contents are written.</li>
-      </ol>
-      <p>Solution to 11:<br />
-			<table class="table table-hover table-bordered table-dark table-striped table-sm">
-        <thead>
-          <tr class="bg-primary">
-            <th>a</th> <th>b</th> <th>a and b</th> <th>a or b</th> <th>not a</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>True</td> <td>True</td> <td>True</td> <td>True</td> <td>False</td>
-          </tr>
-          <tr>
-            <td>True</td> <td>False</td> <td>False</td> <td>True</td> <td>False</td>
-          </tr>
-          <tr>
-            <td>False</td> <td>True</td> <td>False</td> <td>True</td> <td>True</td>
-          </tr>
-          <tr>
-            <td>False</td> <td>False</td> <td>False</td> <td>False</td> <td>True</td>
-          </tr>
-        </tbody>
-			</table>
-    </div>
-  </div>
+  <h2 id="answer-key">Answer Key</h2>
+  <ol>
+    <li>a</li>
+    <li>Typical answers: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>list</code>, <code>tuple</code>, <code>dict</code></li>
+    <li>c</li>
+    <li>c (Explanation: In python3, division defaults to floating point division)</li>
+    <li>a (Explanation: <code>//</code> means integer division and truncates the decimal)</li>
+    <li>True</li>
+    <li>True</li>
+    <li>c</li>
+    <li>Python uses indentation to mark the start and end of a function</li>
+    <li>Functions are defined by using <code>def func_name(parameter_list):</code>. When calling a function, you omit the <code>def</code> and <code>:</code>. Furthermore, a function must have been previously defined before it can be called.</li>
+    <li>See below* (I don't want to screw up inline formatting)</li>
+    <li>c (Explanation: As soon as the first True conditional is reached, execution continues after the entire conditional block)</li>
+    <li><code>input()</code> returns a <code>str</code> by default, so without an explicit cast with <code>int()</code> or <code>float()</code>, it will just print the string twice (so 2 -&gt; 22)</li>
+    <li>a</li>
+    <li>a</li>
+    <li>d (Explanation: the parameter to range is the upper limit, but the range will not go up to the value; it stops before it. So our range is [0, 1, 2, 3, 4, 5, 6, 7]. When filtering to numbers that num % 2 == 0 (even numbers), we are just adding [0, 2, 4, 6])</li>
+    <li>d (Explanation: We never advance <code>index</code> so the program will continue forever -- we call this an infinite loop)</li>
+    <li>When you don't know how many times you will loop -- example, getting input from the user until they give you a valid input</li>
+    <li>When you know exactly how many times you will loop -- example, iterating over the values in a list</li>
+    <li>b</li>
+    <li>b (Explanation: keys are unique, so we overwrote the initial value of <code>"Smith"</code>)</li>
+    <li>A tuple is immutable -- it can't be resized or modified ever</li>
+    <li>d</li>
+    <li>read, write, append</li>
+    <li>The file contents are completely erased first, then new contents are written.</li>
+  </ol>
+  <p>Solution to 11:<br />
+  <table class="table table-hover table-bordered table-dark table-striped table-sm">
+    <thead>
+      <tr class="bg-primary">
+        <th>a</th> <th>b</th> <th>a and b</th> <th>a or b</th> <th>not a</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>True</td> <td>True</td> <td>True</td> <td>True</td> <td>False</td>
+      </tr>
+      <tr>
+        <td>True</td> <td>False</td> <td>False</td> <td>True</td> <td>False</td>
+      </tr>
+      <tr>
+        <td>False</td> <td>True</td> <td>False</td> <td>True</td> <td>True</td>
+      </tr>
+      <tr>
+        <td>False</td> <td>False</td> <td>False</td> <td>False</td> <td>True</td>
+      </tr>
+    </tbody>
+  </table>
 {% endblock %}

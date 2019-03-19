@@ -2,90 +2,80 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="back-to-top">Lesson 2: Functions</h1>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 3: Functions</li>
-      </ul>
-      <h2 id="vocab">Vocab</h2>
-      <ul>
-        <li>function</li>
-        <li>function definition</li>
-        <li>function call</li>
-        <li>local variable</li>
-        <li>parameter</li>
-        <li>argument</li>
-        <li>import</li>
-      </ul>
-      <h2 id="quiz">Quiz</h2>
-      <p>Question 1: What will be printed after running the following program?</p>
-      <pre><code class="python">def print_hello():
-    print(&quot;Hello!&quot;) </code></pre>
+  <h1 id="back-to-top">Lesson 2: Functions</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 3: Functions</li>
+  </ul>
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>function</li>
+    <li>function definition</li>
+    <li>function call</li>
+    <li>local variable</li>
+    <li>parameter</li>
+    <li>argument</li>
+    <li>import</li>
+  </ul>
+  <h2 id="quiz">Quiz</h2>
+  <p>Question 1: What will be printed after running the following program?</p>
+  <pre><code class="python">def print_hello():
+print(&quot;Hello!&quot;) </code></pre>
 
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (False, "Hello!", "Incorrect. Remember the difference between a function definition and a function call"),
-          (False, "\"Hello!\"", "Incorrect. Remember that the quotes are just to denote the string - they aren't actually printed"),
-          (True, "<em>(nothing)</em>", "Correct!"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "Hello!", "Incorrect. Remember the difference between a function definition and a function call"),
+      (False, "\"Hello!\"", "Incorrect. Remember that the quotes are just to denote the string - they aren't actually printed"),
+      (True, "<em>(nothing)</em>", "Correct!"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+    ])
+  }}
 
-      <p>Question 2: What will be printed after running the following program?</p>
-      <pre><code class="python">def print_hello():
-    print(&quot;Hello!&quot;)
+  <p>Question 2: What will be printed after running the following program?</p>
+  <pre><code class="python">def print_hello():
+print(&quot;Hello!&quot;)
 
 def print_twice():
-    print_hello()
-    print_hello()
+print_hello()
+print_hello()
 
 print_twice() </code></pre>
 
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (False, "Hello!Hello!", "Incorrect. By default, each print will automatically insert a newline character"),
-          (True, "Hello!<br />Hello!", "Correct!"),
-          (False, "<em>(nothing)</em>", "Incorrect. Our function is actually getting called this time"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "Hello!Hello!", "Incorrect. By default, each print will automatically insert a newline character"),
+      (True, "Hello!<br />Hello!", "Correct!"),
+      (False, "<em>(nothing)</em>", "Incorrect. Our function is actually getting called this time"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>
-          <p>From section <strong>3.14</strong>, do exercise <strong>3.1</strong></p>
-        </li>
-        <li>
-          <p>[print_n] Write a function called <code>print_n(string, n)</code> that prints <code>string</code> repeated <code>n</code> times</p>
-        </li>
-        <li>
-          <p>[pyramid] Write a program called pyramid.py that outputs a pyramid to the terminal like below. You should write a function for this exercise.</p>
-        </li>
-      </ul>
-      <pre><code class="no-highlight">.
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>
+      <p>From section <strong>3.14</strong>, do exercise <strong>3.1</strong></p>
+    </li>
+    <li>
+      <p>[print_n] Write a function called <code>print_n(string, n)</code> that prints <code>string</code> repeated <code>n</code> times</p>
+    </li>
+    <li>
+      <p>[pyramid] Write a program called pyramid.py that outputs a pyramid to the terminal like below. You should write a function for this exercise.</p>
+    </li>
+  </ul>
+  <pre><code class="no-highlight">.
 ..
 ...
 ....
@@ -95,8 +85,6 @@ print_twice() </code></pre>
 ........
 .........
 ..........  </code></pre>
-    </div>
-  </div>
 {% endblock %}
 
 {% block scripts %}

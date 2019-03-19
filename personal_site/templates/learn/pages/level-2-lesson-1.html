@@ -2,183 +2,173 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#refresher-quiz">Refresher quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#refresher-quiz">Refresher quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Lesson 1: Programming Refresher (and the Python interpreter)</h1>
-      <p>Read the following chapters to refresh your knowledge on some basic programming tools at your disposal.</p>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 3: Functions</li>
-        <li>Chapter 5.1 to 5.7: Conditionals and recursion (stop at 5.7; don't worry about recursion yet)</li>
-        <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
-        <li>Chapter 6: Fruitful functions (skip over 6.5: More recursion)</li>
-        <li>Chapter 7: Iteration</li>
-        <li>Chapter 10: Lists</li>
-        <li>Chapter 11: Dictionaries</li>
-        <li>Chapter 12: Tuples</li>
-        <li>Chapter 14: Files</li>
-      </ul>
+  <h1 id="top-of-page">Lesson 1: Programming Refresher (and the Python interpreter)</h1>
+  <p>Read the following chapters to refresh your knowledge on some basic programming tools at your disposal.</p>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 3: Functions</li>
+    <li>Chapter 5.1 to 5.7: Conditionals and recursion (stop at 5.7; don't worry about recursion yet)</li>
+    <li>Chapter 5.11 to 5.12: Keyboard input and debugging</li>
+    <li>Chapter 6: Fruitful functions (skip over 6.5: More recursion)</li>
+    <li>Chapter 7: Iteration</li>
+    <li>Chapter 10: Lists</li>
+    <li>Chapter 11: Dictionaries</li>
+    <li>Chapter 12: Tuples</li>
+    <li>Chapter 14: Files</li>
+  </ul>
 
-      <h2 id="refresher-quiz">Refresher Quiz</h2>
-      <p>**Use the following program to answer questions 1-3.</p>
-      <pre><code class="python"># Covers chapters 3, 5, 6, 7
+  <h2 id="refresher-quiz">Refresher Quiz</h2>
+  <p>**Use the following program to answer questions 1-3.</p>
+  <pre><code class="python"># Covers chapters 3, 5, 6, 7
 def foo(n):
-    if n &gt; 3:
-        return n * 2
-    else:
-        return n
+if n &gt; 3:
+    return n * 2
+else:
+    return n
 
 def bar(n):
-    result = 0
-    while n &lt; 5:
-        result += foo(n)
-        n += 1
-    return result </code></pre>
+result = 0
+while n &lt; 5:
+    result += foo(n)
+    n += 1
+return result </code></pre>
 
-      <p>Question 1: What would be returned when calling <code>foo(4)</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (False, "0", "Incorrect."),
-          (False, "8", "Incorrect."),
-          (False, "4", "Incorrect."),
-          (False, "18", "Incorrect."),
-        ])
-      }}
+  <p>Question 1: What would be returned when calling <code>foo(4)</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "0", "Incorrect."),
+      (False, "8", "Incorrect."),
+      (False, "4", "Incorrect."),
+      (False, "18", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 2: What would be returned when calling <code>bar(4)</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (False, "0", "Incorrect."),
-          (False, "8", "Incorrect."),
-          (False, "4", "Incorrect."),
-          (False, "18", "Incorrect."),
-        ])
-      }}
+  <p>Question 2: What would be returned when calling <code>bar(4)</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "0", "Incorrect."),
+      (False, "8", "Incorrect."),
+      (False, "4", "Incorrect."),
+      (False, "18", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 3: What would be returned when calling <code>bar(0)</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(3, [
-          (False, "24", "Incorrect."),
-          (False, "01238", "Incorrect."),
-          (False, "01268", "Incorrect."),
-          (False, "14", "Incorrect."),
-        ])
-      }}
+  <p>Question 3: What would be returned when calling <code>bar(0)</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(3, [
+      (False, "24", "Incorrect."),
+      (False, "01238", "Incorrect."),
+      (False, "01268", "Incorrect."),
+      (False, "14", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 4: [Chapter 14] What are the three modes in which you can open a file?</p>
-      {{
-        learn_pages_utils.render_question_responses(4, [
-          (False, "read, write, and append", "Incorrect."),
-          (False, "read, write, and delete", "Incorrect."),
-          (False, "read, execute, and delete", "Incorrect."),
-          (False, "read, write, and mkdir", "Incorrect."),
-        ])
-      }}
+  <p>Question 4: [Chapter 14] What are the three modes in which you can open a file?</p>
+  {{
+    learn_pages_utils.render_question_responses(4, [
+      (False, "read, write, and append", "Incorrect."),
+      (False, "read, write, and delete", "Incorrect."),
+      (False, "read, execute, and delete", "Incorrect."),
+      (False, "read, write, and mkdir", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 5: [Chapters 10, 11] What symbols do you use to create a list inline? What about a dictionary?</p>
-      {{
-        learn_pages_utils.render_question_responses(5, [
-          (False, "<code>[]</code> and <code>&lt;&gt;</code>", "Incorrect."),
-          (False, "<code>[]</code> and <code>()</code>", "Incorrect."),
-          (False, "<code>[]</code> and <code>{}</code>", "Incorrect."),
-          (False, "<code>[]</code> for both", "Incorrect."),
-        ])
-      }}
+  <p>Question 5: [Chapters 10, 11] What symbols do you use to create a list inline? What about a dictionary?</p>
+  {{
+    learn_pages_utils.render_question_responses(5, [
+      (False, "<code>[]</code> and <code>&lt;&gt;</code>", "Incorrect."),
+      (False, "<code>[]</code> and <code>()</code>", "Incorrect."),
+      (False, "<code>[]</code> and <code>{}</code>", "Incorrect."),
+      (False, "<code>[]</code> for both", "Incorrect."),
+    ])
+  }}
 
-      <p>**Use the following program to answer questions 6-8.</p>
-      <pre><code class="python"># Covers chapters 10 and 11
+  <p>**Use the following program to answer questions 6-8.</p>
+  <pre><code class="python"># Covers chapters 10 and 11
 a = [2, 4, 6]
 b = {'alpha': 1, 'bravo': 2, 'charlie': 3, 'echo': 5} </code></pre>
 
-      <p>Question 6: What is <code>a[1]</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(6, [
-          (False, "2", "Incorrect."),
-          (False, "4", "Incorrect."),
-          (False, "6", "Incorrect."),
-          (False, "<code>[2]</code>", "Incorrect."),
-        ])
-      }}
+  <p>Question 6: What is <code>a[1]</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(6, [
+      (False, "2", "Incorrect."),
+      (False, "4", "Incorrect."),
+      (False, "6", "Incorrect."),
+      (False, "<code>[2]</code>", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 7: What is <code>b['bravo']</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(7, [
-          (False, "2", "Incorrect."),
-          (False, "<code>['bravo', 2]</code>", "Incorrect."),
-          (False, "<code>('bravo', 2)</code>", "Incorrect."),
-          (False, "<code>{'bravo', 2}</code>", "Incorrect."),
-        ])
-      }}
+  <p>Question 7: What is <code>b['bravo']</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(7, [
+      (False, "2", "Incorrect."),
+      (False, "<code>['bravo', 2]</code>", "Incorrect."),
+      (False, "<code>('bravo', 2)</code>", "Incorrect."),
+      (False, "<code>{'bravo', 2}</code>", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 8: What is <code>b['delta']</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(8, [
-          (False, "4", "Incorrect."),
-          (False, "<code>['delta']</code>", "Incorrect."),
-          (False, "<code>('delta', 4)</code>", "Incorrect."),
-          (False, "<em>(error)</em>", "Incorrect."),
-        ])
-      }}
+  <p>Question 8: What is <code>b['delta']</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(8, [
+      (False, "4", "Incorrect."),
+      (False, "<code>['delta']</code>", "Incorrect."),
+      (False, "<code>('delta', 4)</code>", "Incorrect."),
+      (False, "<em>(error)</em>", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 9: [Chapter 5.11] What function do we call to read input from the user?</p>
-      {{
-        learn_pages_utils.render_question_responses(9, [
-          (False, "<code>print()</code>", "Incorrect."),
-          (False, "<code>read()</code>", "Incorrect."),
-          (False, "<code>input()</code>", "Incorrect."),
-          (False, "<code>str()</code>, <code>int()</code>, and <code>float()</code>", "Incorrect."),
-        ])
-      }}
+  <p>Question 9: [Chapter 5.11] What function do we call to read input from the user?</p>
+  {{
+    learn_pages_utils.render_question_responses(9, [
+      (False, "<code>print()</code>", "Incorrect."),
+      (False, "<code>read()</code>", "Incorrect."),
+      (False, "<code>input()</code>", "Incorrect."),
+      (False, "<code>str()</code>, <code>int()</code>, and <code>float()</code>", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 10: What is the result of the following program?</p>
-      <pre><code class="python">def baz(character):
-    s = character + 'a'
-    return s * 7
+  <p>Question 10: What is the result of the following program?</p>
+  <pre><code class="python">def baz(character):
+s = character + 'a'
+return s * 7
 
 secret = 'N'
 print(baz(secret) + ' Batman!') </code></pre>
 
-      {{
-        learn_pages_utils.render_question_responses(10, [
-          (False, "Naaaaaaa Batman!", "Incorrect."),
-          (False, "Na7 Batman!", "Incorrect."),
-          (False, "TypeError: cannot add <code>str</code> and <code>int</code>", "Incorrect."),
-          (False, "NaNaNaNaNaNaNa Batman!", "Incorrect."),
-        ])
-      }}
+  {{
+    learn_pages_utils.render_question_responses(10, [
+      (False, "Naaaaaaa Batman!", "Incorrect."),
+      (False, "Na7 Batman!", "Incorrect."),
+      (False, "TypeError: cannot add <code>str</code> and <code>int</code>", "Incorrect."),
+      (False, "NaNaNaNaNaNaNa Batman!", "Incorrect."),
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>[vowels] Write a function called <code>is_vowel(c)</code> that takes a character (a string of length 1) and returns True if the character is a vowel (recall that vowels are A, E, I, O, and U).</li>
-        <li>[divisors] Write a program that takes three <code>int</code>s on the command line (call them <code>lower</code> <code>upper</code> and <code>divisor</code>) then prints out all numbers between <code>lower</code> and <code>upper</code> that are divisible by <code>divisor</code>. For example:</li>
-      </ul>
-      <pre><code class="no-highlight">$ python3 divisors.py 1 100 11
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>[vowels] Write a function called <code>is_vowel(c)</code> that takes a character (a string of length 1) and returns True if the character is a vowel (recall that vowels are A, E, I, O, and U).</li>
+    <li>[divisors] Write a program that takes three <code>int</code>s on the command line (call them <code>lower</code> <code>upper</code> and <code>divisor</code>) then prints out all numbers between <code>lower</code> and <code>upper</code> that are divisible by <code>divisor</code>. For example:</li>
+  </ul>
+  <pre><code class="no-highlight">$ python3 divisors.py 1 100 11
 11 22 33 44 55 66 77 88 99 </code></pre>
 
-      <ul>
-        <li>[letterfreq] Write a program that takes a filename on the command line and prints out how often each letter occurs in the file text. For example, if the file text was <code>the quick brown dog jumps over the lazy dog</code>, your output would look like this:</li>
-      </ul>
-      <pre><code class="no-highlight">$ python3 letterfreq.py sentence.txt
+  <ul>
+    <li>[letterfreq] Write a program that takes a filename on the command line and prints out how often each letter occurs in the file text. For example, if the file text was <code>the quick brown dog jumps over the lazy dog</code>, your output would look like this:</li>
+  </ul>
+  <pre><code class="no-highlight">$ python3 letterfreq.py sentence.txt
 a 1
 b 1
 c 1
@@ -203,8 +193,6 @@ v 1
 w 1
 y 1
 z 1 </code></pre>
-    </div>
-  </div>
 {% endblock %}
 
 {% block scripts %}

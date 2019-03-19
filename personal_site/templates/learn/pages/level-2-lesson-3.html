@@ -2,127 +2,115 @@
 {% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
-  <div class="row">
-    <div class="col">
-      <b>Table of contents</b>
-    </div>
-  </div>
+  <b>Table of contents</b>
 
-  <div class="row">
-    <div class="col">
-      <div class="toc">
-        <ul>
-          <li><a href="#top-of-page">Back to top</a></li>
-          <li><a href="#vocab">Vocab</a></li>
-          <li><a href="#quiz">Quiz</a></li>
-          <li><a href="#exercises">Exercises</a></li>
-          <li><a href="#project-part-2">Project part 2</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="toc">
+    <ul>
+      <li><a href="#top-of-page">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+      <li><a href="#project-part-2">Project part 2</a></li>
+    </ul>
   </div>
 {% endblock %}
 
 {% block learn_content %}
-  <div class="row">
-    <div class="col">
-      <h1 id="top-of-page">Lesson 3: Classes and objects (continued)</h1>
-      <p><strong>Before the lecture, please read the following chapters:</strong></p>
-      <ul>
-        <li>Chapter 17: Classes and methods</li>
-      </ul>
+  <h1 id="top-of-page">Lesson 3: Classes and objects (continued)</h1>
+  <p><strong>Before the lecture, please read the following chapters:</strong></p>
+  <ul>
+    <li>Chapter 17: Classes and methods</li>
+  </ul>
 
-      <h2 id="vocab">Vocab</h2>
-      <ul>
-        <li>method</li>
-      </ul>
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>method</li>
+  </ul>
 
-      <h2 id="quiz">Quiz</h2>
-      <p><strong>Use the following program to answer questions 1-3.</strong></p>
-      <pre><code class="python">class Point:
-    &quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+  <h2 id="quiz">Quiz</h2>
+  <p><strong>Use the following program to answer questions 1-3.</strong></p>
+  <pre><code class="python">class Point:
+&quot;&quot;&quot;Represents a point in 2D space&quot;&quot;&quot;
+def __init__(self, x, y):
+    self.x = x
+    self.y = y
 
-    def __str__(self):
-        return f&quot;Point(x = {self.x}, y = {self.y})&quot;
+def __str__(self):
+    return f&quot;Point(x = {self.x}, y = {self.y})&quot;
 
 p1 = Point(3, 4)
 p2 = Point(y=2, x=1)
-      </code></pre>
+  </code></pre>
 
-      <p>Question 1: What would happen if you typed <code>print(p1)</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(1, [
-          (False, "<code>Point(3, 4)</code>", "Incorrect. Close, but look again at the <code>__str__</code> magic method"),
-          (True, "<code>Point(x = 3, y = 4)</code>", "Correct!"),
-          (False, "<code>&lt;Point at 0x7eff85415980&gt;</code> (or something similar)", "Incorrect. Remember the <code>__str__</code> magic method"),
-          (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
-        ])
-      }}
+  <p>Question 1: What would happen if you typed <code>print(p1)</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "<code>Point(3, 4)</code>", "Incorrect. Close, but look again at the <code>__str__</code> magic method"),
+      (True, "<code>Point(x = 3, y = 4)</code>", "Correct!"),
+      (False, "<code>&lt;Point at 0x7eff85415980&gt;</code> (or something similar)", "Incorrect. Remember the <code>__str__</code> magic method"),
+      (False, "<em>(error)</em>", "Incorrect. This is perfectly valid Python code"),
+    ])
+  }}
 
-      <p>Question 2: What do we call methods such as <code>__init__</code> or <code>__str__</code>?</p>
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (False, "underscore functions", "Incorrect."),
-          (False, "funky functions ", "Incorrect."),
-          (True, "magic methods", "Incorrect."),
-          (False, "quick methods", "Incorrect."),
-        ])
-      }}
+  <p>Question 2: What do we call methods such as <code>__init__</code> or <code>__str__</code>?</p>
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "underscore functions", "Incorrect."),
+      (False, "funky functions ", "Incorrect."),
+      (True, "magic methods", "Incorrect."),
+      (False, "quick methods", "Incorrect."),
+    ])
+  }}
 
-      <p>Question 3: How can you implement equality checking (<code>==</code>) for a user-defined class?</p>
-      {{
-        learn_pages_utils.render_question_responses(2, [
-          (False, "<code>def __equality__(self, other):</code>", "Incorrect."),
-          (False, "<code>def equals(a, b):</code>", "Incorrect."),
-          (False, "<code>def ==(self, other):</code>", "Incorrect."),
-          (True, "<code>def __eq__(self, other):</code>", "Correct!"),
-        ])
-      }}
+  <p>Question 3: How can you implement equality checking (<code>==</code>) for a user-defined class?</p>
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "<code>def __equality__(self, other):</code>", "Incorrect."),
+      (False, "<code>def equals(a, b):</code>", "Incorrect."),
+      (False, "<code>def ==(self, other):</code>", "Incorrect."),
+      (True, "<code>def __eq__(self, other):</code>", "Correct!"),
+    ])
+  }}
 
-      <h2 id="exercises">Exercises</h2>
-      <ul>
-        <li>[vector2] Revisit the <code>Vector</code> class from lesson 2 but write methods for the class instead of functions. So now our <code>Vector</code> class should have methods such as <code>distance(self)</code>, <code>add(self, v2)</code>, or <code>scale(self, d)</code>.</li>
-        <li>[deck] Write a <code>Deck</code> class that holds 52 standard playing cards (ex. 2 of Hearts, Ace of Diamonds). Within your <code>Deck</code> class, create methods <code>shuffle(self)</code>, <code>draw(self, n)</code> (draw n cards), and <code>reset(self)</code> (reset the deck to 52 cards).</li>
-      </ul>
+  <h2 id="exercises">Exercises</h2>
+  <ul>
+    <li>[vector2] Revisit the <code>Vector</code> class from lesson 2 but write methods for the class instead of functions. So now our <code>Vector</code> class should have methods such as <code>distance(self)</code>, <code>add(self, v2)</code>, or <code>scale(self, d)</code>.</li>
+    <li>[deck] Write a <code>Deck</code> class that holds 52 standard playing cards (ex. 2 of Hearts, Ace of Diamonds). Within your <code>Deck</code> class, create methods <code>shuffle(self)</code>, <code>draw(self, n)</code> (draw n cards), and <code>reset(self)</code> (reset the deck to 52 cards).</li>
+  </ul>
 
-      <div class="card text-white mb-3 bg-info">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">NOTE:</b>
-            It may be helpful to define a Card class for this exercise that has suit and rank.
-          </p>
-        </div>
-      </div>
-
-      <h2 id="project-part-2">Project Part 2</h2>
-      <p>In part 2, we are going to create the "main game loop." In the game loop, this is what should happen:<br />
-      1. print out the current state of the board<br />
-      2. ask the user for an input. Input can either be "solve1" (computer will randomly fill in 1 correct answer), "solveall" (computer will complete the entire board), or input like "row col val" where the user wishes to set coordinate (row, col) to the value <code>val</code>. Example: <code>1 1 4</code> would set the space (1, 1) to 4.<br />
-      3. update the game board given the last input<br />
-      4. If the board is completely solved, end the game and tell the user how long they took in seconds to complete the game.</p>
-      <p><strong>INSTRUCTIONS BEFORE STARTING:</strong></p>
-      <p>You are encouraged to continue this project from what you made in part 1, but if you're having trouble extending your project, feel free to continue from <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku2.py">the template I've provided on my bitbucket page here</a>. This is the <em>skeleton code</em> for part 2.</p>
-
-      <div class="card text-white mb-3 bg-info">
-        <div class="card-body">
-          <p class="card-text">
-            <b style="font-size: 1.1em">NOTE:</b>
-            If you'd like my solution for this part of the project, <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku2_solution.py" class="text-white font-weight-bold">you can check out my solution here</a>. Please try not to look until you've attempted this yourself, though!
-          </p>
-        </div>
-      </div>
-
-      <p>If you didn't do so in part 1, you should also <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku_boards.zip">download this file</a> and run <code>unzip sudoku_boards.zip</code> in the terminal to get a bunch of premade sudoku boards.</p>
-      <p><strong>Here are the objectives for part 2:</strong><br />
-      - Add methods to <code>SudokuGame</code> class for <code>__init__</code> (if you didn't do so in part 1), <code>__str__()</code>, <code>is_solved()</code>, <code>solve_one()</code>, <code>solve_all()</code>, and <code>set(row, column, value)</code><br />
-      - Create a main game loop that repeatedly asks the user for input</p>
-      <p><strong>Bonuses:</strong><br />
-      1. Add a "check" input that will remove any wrong guesses from the current board state<br />
-      2. Add an index to the x and y axis so the user can easily see what row and column they wish to fill in next<br />
-      3. Add color! Have starting values in the grid be white, user input be blue, and if you've added the "check" command, have correct cells be green and incorrect cells be red after a call to check.</p>
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        It may be helpful to define a Card class for this exercise that has suit and rank.
+      </p>
     </div>
   </div>
+
+  <h2 id="project-part-2">Project Part 2</h2>
+  <p>In part 2, we are going to create the "main game loop." In the game loop, this is what should happen:<br />
+  1. print out the current state of the board<br />
+  2. ask the user for an input. Input can either be "solve1" (computer will randomly fill in 1 correct answer), "solveall" (computer will complete the entire board), or input like "row col val" where the user wishes to set coordinate (row, col) to the value <code>val</code>. Example: <code>1 1 4</code> would set the space (1, 1) to 4.<br />
+  3. update the game board given the last input<br />
+  4. If the board is completely solved, end the game and tell the user how long they took in seconds to complete the game.</p>
+  <p><strong>INSTRUCTIONS BEFORE STARTING:</strong></p>
+  <p>You are encouraged to continue this project from what you made in part 1, but if you're having trouble extending your project, feel free to continue from <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku2.py">the template I've provided on my bitbucket page here</a>. This is the <em>skeleton code</em> for part 2.</p>
+
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        If you'd like my solution for this part of the project, <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku2_solution.py" class="text-white font-weight-bold">you can check out my solution here</a>. Please try not to look until you've attempted this yourself, though!
+      </p>
+    </div>
+  </div>
+
+  <p>If you didn't do so in part 1, you should also <a href="https://bitbucket.org/lgore93/python_lvl2/src/master/sudoku/sudoku_boards.zip">download this file</a> and run <code>unzip sudoku_boards.zip</code> in the terminal to get a bunch of premade sudoku boards.</p>
+  <p><strong>Here are the objectives for part 2:</strong><br />
+  - Add methods to <code>SudokuGame</code> class for <code>__init__</code> (if you didn't do so in part 1), <code>__str__()</code>, <code>is_solved()</code>, <code>solve_one()</code>, <code>solve_all()</code>, and <code>set(row, column, value)</code><br />
+  - Create a main game loop that repeatedly asks the user for input</p>
+  <p><strong>Bonuses:</strong><br />
+  1. Add a "check" input that will remove any wrong guesses from the current board state<br />
+  2. Add an index to the x and y axis so the user can easily see what row and column they wish to fill in next<br />
+  3. Add color! Have starting values in the grid be white, user input be blue, and if you've added the "check" command, have correct cells be green and incorrect cells be red after a call to check.</p>
 {% endblock %}
