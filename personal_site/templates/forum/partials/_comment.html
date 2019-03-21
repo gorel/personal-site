@@ -1,7 +1,13 @@
 <div style="padding-bottom: 10px">
   <div class="border border-secondary" style="padding: 10px">
 
-    <b>{{ comment.author.username }}</b> {{ moment(comment.posted_at).fromNow() }}
+    <b>
+      {%- if post.show_anon -%}
+        <span class="text-muted">Anonymous</span>
+      {%- else -%}
+        {{ post.author.username }}
+      {%- endif -%}
+    </b> {{ moment(post.posted_at).fromNow() }}
 
     {% if comment.was_edited %}
       <p class="small">Last edited {{ moment(comment.edited_at).fromNow() }}</p>

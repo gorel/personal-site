@@ -23,20 +23,25 @@ class Post(db.Model):
     num_comments = db.Column(db.Integer)
     title = db.Column(db.String(constants.POST_TITLE_MAX_LEN))
     body = db.Column(db.Text)
+
     posted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     edited_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     last_activity = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
 
-    def __init__(self, author, title, body):
+    show_anon = db.Column(db.Boolean)
+
+    def __init__(self, author, title, body, show_anon):
         self.author_id = author.id
         self.title = title
         self.body = body
         self.num_comments = 0
+        self.show_anon = show_anon
 
-    def edit(self, new_body):
+    def edit(self, new_body, new_anon_policy):
         if self.body == new_body:
             return
         self.body = new_body
+        self.show_anon = new_anon_policy
         self.edited_at = datetime.datetime.now()
         self.last_activity = datetime.datetime.now()
 
@@ -55,18 +60,23 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     body = db.Column(db.Text)
+
     posted_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     edited_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, post, author, body):
+    show_anon = db.Column(db.Boolean)
+
+    def __init__(self, post, author, body, show_anon):
         self.post_id = post.id
         self.author_id = author.id
         self.body = body
+        self.show_anon = show_anon
 
-    def edit(self, new_body):
+    def edit(self, new_body, new_anon_policy):
         if self.body == new_body:
             return
         self.body = new_body
+        self.show_anon = new_anon_policy
         self.edited_at = datetime.datetime.utcnow()
 
     @property

@@ -25,7 +25,8 @@ class User(db.Model, flask_login.UserMixin):
     email = db.Column(db.String(64), index=True, unique=True)
     pw_hash = db.Column(db.String(64))
     email_verified = db.Column(db.Boolean)
-    is_admin = db.Column(db.Boolean)
+    is_admin = db.Column(db.Boolean, default=False)
+    is_banned = db.Column(db.Boolean, default=False)
 
     notifications = db.relationship("Notification", backref="recipient", lazy="dynamic")
     posts = db.relationship("Post", backref="author", lazy="dynamic")
@@ -63,6 +64,10 @@ class User(db.Model, flask_login.UserMixin):
             flask.current_app.config["SECRET_KEY"],
             algorithm="HS256",
         ).decode("utf-8")
+
+    def set_banned(self, banned_status):
+        # TODO: Send a notification/email here in the future
+        self.is_banned = banned_status
 
 
     @classmethod

@@ -22,6 +22,7 @@ class NewPostForm(flask_wtf.Form):
         "Body",
         render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
+    show_anon = wtforms.BooleanField("Show as anonymous to classmates?")
     submit = wtforms.SubmitField("Submit")
 
 
@@ -37,6 +38,7 @@ class NewPostForm(flask_wtf.Form):
             author=flask_login.current_user,
             title=self.title.data,
             body=self.body.data,
+            show_anon=self.show_anon.data,
         )
         return True
 
@@ -46,6 +48,7 @@ class EditPostForm(flask_wtf.Form):
         "Body",
         render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
+    show_anon = wtforms.BooleanField("Show as anonymous to classmates?")
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, *args, **kwargs):
@@ -61,7 +64,7 @@ class EditPostForm(flask_wtf.Form):
             self.body.errors.append("Are you sure you're logged in?")
             return False
 
-        self.post.edit(self.body.data)
+        self.post.edit(self.body.data, self.show_anon.data)
         return True
 
 
@@ -70,6 +73,7 @@ class NewCommentForm(flask_wtf.Form):
         "Body",
         render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
     )
+    show_anon = wtforms.BooleanField("Show as anonymous to classmates?")
     submit = wtforms.SubmitField("Save")
 
     def __init__(self, post, *args, **kwargs):
@@ -85,6 +89,7 @@ class NewCommentForm(flask_wtf.Form):
             post=self.post,
             author=flask_login.current_user,
             body=self.body.data,
+            show_anon=self.show_anon.data,
         )
 
         self.post.num_comments += 1
@@ -97,6 +102,7 @@ class EditCommentForm(flask_wtf.Form):
         "Body",
         render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
     )
+    show_anon = wtforms.BooleanField("Show as anonymous to classmates?")
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, comment, *args, **kwargs):
@@ -119,6 +125,6 @@ class EditCommentForm(flask_wtf.Form):
             self.body.errors.append("Are you sure you're logged in?")
             return False
 
-        self.comment.edit(self.body.data)
+        self.comment.edit(self.body.data, self.show_anon.data)
         self.post.last_activity = datetime.datetime.utcnow()
         return True

@@ -17,6 +17,7 @@
 - ~Learn page "prev page" and "next page" button~
 - ~Anonymous questions~
 - ~Need a questions tab for learn pages~
+- ~Anonymous forum posts~
 - i18n/l10n
 - admin panel
 - homepage?
@@ -26,7 +27,6 @@
 - user notifications
 - new/edit comment links to comment instead of parent post
 - Don't use wtf.quick_form -> slightly fixed by manually modifying wtf.html
-- Anonymous forum posts
 - Form to submit new ideas for learn pages
 - Quiz support
 - Idea of a "cohort" -> subscribe to new posts for five weeks
@@ -35,3 +35,4 @@
 - In learn.index, set a cookie and only increment views if last view was 1+ hr ago
 - Add hover details for "show as anonymous"
 - Parent class for markdown-renderable models
+- Require email_verified to post/comment in forums or add learn question

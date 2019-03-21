@@ -2,7 +2,13 @@
   <div class="border border-primary rounded" style="padding: 10px; border-width: 5px !important">
     <h1 class="">{{ post.title }}</h1>
 
-    <b>Posted by {{ post.author.username }}</b> {{ moment(post.posted_at).fromNow() }}
+    <b>
+      {% if post.show_anon -%}
+        <span class="text-muted">Anonymous</span>
+      {%- else -%}
+        {{ post.author.username }}
+      {%- endif -%}
+    </b> {{ moment(post.posted_at).fromNow() }}
 
     {% if post.was_edited %}
       <p class="small">Last edited {{ moment(post.edited_at).fromNow() }}</p>

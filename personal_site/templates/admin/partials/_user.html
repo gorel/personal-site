@@ -1,0 +1,20 @@
+<tr>
+  <td>
+    {% if user.is_admin -%}
+      <span class="text-success">[ADMIN]</span>
+    {%- elif user.is_banned -%}
+      <span class="text-danger">[BANNED]</span>
+    {%- endif %}
+    {{ user.username }}
+  </td>
+  <td>{{ user.email }}</td>
+  <td>
+    {%- if user.email_verified -%}
+      <i class="fas fa-check text-success"></i>
+    {%- else -%}
+      <i class="fas fa-times-circle text-danger"></i>
+    {%- endif -%}
+  </td>
+  {# TODO: This should be post and have a popup for confirmation #}
+  <td><a class="text-danger" href="{{ url_for("admin.ban_user", user_id=user.id) }}">Ban user</a></td>
+</tr>

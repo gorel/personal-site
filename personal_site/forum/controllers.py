@@ -39,6 +39,7 @@ def edit_post(post_id):
         flask.redirect(flask.url_for("forum.view_post", post_id=form.post.id))
     else:
         form.body.data = post.body
+        form.show_anon.data = post.show_anon
         flask.render_template("forum/edit_post.html", post=post, form=form, title="Edit post")
 
 
@@ -46,7 +47,7 @@ def edit_post(post_id):
 def view_post(post_id):
     post = models.Post.query.get_or_404(post_id)
     page = flask.request.args.get("page", 1, type=int)
-    comments = models.Comment.query.order_by(
+    comments = post.comments.order_by(
         models.Comment.posted_at).paginate(page, constants.COMMENTS_PER_PAGE)
     return flask.render_template("forum/view_post.html", post=post, comments=comments)
 
@@ -77,4 +78,5 @@ def edit_comment(post_id, comment_id):
         return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
     else:
         form.body.data = comment.body
+        form.show_anon.data = comment.show_anon
         return flask.render_template("forum/edit_comment.html", form=form, post=post)

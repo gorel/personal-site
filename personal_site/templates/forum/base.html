@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
 {% block center_content %}
-  <h1>Forum</h1>
+  {% if post %}
+    <h3><a href="{{ url_for("forum.index") }}">
+      <span>&larr;</span>
+      Back to post list
+    </a></h3>
+  {% else %}
+    <h3>Forum</h3>
+  {% endif %}
 
   <div style="padding-bottom: 10px">
     <a href="{{ url_for("forum.new_post") }}" class="btn btn-primary pull-right">New post</a>

@@ -1,5 +1,11 @@
 <tr>
-  <td>{{ post_preview.author.username }}</td>
+  <td>
+    {% if post_preview.show_anon -%}
+      <span class="text-muted">Anonymous</span>
+    {%- else -%}
+      {{ post_preview.author.username }}
+    {%- endif -%}
+  </td>
   <td><a href="{{ url_for("forum.view_post", post_id=post_preview.id) }}">{{ post_preview.title }}</a></td>
   <td>{{ moment(post_preview.posted_at).fromNow() }}</td>
   <td>{{ moment(post_preview.last_activity).fromNow() }}</td>

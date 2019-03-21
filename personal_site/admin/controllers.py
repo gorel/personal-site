@@ -30,6 +30,18 @@ def users(page_num=1):
     return flask.render_template("admin/users.html", users=users, title="Users")
 
 
+@admin.route("/ban/<int:user_id>", methods=["POST"])
+@flask_login.login_required
+@utils.admin_required
+def ban_user(user_id):
+    user = auth_models.User.query.get_or_404(user_id)
+    user.set_banned(True)
+    db.session.commit()
+
+    flask.flash(f"User {user.username} has been banned.", "alert-success")
+    return flask.redirect(flask.url_for("admin.users"))
+
+
 @admin.route("/users/delete/<int:user_id>", methods=["POST"])
 @flask_login.login_required
 @utils.admin_required
@@ -38,13 +50,11 @@ def delete_user(user_id):
         flask.flash("Now that doesn't seem like a great idea...", "alert-danger")
         return flask.redirect(flask.url_for("admin.users"))
 
-    user = auth_models.User.query.get(user_id)
-    if user is not None:
-        db.session.delete(user)
-        db.session.commit()
-        flask.flash("Deleted user account", "alert-success")
-    else:
-        flask.flash("Invalid user_id", "alert-warning")
+    user = auth_models.User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    flask.flash("Deleted user account", "alert-success")
     return flask.redirect(flask.url_for("admin.users"))
 
 
