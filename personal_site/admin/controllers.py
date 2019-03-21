@@ -5,7 +5,7 @@ import flask_login
 
 from personal_site import constants, db
 
-from personal_site.admin import forms, utils
+from personal_site.admin import forms, models, utils
 
 import personal_site.auth.models as auth_models
 
@@ -30,6 +30,31 @@ def users(page_num=1):
     return flask.render_template("admin/users.html", users=users, title="Users")
 
 
+@admin.route("/send_warning/<int:user_id>", methods=["GET", "POST"])
+@utils.admin_required
+def warn_user(user_id):
+    user = auth_models.User.query.get_or_404(user_id)
+    form = forms.WarnUserForm(user)
+
+    if form.validate_on_submit():
+        db.session.add(form.warning)
+        db.session.commit()
+        flask.flash(f"Sent a warning to {user.username}", "alert-info")
+        return flask.redirect(flask.url_for("admin.users"))
+    else:
+        return flask.render_template("admin/warn_user.html", form=form, title="Warn user")
+
+
+@admin.route("/view_warnings/<int:user_id>")
+@utils.admin_required
+def view_warnings(user_id):
+    user = auth_models.User.query.get_or_404(user_id)
+    # Likely don't need to paginate, because if it got to that point,
+    # probably we have already banned the user
+    warnings = user.warnings.order_by(models.Warning.timestamp.desc()).all()
+    return flask.render_template("admin/view_warnings.html", user=user, warnings=warnings)
+
+
 @admin.route("/ban/<int:user_id>", methods=["POST"])
 @flask_login.login_required
 @utils.admin_required
@@ -38,7 +63,19 @@ def ban_user(user_id):
     user.set_banned(True)
     db.session.commit()
 
-    flask.flash(f"User {user.username} has been banned.", "alert-success")
+    flask.flash(f"User {user.username} has been banned.", "alert-info")
+    return flask.redirect(flask.url_for("admin.users"))
+
+
+@admin.route("/unban/<int:user_id>", methods=["POST"])
+@flask_login.login_required
+@utils.admin_required
+def unban_user(user_id):
+    user = auth_models.User.query.get_or_404(user_id)
+    user.set_banned(False)
+    db.session.commit()
+
+    flask.flash(f"User {user.username} has been unbanned.", "alert-info")
     return flask.redirect(flask.url_for("admin.users"))
 
 
@@ -54,7 +91,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
 
-    flask.flash("Deleted user account", "alert-success")
+    flask.flash("Deleted user account", "alert-info")
     return flask.redirect(flask.url_for("admin.users"))
 
 

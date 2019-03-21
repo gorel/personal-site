@@ -6,6 +6,7 @@ TEMPLATE_DIR = os.path.join(__basepath, "templates")
 
 # Admin
 ADMIN_USERS_PER_PAGE = 50
+WARNING_MAX_LEN = 200
 
 # Auth
 USERNAME_MAX_LEN = 32

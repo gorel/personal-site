@@ -207,7 +207,7 @@ z 1 </code></pre>
 {% block scripts %}
   {{ super () }}
 
-  <!-- i+1 since range is zero-indexed -->
+  {# i+1 since range is zero-indexed #}
   {% for i in range(10) -%}
     {{ learn_pages_utils.render_question_jquery(i + 1) }}
   {%- endfor %}

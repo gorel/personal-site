@@ -3,12 +3,16 @@
 {% block center_content %}
   <h1>User list</h1>
 
+  {# TODO: User search plus sorting (javascript probably) #}
+  {# also need to add "last activity timestamp" somehow #}
+
   <table class="table">
     <tr>
       <th>Username</th>
       <th>Email</th>
       <th>Email verified?</th>
-      <th></th>
+      <th>Warnings</th>
+      <th>Actions</th>
     </tr>
     {% for user in users.items %}
       {% include "admin/partials/_user.html" %}

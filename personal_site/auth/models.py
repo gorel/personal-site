@@ -28,6 +28,8 @@ class User(db.Model, flask_login.UserMixin):
     is_admin = db.Column(db.Boolean, default=False)
     is_banned = db.Column(db.Boolean, default=False)
 
+    warnings = db.relationship("Warning", backref="user", lazy="dynamic")
+
     notifications = db.relationship("Notification", backref="recipient", lazy="dynamic")
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
@@ -95,7 +97,7 @@ class User(db.Model, flask_login.UserMixin):
             recipients=[self.email],
             text_body=flask.render_template(
                 "auth/email/verify_account.txt",
-                user=user,
+                user=self,
                 token=token,
             ),
             html_body=flask.render_template(

@@ -14,7 +14,33 @@
     {%- else -%}
       <i class="fas fa-times-circle text-danger"></i>
     {%- endif -%}
+  <td>
+    {% set warn_count = user.warnings.count() %}
+    {% if warn_count > 0 %}
+      <a href="{{ url_for("admin.view_warnings", user_id=user.id) }}">
+        View {{warn_count}} warning{% if warn_count > 1 %}s{% endif %}
+      </a>
+    {% else %}
+      <p class="text-muted">No warnings</p>
+    {% endif %}
   </td>
-  {# TODO: This should be post and have a popup for confirmation #}
-  <td><a class="text-danger" href="{{ url_for("admin.ban_user", user_id=user.id) }}">Ban user</a></td>
+  <td>
+    {% if not user.is_banned %}
+      <div>
+        <a class="text-warning" href="{{ url_for("admin.warn_user", user_id=user.id) }}">Warn user</a>
+      </div>
+    {% endif %}
+
+    <div>
+      {% if user.is_banned %}
+        <a class="text-danger" href="{{ url_for("admin.unban_user", user_id=user.id) }}" data-method="post" data-confirm="Are you sure you want to unban {{ user.username }}?">
+          Un-ban user
+        </a>
+      {% else %}
+        <a class="text-danger" href="{{ url_for("admin.ban_user", user_id=user.id) }}" data-method="post" data-confirm="Are you sure you want to ban {{ user.username }}?">
+          Ban user
+        </a>
+      {% endif %}
+    </div>
+  </td>
 </tr>
