@@ -12,6 +12,7 @@ import flask_login
 import flask_mail
 import flask_migrate
 import flask_moment
+import flask_shelve
 import flask_sqlalchemy
 import flask_wtf
 
@@ -21,13 +22,13 @@ import wtforms
 import site_config
 
 
+bcrypt = flask_bcrypt.Bcrypt()
+csrf = flask_wtf.CSRFProtect()
 db = flask_sqlalchemy.SQLAlchemy()
 login_manager = flask_login.LoginManager()
-bcrypt = flask_bcrypt.Bcrypt()
 mail = flask_mail.Mail()
 migrate = flask_migrate.Migrate()
 moment = flask_moment.Moment()
-csrf = flask_wtf.CSRFProtect()
 
 
 def register_jinja_utils(app):
@@ -82,13 +83,14 @@ def create_app(config_class=site_config.Config):
     app.config.from_object(config_class)
 
     # Set up extensions
+    bcrypt.init_app(app)
+    csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    bcrypt.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
     moment.init_app(app)
-    csrf.init_app(app)
+    flask_shelve.init_app(app)
 
     # Set up jinja utilities
     register_jinja_utils(app)

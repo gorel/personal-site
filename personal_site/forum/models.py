@@ -38,7 +38,7 @@ class Post(db.Model):
         self.show_anon = show_anon
 
     def edit(self, new_body, new_anon_policy):
-        if self.body == new_body:
+        if self.body == new_body and self.show_anon == new_anon_policy:
             return
         self.body = new_body
         self.show_anon = new_anon_policy
@@ -73,7 +73,7 @@ class Comment(db.Model):
         self.show_anon = show_anon
 
     def edit(self, new_body, new_anon_policy):
-        if self.body == new_body:
+        if self.body == new_body and self.show_anon == new_anon_policy:
             return
         self.body = new_body
         self.show_anon = new_anon_policy

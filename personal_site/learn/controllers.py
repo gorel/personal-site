@@ -1,12 +1,15 @@
+import datetime
 import os
 
 import flask
 import flask_login
+import flask_shelve
 
 from personal_site import constants, db
 from personal_site.learn import forms, models
 
 import personal_site.admin.utils as admin_utils
+import personal_site.auth.utils as auth_utils
 
 learn = flask.Blueprint("learn", __name__, url_prefix="/learn")
 
@@ -32,10 +35,24 @@ def view(name):
     filepath = get_learn_page_path_or_404(name)
 
     page_stats = models.LearnPageStats.get_or_create(name)
-    page_stats.views += 1
-    db.session.commit()
 
-    has_questions = models.LearnQuestion.query.filter_by(page_name=name).first() is not None
+    # Increment views if user hasn't seen page in 1hr+
+    if flask_login.current_user.is_authenticated:
+        shelve_db = flask_shelve.get_shelve("c")
+
+        now = datetime.datetime.utcnow()
+        one_hour_ago = now - datetime.timedelta(hours=1)
+        shelf_key = f"{flask_login.current_user.username}-{name}"
+
+        if shelve_db.get(shelf_key, now) < one_hour_ago:
+            page_stats.views += 1
+            db.session.commit()
+
+        # Update last seen time to now
+        shelve_db[shelf_key] = now
+
+    has_questions = models.LearnQuestion.query.filter_by(
+        page_name=name).first() is not None
 
     return flask.render_template(
         filepath,
@@ -60,6 +77,7 @@ def questions(name):
 
 
 @learn.route("/pages/<name>/ask_question", methods=["GET", "POST"])
+@auth_utils.require_verified_email
 def ask_question(name):
     get_learn_page_path_or_404(name)
 
@@ -80,6 +98,7 @@ def ask_question(name):
 
 
 @learn.route("/pages/answer_question/<int:qid>", methods=["GET", "POST"])
+@admin_utils.admin_required
 def answer_question(qid):
     question = models.LearnQuestion.query.get_or_404(qid)
     form = forms.AnswerQuestionForm(question)

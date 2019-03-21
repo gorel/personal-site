@@ -6,6 +6,8 @@ import flask_login
 from personal_site import constants, db
 from personal_site.forum import forms, models
 
+import personal_site.auth.utils as auth_utils
+
 
 forum = flask.Blueprint("forum", __name__, url_prefix="/forum")
 
@@ -19,6 +21,7 @@ def index():
 
 @forum.route("/new_post", methods=["GET", "POST"])
 @flask_login.login_required
+@auth_utils.require_verified_email
 def new_post():
     form = forms.NewPostForm()
     if form.validate_on_submit():
@@ -31,6 +34,7 @@ def new_post():
 
 @forum.route("<int:post_id>/edit", methods=["GET", "POST"])
 @flask_login.login_required
+@auth_utils.require_verified_email
 def edit_post(post_id):
     post = models.Post.query.get_or_404(post_id)
     form = forms.EditPostForm(post)
@@ -54,6 +58,7 @@ def view_post(post_id):
 
 @forum.route("/<int:post_id>/comment", methods=["GET", "POST"])
 @flask_login.login_required
+@auth_utils.require_verified_email
 def new_comment(post_id):
     post = models.Post.query.get_or_404(post_id)
     form = forms.NewCommentForm(post)
@@ -68,6 +73,7 @@ def new_comment(post_id):
 
 @forum.route("/<int:post_id>/<int:comment_id>/edit", methods=["GET", "POST"])
 @flask_login.login_required
+@auth_utils.require_verified_email
 def edit_comment(post_id, comment_id):
     post = models.Post.query.get_or_404(post_id)
     comment = models.Comment.query.get_or_404(comment_id)

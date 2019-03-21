@@ -56,6 +56,15 @@ def forgot_password():
         return flask.render_template("auth/forgot.html", form=form, title="Forgot your password?")
 
 
+@auth.route("/resend_verification_email")
+@flask_login.login_required
+def resend_verification_email():
+    user = flask_login.current_user
+    user.send_verify_account_email()
+    flask.flash(f"Sent verification email to {user.email}", "alert-success")
+    flask.redirect(flask.url_for("default.home"))
+
+
 @auth.route("/verify_account/<token>")
 def verify_account(token):
     user = models.User.gen_user_for_token("verify_account", token)
@@ -68,7 +77,7 @@ def verify_account(token):
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if flask_login.current_user.is_authenticated:
-        # User should be going through account flow
+        # TODO: User should be going through account flow
         return flask.redirect(flask.url_for("default.home"))
     user = models.User.gen_user_for_token("reset_password", token)
     flask.current_app.logger.warning(f"->->->user is {user}")
