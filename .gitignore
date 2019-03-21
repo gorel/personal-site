@@ -110,3 +110,5 @@ venv.bak/
 app.db
 app_backup.db
 migrations/
+shelve.db
+shelve.db.lock
