@@ -33,7 +33,7 @@ class EditAccountForm(flask_wtf.Form):
         ],
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
-    submit = wtforms.SubmitField("Submit")
+    submit = wtforms.SubmitField("Submit", render_kw={"class": "btn btn-primary"})
 
     def validate(self):
         if not super(EditAccountForm, self).validate():

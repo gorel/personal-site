@@ -1,5 +1,29 @@
 {% extends "base.html" %}
 
+{% block lhs_content %}
+  <div class="row" style="position: fixed">
+    <div class="col">
+      {% if page_name -%}
+        <div>
+          <a class="btn btn-primary" href="{{ url_for("learn.ask_question", name=page_name) }}">
+            Question about this page?
+          </a>
+        </div>
+
+        <div>
+          {% if has_questions %}
+            <a href="{{ url_for("learn.questions", name=page_name) }}">View questions others have asked</a>
+          {% endif %}
+        </div>
+
+        <hr />
+      {%- endif %}
+
+      {% block learn_lhs_content %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
 {% block title %}
   Learn{% if title %} - {{ title }}{% endif %}
 {% endblock %}

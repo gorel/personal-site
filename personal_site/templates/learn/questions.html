@@ -1,0 +1,14 @@
+{% extends "learn/base.html" %}
+
+{# TODO: Filters for answered/unanswered/marked good #}
+{% block learn_lhs_content %}
+  TODO filtering
+{% endblock %}
+
+{% block learn_content %}
+  <h1>Questions about {{ page_name }}</h1>
+
+  {% for question in questions %}
+    {% include "learn/partials/_question.html" %}
+  {% endfor %}
+{% endblock %}

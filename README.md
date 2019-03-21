@@ -2,16 +2,9 @@
 
 ## TODO
 - ~Elasticsearch for wiki pages~
-- i18n/l10n
-- admin panel
-- homepage?
-- about
 - ~forum~
 - ~make the site not look like garbage~
-- migrate to mysql
 - ~email support~
-- Make async email less laggy (task queue?)
-- user notifications
 - ~add title to pages~
 - ~favicon~
 - ~set up prev/next/random in wiki~ wiki deprecated
@@ -19,14 +12,26 @@
 - ~wiki preview?~ wiki deprecated
 - ~better wiki 404 page~ wiki deprecated
 - ~git-backed wiki~ wiki deprecated
-- new/edit comment links to comment instead of parent post
-- Don't use wtf.quick_form
-- Anonymous posts/questions
-- Form to submit new ideas for learn pages
-- Need a questions tab for learn pages
-- Quiz support
 - ~MAJOR: Drop wiki in favor of raw html (this isn't a wiki product...)~
 - ~Instead of wiki, "progbeg" blueprint~
+- ~Learn page "prev page" and "next page" button~
+- ~Anonymous questions~
+- ~Need a questions tab for learn pages~
+- i18n/l10n
+- admin panel
+- homepage?
+- about
+- migrate to mysql
+- Make async email less laggy (task queue?)
+- user notifications
+- new/edit comment links to comment instead of parent post
+- Don't use wtf.quick_form -> slightly fixed by manually modifying wtf.html
+- Anonymous forum posts
+- Form to submit new ideas for learn pages
+- Quiz support
 - Idea of a "cohort" -> subscribe to new posts for five weeks
-- Save progress on completed lessons + "next page" button
+- With cohorts, it would be nice to have sub-forums
+- Save progress on completed lessons
 - In learn.index, set a cookie and only increment views if last view was 1+ hr ago
+- Add hover details for "show as anonymous"
+- Parent class for markdown-renderable models

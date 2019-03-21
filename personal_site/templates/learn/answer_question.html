@@ -1,0 +1,18 @@
+{% extends "learn/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{# manually remove lhs_content since it links back to this same question page #}
+{% block lhs_content %}{%endblock %}
+
+{% block learn_content %}
+  <h1>Answering a question about {{ page_name }}</h1>
+
+  <h4>Original question:</h4>
+
+  {% set question = form.question %}
+  {% include "learn/partials/_question.html" %}
+
+  <hr />
+
+  {{ wtf.quick_form(form) }}
+{% endblock %}

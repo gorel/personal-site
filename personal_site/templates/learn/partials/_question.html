@@ -1,0 +1,34 @@
+<div style="padding-bottom: 2rem">
+  <div class="border border-secondary" style="padding: 10px">
+    {% if question.answer %}
+      <div>
+        <b class="small text-success">Answered</b>
+        {% if question.good_question %}
+          <span class="float-right">
+            Good question
+            <i class="fas fa-star text-success"></i>
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <b>
+      {%- if question.show_anon -%}
+        Anonymous
+      {%- else -%}
+        {{ question.asker.username }}
+      {%- endif %} asks...
+    </b>
+
+    <p>{{ question.html_question|safe }}</p>
+
+    {% if question.answer %}
+      <hr class="border-secondary" />
+      <p class="text-success font-weight-bold" style="margin-bottom: 0rem">Admin answer</p>
+      {{ question.html_answer|safe }}
+    {% elif current_user.is_admin %}
+      <hr class="border-secondary" />
+      <a class="btn btn-info" href="{{ url_for("learn.answer_question", qid=question.id) }}">Answer this question</a>
+    {% endif %}
+  </div>
+</div>

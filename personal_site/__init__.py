@@ -16,6 +16,7 @@ import flask_sqlalchemy
 import flask_wtf
 
 import htmlmin.main
+import wtforms
 
 import site_config
 
@@ -27,6 +28,52 @@ mail = flask_mail.Mail()
 migrate = flask_migrate.Migrate()
 moment = flask_moment.Moment()
 csrf = flask_wtf.CSRFProtect()
+
+
+def register_jinja_utils(app):
+    def _is_hidden_field(field):
+        return isinstance(field, wtforms.fields.HiddenField)
+    app.jinja_env.globals["bootstrap_is_hidden_field"] = _is_hidden_field
+
+
+def set_up_logger(app):
+    if not app.debug and not app.testing:
+        formatter = logging.Formatter(
+            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
+        )
+        handler = logging.handlers.RotatingFileHandler(
+            "site.log", maxBytes=10000, backupCount=2,
+        )
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+        app.logger.addHandler(handler)
+
+
+def register_error_handlers(app):
+    if not app.debug and not app.testing:
+        @app.errorhandler(401)
+        def error401(error):
+            return flask.render_template("401.html", error=error), 401
+
+        @app.errorhandler(404)
+        def error404(error):
+            return flask.render_template("404.html", error=error), 404
+
+        @app.errorhandler(500)
+        def error500(error):
+            app.logger.error(f"HTTP 500: {error}")
+            flask.flash(
+                "Something went wrong :( A log has been generated.",
+                "alert-warning",
+            )
+            return flask.redirect(flask.url_for("default.home", error=error))
+
+        # Minify sent HTML
+        @app.after_request
+        def response_minify(response):
+            if response.content_type == "text/html; charset=utf-8":
+                response.set_data(htmlmin.main.minify(response.get_data(as_text=True)))
+            return response
 
 
 def create_app(config_class=site_config.Config):
@@ -43,43 +90,17 @@ def create_app(config_class=site_config.Config):
     moment.init_app(app)
     csrf.init_app(app)
 
+    # Set up jinja utilities
+    register_jinja_utils(app)
+
     # Enable ElasticSearch for searchable pages
     app.elasticsearch = elasticsearch.Elasticsearch([app.config["ELASTICSEARCH_URL"]])
 
     # Set up logging if we aren't in debug/testing mode
-    if not app.debug and not app.testing:
-        formatter = logging.Formatter(
-            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
-        )
-        handler = logging.handlers.RotatingFileHandler(
-            "site.log", maxBytes=10000, backupCount=2,
-        )
-        handler.setLevel(logging.INFO)
-        handler.setFormatter(formatter)
-        app.logger.addHandler(handler)
+    set_up_logger(app)
 
     # Register error handlers if we aren't in debug/testing mode
-    if not app.debug and not app.testing:
-        @app.errorhandler(401)
-        def error401(error):
-            return flask.render_template("401.html", error=error), 401
-
-        @app.errorhandler(404)
-        def error404(error):
-            return flask.render_template("404.html", error=error), 404
-
-        @app.errorhandler(500)
-        def error500(error):
-            app.logger.error(f"HTTP 500: {error}")
-            flask.flash("Something went wrong :( A log has been generated.", "alert-warning")
-            return flask.redirect(flask.url_for("default.home", error=error))
-
-        # Minify sent HTML
-        @app.after_request
-        def response_minify(response):
-            if response.content_type == "text/html; charset=utf-8":
-                response.set_data(htmlmin.main.minify(response.get_data(as_text=True)))
-            return response
+    register_error_handlers(app)
 
     # Import all blueprints from controllers
     from personal_site.controllers import default

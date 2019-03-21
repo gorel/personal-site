@@ -15,19 +15,41 @@ class AskQuestionForm(flask_wtf.Form):
     show_anon = wtforms.BooleanField("Show as anonymous to classmates?")
     submit = wtforms.SubmitField("Submit")
 
-    def __init__(self, page, *args, **kwargs):
+    def __init__(self, page_name, *args, **kwargs):
         super(AskQuestionForm, self).__init__(*args, **kwargs)
-        self.page = page
+        self.page_name = page_name
         self.learn_question = None
 
     def validate(self):
         if not super(AskQuestionForm, self).validate():
             return False
 
-        self.question = models.LearnQuestion(
+        self.learn_question = models.LearnQuestion(
+            page_name=self.page_name,
             question=self.question.data,
-            page=self.page,
             asker=flask_login.current_user,
             show_anon=self.show_anon.data,
         )
+        return True
+
+
+class AnswerQuestionForm(flask_wtf.Form):
+    answer = wtforms.TextAreaField(
+        "Question answer",
+        validators=[wtforms.validators.DataRequired()],
+        render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
+    )
+    mark_as_good = wtforms.BooleanField('Mark as "good question"?')
+    submit = wtforms.SubmitField("Submit")
+
+    def __init__(self, question, *args, **kwargs):
+        super(AnswerQuestionForm, self).__init__(*args, **kwargs)
+        self.question = question
+
+    def validate(self):
+        if not super(AnswerQuestionForm, self).validate():
+            return False
+
+        self.question.answer = self.answer.data
+        self.question.good_question = self.mark_as_good.data
         return True
