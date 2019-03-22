@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 {% block center_content %}
+  {% if current_user.is_authenticated and current_user.is_banned %}
+    <div class="alert alert-danger text-center">
+      Your account has been banned. You will not be able to post or comment in the forum.
+    </div>
+  {% endif %}
+
   {% if post %}
     <h3><a href="{{ url_for("forum.index") }}">
       <span>&larr;</span>

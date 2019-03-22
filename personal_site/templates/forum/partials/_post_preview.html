@@ -3,7 +3,9 @@
     {% if post_preview.show_anon -%}
       <span class="text-muted">Anonymous</span>
     {%- else -%}
-      {{ post_preview.author.username }}
+      <a href="{{ url_for("profile.index", user_id=post_preview.author.id) }}" class="text-info">
+        {{ post_preview.author.username }}
+      </a>
     {%- endif -%}
   </td>
   <td><a href="{{ url_for("forum.view_post", post_id=post_preview.id) }}">{{ post_preview.title }}</a></td>

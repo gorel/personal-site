@@ -22,6 +22,7 @@ def index():
 @forum.route("/new_post", methods=["GET", "POST"])
 @flask_login.login_required
 @auth_utils.require_verified_email
+@auth_utils.require_not_banned
 def new_post():
     form = forms.NewPostForm()
     if form.validate_on_submit():
@@ -35,6 +36,7 @@ def new_post():
 @forum.route("/<int:post_id>/edit", methods=["GET", "POST"])
 @flask_login.login_required
 @auth_utils.require_verified_email
+@auth_utils.require_not_banned
 def edit_post(post_id):
     post = models.Post.query.get_or_404(post_id)
     form = forms.EditPostForm(post)
@@ -58,7 +60,7 @@ def delete_post(post_id):
 
 
 @forum.route("/<int:post_id>")
-def view_post(post_id):
+def view_post(post_id, page_num=1):
     post = models.Post.query.get_or_404(post_id)
     page = flask.request.args.get("page", 1, type=int)
     comments = post.comments.order_by(
@@ -69,6 +71,7 @@ def view_post(post_id):
 @forum.route("/<int:post_id>/comment", methods=["GET", "POST"])
 @flask_login.login_required
 @auth_utils.require_verified_email
+@auth_utils.require_not_banned
 def new_comment(post_id):
     post = models.Post.query.get_or_404(post_id)
     form = forms.NewCommentForm(post)
@@ -84,6 +87,7 @@ def new_comment(post_id):
 @forum.route("/<int:post_id>/<int:comment_id>/edit", methods=["GET", "POST"])
 @flask_login.login_required
 @auth_utils.require_verified_email
+@auth_utils.require_not_banned
 def edit_comment(post_id, comment_id):
     post = models.Post.query.get_or_404(post_id)
     comment = models.Comment.query.get_or_404(comment_id)

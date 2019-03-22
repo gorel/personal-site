@@ -5,7 +5,9 @@
       {%- if comment.show_anon -%}
         <span class="text-muted">Anonymous</span>
       {%- else -%}
-        {{ comment.author.username }}
+        <a href="{{ url_for("profile.index", user_id=comment.author.id) }}" class="text-info">
+          {{ comment.author.username }}
+        </a>
       {%- endif -%}
     </b> {{ moment(comment.posted_at).fromNow() }}
 

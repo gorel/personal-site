@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block center_content %}
+  <h1>
+    {%- if current_user.id == user.id -%}
+      <span>
+        My profile
+        <small><a href="{{ url_for("profile.edit", user_id=user.id) }}">Edit profile</a></small>
+      </span>
+    {%- else -%}
+      {{ user.username }}'s profile
+    {%- endif -%}
+  </h1>
+
+  <span>
+    <a href="{{ url_for("profile.posts_by_user", user_id=user.id) }}">View posts</a>
+    <a href="{{ url_for("profile.comments_by_user", user_id=user.id) }}">View comments</a>
+  </span>
+
+  <hr />
+
+  {% block profile_content %}{% endblock %}
+{% endblock %}

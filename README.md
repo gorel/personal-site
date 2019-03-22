@@ -21,6 +21,7 @@
 - ~Require email_verified to post/comment in forums or add learn question~
 - ~In learn.index, set a cookie and only increment views if last view was 1+ hr ago~
 - ~Form to submit new ideas for learn pages~ -> covered by forums
+- ~Parent class for markdown-renderable models~ -> Seems overkill
 - i18n/l10n
 - admin panel
 - homepage?
@@ -34,4 +35,3 @@
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
 - Add hover details for "show as anonymous"
-- Parent class for markdown-renderable models

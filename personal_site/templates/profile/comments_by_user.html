@@ -1,0 +1,13 @@
+{% extends "profile/base.html" %}
+
+{% block profile_content %}
+  {% if comments.items %}
+    {% for comment in comments.items %}
+      {% include "forum/partials/_comment.html" %}
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">(There's nothing here)</p>
+  {% endif %}
+
+  {# TODO: Paginate #}
+{% endblock %}

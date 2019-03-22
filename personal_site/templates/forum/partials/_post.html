@@ -6,7 +6,9 @@
       {% if post.show_anon -%}
         <span class="text-muted">Anonymous</span>
       {%- else -%}
-        {{ post.author.username }}
+        <a href="{{ url_for("profile.index", user_id=post.author.id) }}" class="text-info">
+          {{ post.author.username }}
+        </a>
       {%- endif -%}
     </b> {{ moment(post.posted_at).fromNow() }}
 
