@@ -15,11 +15,18 @@ ADMIN_USERS_PER_PAGE = 50
 WARNING_MAX_LEN = 200
 
 # Auth
-USERNAME_MAX_LEN = 32
+USERNAME_MAX_LEN = 64
+EMAIL_MAX_LEN = 64
+PW_HASH_LEN = 64
 PASSWORD_MIN_LEN = 8
+VERIFY_ACCOUNT_TOKEN_STR = "verify_account"
+RESET_PASSWORD_TOKEN_STR = "reset_password"
 
-# Wiki
-WIKIPAGE_MAX_LEN = 64
+# Profile
+NOTIFICATION_MAX_LEN = 140
+ICON_MAX_LEN = 64
+TEXT_CLASS_MAX_LEN = 64
+NOTIFICATIONS_PER_PAGE = 25
 
 # Learn
 LEARN_PAGE_TEMPLATE_DIR = os.path.join("learn", "pages")
@@ -30,9 +37,10 @@ PAGE_IDNAME_REGEX_MSG = ("idname can only contain alphanumeric characters plus "
                          "multiple successive `-` characters")
 # Time required for a shelve_db key to expire for incrementing views
 LEARN_VIEW_EXPIRED_HOURS = 1
+SHELVE_TIMEOUT_SECS = 0.1
+QUESTIONS_PER_PAGE = 20
 
 # Forum
-NOTIFICATION_MAX_LEN = 140
 POST_TITLE_MAX_LEN = 100
 POSTS_PER_PAGE = 25
 COMMENTS_PER_PAGE = 20

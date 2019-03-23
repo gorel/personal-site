@@ -5,17 +5,6 @@ import markdown
 from personal_site import constants, db
 
 
-class Notification(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    recipient_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    message = db.Column(db.String(constants.NOTIFICATION_MAX_LEN))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
-
-    def __init__(self, recipient, message):
-        self.recipient_id = recipient.id
-        self.message = message
-
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))

@@ -61,7 +61,6 @@ def view_warnings(user_id):
 def ban_user(user_id):
     user = auth_models.User.query.get_or_404(user_id)
     user.set_banned(True)
-    db.session.commit()
 
     flask.flash(f"User {user.username} has been banned.", "alert-info")
     return flask.redirect(flask.url_for("admin.users"))
@@ -73,7 +72,6 @@ def ban_user(user_id):
 def unban_user(user_id):
     user = auth_models.User.query.get_or_404(user_id)
     user.set_banned(False)
-    db.session.commit()
 
     flask.flash(f"User {user.username} has been unbanned.", "alert-info")
     return flask.redirect(flask.url_for("admin.users"))

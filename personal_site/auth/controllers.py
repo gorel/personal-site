@@ -4,9 +4,8 @@ Authentication and related behavior
 
 import flask
 import flask_login
-import flask_mail
 
-from personal_site import db, mail
+from personal_site import constants, db
 from personal_site.auth import forms, models
 
 
@@ -67,7 +66,7 @@ def resend_verification_email():
 
 @auth.route("/verify_account/<token>")
 def verify_account(token):
-    user = models.User.gen_user_for_token("verify_account", token)
+    user = models.User.gen_user_for_token(constants.VERIFY_ACCOUNT_TOKEN_STR, token)
     if user is not None:
         user.verify_email()
         flask.flash("Verified email successfully. Welcome!", "alert-success")
@@ -77,10 +76,9 @@ def verify_account(token):
 @auth.route("/reset_password/<token>", methods=["GET", "POST"])
 def reset_password(token):
     if flask_login.current_user.is_authenticated:
-        # TODO: User should be going through account flow
-        return flask.redirect(flask.url_for("default.home"))
-    user = models.User.gen_user_for_token("reset_password", token)
-    flask.current_app.logger.warning(f"->->->user is {user}")
+        flask.flash("You should do that from your profile", "alert-warning")
+        return flask.redirect(flask.url_for("profile.index"))
+    user = models.User.gen_user_for_token(constants.RESET_PASSWORD_TOKEN_STR, token)
     if user is None:
         return flask.redirect(flask.url_for("default.home"))
 

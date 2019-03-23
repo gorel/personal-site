@@ -115,7 +115,7 @@ class EditCommentForm(flask_wtf.Form):
             return False
 
         if self.comment.parent_post.id != self.post.id:
-            # TODO: Throw a bigger error here?
+            flask.current_app.logger.error("comment doesn't belong to post")
             self.body.errors.append("You can't move this comment to another post")
             self.body.errors.append("I'm really not sure how this even happened.")
             return False

@@ -8,8 +8,8 @@ import flask
 import flask_login
 import jwt
 
-from personal_site import bcrypt, db, login_manager, mail
-import personal_site.forum.models as forum_models
+from personal_site import bcrypt, constants, db, login_manager, mail
+import personal_site.profile.models as profile_models
 
 
 @login_manager.user_loader
@@ -19,10 +19,10 @@ def user_loader(user_id):
 
 class User(db.Model, flask_login.UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64))
-    email = db.Column(db.String(64), index=True, unique=True)
-    pw_hash = db.Column(db.String(64))
-    email_verified = db.Column(db.Boolean)
+    username = db.Column(db.String(constants.USERNAME_MAX_LEN))
+    email = db.Column(db.String(constants.EMAIL_MAX_LEN), index=True, unique=True)
+    pw_hash = db.Column(db.String(constants.PW_HASH_LEN))
+    email_verified = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
     is_banned = db.Column(db.Boolean, default=False)
 
@@ -32,6 +32,7 @@ class User(db.Model, flask_login.UserMixin):
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
     last_notification_read_time = db.Column(db.DateTime)
+    unread_notifications = db.Column(db.Integer, default=0)
 
     tasks = db.relationship("Task", backref="user", lazy="dynamic")
 
@@ -39,8 +40,6 @@ class User(db.Model, flask_login.UserMixin):
         flask_login.UserMixin.__init__(self)
         self.username = username
         self.email = email
-        self.email_verified = False
-        self.is_admin = False
 
         pw_bytes = bytes(password, encoding="utf-8")
         sha256 = hashlib.sha256(pw_bytes).hexdigest()
@@ -67,14 +66,35 @@ class User(db.Model, flask_login.UserMixin):
             algorithm="HS256",
         ).decode("utf-8")
 
-    def set_banned(self, banned_status):
-        # TODO: Send a notification/email here in the future
-        self.is_banned = banned_status
+    def set_notification_read_time(self):
+        self.unread_notifications = 0
+        self.last_notification_read_time = datetime.datetime.utcnow()
+        db.session.commit()
+
+
+    def set_banned(self, is_banned):
+        if is_banned:
+            notif = profile_models.Notification(
+                recipient=self,
+                message="You have been banned for your recent behavior",
+                text_class="text-danger",
+                icon="fas fa-ban",
+            )
+        else:
+            notif = profile_models.Notification(
+                recipient=self,
+                message="You have been unbanned",
+                text_class="text-success",
+                icon="fas fa-badge-check",
+            )
+
+        self.is_banned = is_banned
+        db.session.add(notif)
+        db.session.commit()
 
     def launch_task(self, task_name, description, *args, **kwargs):
-        # TODO: Can't get imports to work correctly here
-        #if task_name not in flask.current_app.registered_tasks:
-        #    raise NameError(f"Task {task_name} has not been registered")
+        if task_name not in flask.current_app.registered_tasks:
+            raise NameError(f"Task {task_name} has not been registered")
 
         rq_job = flask.current_app.task_queue.enqueue(
             constants.TASK_PREFIX + task_name,
@@ -108,8 +128,7 @@ class User(db.Model, flask_login.UserMixin):
         return cls.query.get(user_id)
 
     def send_verify_account_email(self):
-        # TODO - Magic constant
-        token = self.gen_token("verify_account")
+        token = self.gen_token(constants.VERIFY_ACCOUNT_TOKEN_STR)
 
         self.launch_task(
             name="send_email",
@@ -138,8 +157,7 @@ class User(db.Model, flask_login.UserMixin):
     def send_reset_password_email(self):
         # 24 hours
         exp_seconds = 60 * 60 * 24
-        # TODO: Magic constant
-        token = self.gen_token("reset_password", exp_seconds=exp_seconds)
+        token = self.gen_token(constants.RESET_PASSWORD_TOKEN_STR, exp_seconds=exp_seconds)
 
         self.launch_task(
             name="send_email",
@@ -165,8 +183,8 @@ class User(db.Model, flask_login.UserMixin):
     def get_new_notifications(self):
         last_read_time = self.last_notification_read_time or datetime.datetime(1900, 1, 1)
         self.last_notification_read_time = datetime.datetime.utcnow()
-        return forum_models.Notification.query.filter_by(recipient=self).filter(
-            forum_models.Notification.timestamp > last_read_time).limit(10)
+        return profile_models.Notification.query.filter_by(recipient=self).filter(
+            profile_models.Notification.timestamp > last_read_time).limit(10)
 
     def __repr__(self):
         return f"<User {self.id}: {self.username}>"

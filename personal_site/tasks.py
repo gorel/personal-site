@@ -19,7 +19,7 @@ app = create_app()
 app.app_context().push()
 
 
-def register_as_task(f, *args, **kwargs):
+def register_task(f, *args, **kwargs):
     @functools.wraps(f)
     def _wrap(*args, **kwargs):
         job = rq.get_current_job()
@@ -60,17 +60,12 @@ def _set_progress(job, progress_pct):
     job.meta["progress"] = progress_pct
     job.save_meta()
     task = models.Task.query.get(job.get_id())
-
-    # Task is initiated from a user context
-    if task.user is not None:
-        # TODO: Send notification
-        pass
     if progress_pct >= 100:
         task.complete = True
     db.session.commit()
 
 
-@register_as_task
+@register_task
 def send_email(email_props):
     job = rq.get_current_job()
     _set_progress(job, 0)
@@ -78,7 +73,7 @@ def send_email(email_props):
     _set_progress(job, 100)
 
 
-@register_as_task
+@register_task
 def clear_old_shelve_objects():
     with fake_request_context():
         job = rq.get_current_job()

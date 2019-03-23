@@ -1,8 +1,7 @@
 {% extends "learn/base.html" %}
 
-{# TODO: Filters for answered/unanswered/marked good #}
 {% block learn_lhs_content %}
-  TODO filtering
+  {# TODO: Filters for answered/unanswered/marked good #}
 {% endblock %}
 
 {% block learn_content %}
@@ -11,4 +10,6 @@
   {% for question in questions %}
     {% include "learn/partials/_question.html" %}
   {% endfor %}
+
+  {# TODO: Paginate #}
 {% endblock %}

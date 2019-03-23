@@ -27,7 +27,7 @@
 - ~Also add "delete old shelves" to task queue~
 - More task queue testing (daemons, email server)
 - i18n/l10n
-- homepage?
+- homepage
 - about
 - migrate to mysql
 - user notifications
@@ -37,3 +37,4 @@
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
 - Add hover details for "show as anonymous"
+- "Follow" button on forum posts to get notifications

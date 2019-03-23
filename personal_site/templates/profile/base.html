@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 
 {% block center_content %}
-  <h1>
     {%- if current_user.id == user.id -%}
-      <span>
-        My profile
-        <small><a href="{{ url_for("profile.edit", user_id=user.id) }}">Edit profile</a></small>
-      </span>
+      <h1>My profile</h1>
+      <a href="{{ url_for("profile.edit", user_id=user.id) }}">Edit</a>
     {%- else -%}
-      {{ user.username }}'s profile
+      <h1>{{ user.username }}'s profile</h1>
     {%- endif -%}
-  </h1>
 
-  <span>
-    <a href="{{ url_for("profile.posts_by_user", user_id=user.id) }}">View posts</a>
-    <a href="{{ url_for("profile.comments_by_user", user_id=user.id) }}">View comments</a>
-  </span>
+  <br />
+
+  <div class="row">
+    <div class="col">
+      <a href="{{ url_for("profile.posts_by_user", user_id=user.id) }}">View posts</a>
+    </div>
+    <div class="col">
+      <a href="{{ url_for("profile.comments_by_user", user_id=user.id) }}">View comments</a>
+    </div>
+    <div class="col">
+      {%- if current_user.id == user.id -%}
+        <a href="{{ url_for("profile.notifications") }}">Notifications</a>
+      {%- endif -%}
+    </div>
+  </div>
 
   <hr />
 

@@ -137,4 +137,8 @@ def create_app(config_class=site_config.Config):
     app.register_blueprint(learn)
     app.register_blueprint(profile)
 
+    # Register tasks
+    from personal_site import tasks
+    app.registered_tasks = tasks.REGISTERED_TASKS
+
     return app

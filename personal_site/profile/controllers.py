@@ -6,7 +6,7 @@ from personal_site import constants, db
 import personal_site.auth.models as auth_models
 import personal_site.forum.models as forum_models
 
-from personal_site.profile import forms
+from personal_site.profile import forms, models
 
 profile = flask.Blueprint("profile", __name__, url_prefix="/profile")
 
@@ -33,13 +33,37 @@ def edit():
         return flask.render_template("profile/edit.html", form=form, title="Edit profile")
 
 
+@profile.route("/num_unread_notifications")
+@flask_login.login_required
+def num_unread_notifications():
+    return flask.jsonify({"count": flask_login.current_user.unread_notifications})
+
+
+@profile.route("/notifications")
+@profile.route("/notifications/")
+@profile.route("/notifications/<int:page_num>")
+@flask_login.login_required
+def notifications(page_num=1):
+    user = flask_login.current_user
+    last_read_time = user.last_notification_read_time or 0
+    user.set_notification_read_time()
+    notifs = user.notifications.order_by(models.Notification.timestamp.desc())
+    notifs = notifs.paginate(page_num, constants.NOTIFICATIONS_PER_PAGE)
+    return flask.render_template(
+        "profile/notifications.html",
+        user=user,
+        notifications=notifs,
+        last_read_time=last_read_time,
+    )
+
+
 @profile.route("/posts/<int:user_id>")
 def posts_by_user(user_id):
     user = auth_models.User.query.get_or_404(user_id)
     page = flask.request.args.get("page", 1, type=int)
 
     # Privacy filter for show_anon must be checked
-    posts = user.posts.order_by(forum_models.Post.posted_at)
+    posts = user.posts.order_by(forum_models.Post.posted_at.desc())
     if user_id != flask_login.current_user.id:
         posts = posts.filter(forum_models.Post.show_anon.is_(False))
     posts = posts.paginate(page, constants.COMMENTS_PER_PAGE)
@@ -53,7 +77,7 @@ def comments_by_user(user_id):
     page = flask.request.args.get("page", 1, type=int)
 
     # Privacy filter for show_anon must be checked
-    comments = user.comments.order_by(forum_models.Comment.posted_at)
+    comments = user.comments.order_by(forum_models.Comment.posted_at.desc())
     if user_id != flask_login.current_user.id:
         comments = comments.filter(forum_models.Comment.show_anon.is_(False))
     comments = comments.paginate(page, constants.COMMENTS_PER_PAGE)

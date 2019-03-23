@@ -1,0 +1,24 @@
+<div style="padding-bottom: 10px">
+  <div class="border border-secondary" style="padding: 10px">
+
+    <div>
+      {% if notification.timestamp > last_read_time %}
+        <i class="fas fa-exclamation-circle text-primary"></i>
+      {% endif %}
+      <span class="small">Received {{ moment(notification.timestamp).fromNow() }}</span>
+    </div>
+
+    <hr />
+
+    <div>
+      {% if notification.icon %}
+        <i class="{{ notification.icon}} {{ notification.text_class }}"></i>
+      {% endif %}
+
+      <span {% if notification.text_class %}class="{{ notification.text_class }}"{% endif %}>
+        {{ notification.message }}
+      </span>
+    </div>
+
+  </div>
+</div>

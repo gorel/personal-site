@@ -38,7 +38,8 @@ def view(name):
 
     # Increment views if user hasn't seen page in 1hr+
     if flask_login.current_user.is_authenticated:
-        # TODO: contextlib timeout for shelve
+
+        # TODO: Set a timeout for updating page stats to not block the page
         shelve_db = flask_shelve.get_shelve("c")
         shelve_key = f"{flask_login.current_user.username}-{name}"
 
@@ -63,10 +64,12 @@ def view(name):
 @learn.route("/pages/<name>/questions", methods=["GET", "POST"])
 def questions(name):
     get_learn_page_path_or_404(name)
+    page = flask.request.args.get("page", 1, type=int)
 
-    # TODO: Probably should paginate questions or even get different ones by
-    # answered/unanswered/marked good
-    questions = models.LearnQuestion.query.filter_by(page_name=name).all()
+    questions = models.LearnQuestion.query.filter_by(page_name=name)
+    # Show good questions first
+    questions = questions.order_by(
+        models.LearnQuestion.good_question.desc()).paginate(page, constants.QUESTIONS_PER_PAGE)
 
     return flask.render_template(
         "learn/questions.html",
