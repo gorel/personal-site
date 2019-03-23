@@ -22,12 +22,14 @@
 - ~In learn.index, set a cookie and only increment views if last view was 1+ hr ago~
 - ~Form to submit new ideas for learn pages~ -> covered by forums
 - ~Parent class for markdown-renderable models~ -> Seems overkill
+- ~admin panel~
+- ~Make async email less laggy (task queue?)~
+- ~Also add "delete old shelves" to task queue~
+- More task queue testing (daemons, email server)
 - i18n/l10n
-- admin panel
 - homepage?
 - about
 - migrate to mysql
-- Make async email less laggy (task queue?)
 - user notifications
 - new/edit comment links to comment instead of parent post
 - Quiz support

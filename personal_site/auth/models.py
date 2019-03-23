@@ -11,8 +11,6 @@ import jwt
 from personal_site import bcrypt, db, login_manager, mail
 import personal_site.forum.models as forum_models
 
-from personal_site.auth import emailutil
-
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -34,6 +32,8 @@ class User(db.Model, flask_login.UserMixin):
     posts = db.relationship("Post", backref="author", lazy="dynamic")
     comments = db.relationship("Comment", backref="author", lazy="dynamic")
     last_notification_read_time = db.Column(db.DateTime)
+
+    tasks = db.relationship("Task", backref="user", lazy="dynamic")
 
     def __init__(self, username, email, password):
         flask_login.UserMixin.__init__(self)
@@ -71,6 +71,26 @@ class User(db.Model, flask_login.UserMixin):
         # TODO: Send a notification/email here in the future
         self.is_banned = banned_status
 
+    def launch_task(self, task_name, description, *args, **kwargs):
+        # TODO: Can't get imports to work correctly here
+        #if task_name not in flask.current_app.registered_tasks:
+        #    raise NameError(f"Task {task_name} has not been registered")
+
+        rq_job = flask.current_app.task_queue.enqueue(
+            constants.TASK_PREFIX + task_name,
+            self.id,
+            *args,
+            **kwargs)
+        task = Task(id=rq_job.get_id(), name=name, description=description, user=self)
+        db.session.add(task)
+        db.session.commit()
+        return task
+
+    def get_tasks_in_progress(self):
+        return Task.query.filter_by(user=self, complete=False).all()
+
+    def get_task_in_progress(self, name):
+        return Task.query.filter_by(name=name, user=self, complete=False).first()
 
     @classmethod
     def gen_user_for_token(cls, kind, token):
@@ -91,20 +111,25 @@ class User(db.Model, flask_login.UserMixin):
         # TODO - Magic constant
         token = self.gen_token("verify_account")
 
-        emailutil.send_email(
-            subject="[LoganGore] Verify your email",
-            sender=flask.current_app.config["ADMINS"][0],
-            recipients=[self.email],
-            text_body=flask.render_template(
-                "auth/email/verify_account.txt",
-                user=self,
-                token=token,
-            ),
-            html_body=flask.render_template(
-                "auth/email/verify_account.html",
-                user=self,
-                token=token,
-            ),
+        self.launch_task(
+            name="send_email",
+            description=f"Email verification for user_id={self.id}",
+            # func args below
+            email_props={
+                "subject": "[LoganGore] Verify your email",
+                "sender": flask.current_app.config["ADMINS"][0],
+                "recipients": [self.email],
+                "text_body": flask.render_template(
+                    "auth/email/verify_account.txt",
+                    user=self,
+                    token=token,
+                ),
+                "html_body": flask.render_template(
+                    "auth/email/verify_account.html",
+                    user=self,
+                    token=token,
+                ),
+            },
         )
 
     def verify_email(self):
@@ -116,20 +141,25 @@ class User(db.Model, flask_login.UserMixin):
         # TODO: Magic constant
         token = self.gen_token("reset_password", exp_seconds=exp_seconds)
 
-        emailutil.send_email(
-            subject="[LoganGore] Reset your password",
-            sender=flask.current_app.config["ADMINS"][0],
-            recipients=[self.email],
-            text_body=flask.render_template(
-                "auth/email/reset_password.txt",
-                user=self,
-                token=token,
-            ),
-            html_body=flask.render_template(
-                "auth/email/reset_password.html",
-                user=self,
-                token=token,
-            ),
+        self.launch_task(
+            name="send_email",
+            description=f"Password reset email for user_id={self.id}",
+            # func args below
+            email_props={
+                "subject": "[LoganGore] Reset your password",
+                "sender": flask.current_app.config["ADMINS"][0],
+                "recipients": [self.email],
+                "text_body": flask.render_template(
+                    "auth/email/reset_password.txt",
+                    user=self,
+                    token=token,
+                ),
+                "html_body": flask.render_template(
+                    "auth/email/reset_password.html",
+                    user=self,
+                    token=token,
+                ),
+            },
         )
 
     def get_new_notifications(self):

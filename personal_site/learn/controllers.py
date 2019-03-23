@@ -6,7 +6,7 @@ import flask_login
 import flask_shelve
 
 from personal_site import constants, db
-from personal_site.learn import forms, models
+from personal_site.learn import forms, models, utils
 
 import personal_site.admin.utils as admin_utils
 import personal_site.auth.utils as auth_utils
@@ -38,18 +38,17 @@ def view(name):
 
     # Increment views if user hasn't seen page in 1hr+
     if flask_login.current_user.is_authenticated:
+        # TODO: contextlib timeout for shelve
         shelve_db = flask_shelve.get_shelve("c")
+        shelve_key = f"{flask_login.current_user.username}-{name}"
 
-        now = datetime.datetime.utcnow()
-        one_hour_ago = now - datetime.timedelta(hours=1)
-        shelf_key = f"{flask_login.current_user.username}-{name}"
-
-        if shelve_db.get(shelf_key, now) < one_hour_ago:
+        if utils.is_last_view_expired(shelve_db, shelve_key):
             page_stats.views += 1
             db.session.commit()
 
         # Update last seen time to now
-        shelve_db[shelf_key] = now
+        # It is INTENTIONAL that this updates even if we don't increment views
+        utils.update_shelve_expiration_time(shelve_db, shelve_key)
 
     has_questions = models.LearnQuestion.query.filter_by(
         page_name=name).first() is not None

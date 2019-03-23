@@ -17,6 +17,8 @@ import flask_sqlalchemy
 import flask_wtf
 
 import htmlmin.main
+import redis
+import rq
 import wtforms
 
 import site_config
@@ -29,6 +31,14 @@ login_manager = flask_login.LoginManager()
 mail = flask_mail.Mail()
 migrate = flask_migrate.Migrate()
 moment = flask_moment.Moment()
+
+# Import all models files to ensure SQLAlchemy finds and instantiates them
+def import_models():
+    import personal_site.models
+    import personal_site.admin.models
+    import personal_site.auth.models
+    import personal_site.forum.models
+    import personal_site.learn.models
 
 
 def register_jinja_utils(app):
@@ -92,11 +102,18 @@ def create_app(config_class=site_config.Config):
     moment.init_app(app)
     flask_shelve.init_app(app)
 
+    # Import models for db migration and setup
+    import_models()
+
     # Set up jinja utilities
     register_jinja_utils(app)
 
     # Enable ElasticSearch for searchable pages
     app.elasticsearch = elasticsearch.Elasticsearch([app.config["ELASTICSEARCH_URL"]])
+
+    # Enable redis queue
+    app.redis = redis.Redis.from_url(app.config["REDIS_URL"])
+    app.task_queue = rq.Queue(app.config["RQ_NAME"], connection=app.redis)
 
     # Set up logging if we aren't in debug/testing mode
     set_up_logger(app)
