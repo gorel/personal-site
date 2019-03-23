@@ -68,6 +68,30 @@ def view_post(post_id, page_num=1):
     return flask.render_template("forum/view_post.html", post=post, comments=comments)
 
 
+@forum.route("/<int:post_id>/follow", methods=["POST"])
+def follow_post(post_id):
+    post = models.Post.query.get_or_404(post_id)
+    flask_login.current_user.followed_posts.append(post)
+    db.session.commit()
+
+    flask.flash(f"You have subscribed to '{post.title}'", "alert-success")
+    return flask.redirect(
+        flask.request.referrer
+        or flask.url_for("forum.view_post", post_id=post_id))
+
+
+@forum.route("/<int:post_id>/unfollow", methods=["POST"])
+def unfollow_post(post_id):
+    post = models.Post.query.get_or_404(post_id)
+    flask_login.current_user.followed_posts.remove(post)
+    db.session.commit()
+
+    flask.flash(f"You have unsubscribed from '{post.title}'", "alert-success")
+    return flask.redirect(
+        flask.request.referrer
+        or flask.url_for("forum.view_post", post_id=post_id))
+
+
 @forum.route("/<int:post_id>/comment", methods=["GET", "POST"])
 @flask_login.login_required
 @auth_utils.require_verified_email
@@ -77,6 +101,7 @@ def new_comment(post_id):
     form = forms.NewCommentForm(post)
 
     if form.validate_on_submit():
+        post.notify_followers(poster=flask_login.current_user)
         db.session.add(form.comment)
         db.session.commit()
         return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))

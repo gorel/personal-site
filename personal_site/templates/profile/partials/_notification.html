@@ -21,5 +21,9 @@
         {{ notification.message }}
       </span>
     </div>
+
+    {% if notification.url_link %}
+    <a class="btn btn-primary btn-small" href="{{ notification.url_link }}">Go there</a>
+    {% endif %}
   </div>
 </div>

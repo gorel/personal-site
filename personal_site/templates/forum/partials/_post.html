@@ -1,3 +1,16 @@
+<h5>
+  {# TODO: Add a way to unsubscribe #}
+  {% if post in current_user.followed_posts %}
+    <a href="{{ url_for("forum.unfollow_post", post_id=post.id) }}" data-method="post" class="text-info">
+      You're subscribed to new comments on this post. Click here to unsubscribe.
+    </a>
+  {% else %}
+    <a href="{{ url_for("forum.follow_post", post_id=post.id) }}" data-method="post" class="text-info">
+      Click to subscribe to new comments on this post
+    </a>
+  {% endif %}
+</h5>
+
 <div style="padding-bottom: 10px">
   <div class="border border-primary rounded" style="padding: 10px; border-width: 5px !important">
     <h1 class="">{{ post.title }}</h1>

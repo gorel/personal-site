@@ -1,8 +1,16 @@
 import datetime
 
+import flask
 import markdown
 
 from personal_site import constants, db
+
+
+class PostFollow(db.Model):
+    __tablename__ = "post_follow"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
 
 
 class Post(db.Model):
@@ -19,6 +27,8 @@ class Post(db.Model):
 
     show_anon = db.Column(db.Boolean)
 
+    followers = db.relationship("User", secondary="post_follow", lazy="dynamic")
+
     def __init__(self, author, title, body, show_anon):
         self.author_id = author.id
         self.title = title
@@ -33,6 +43,13 @@ class Post(db.Model):
         self.show_anon = new_anon_policy
         self.edited_at = datetime.datetime.now()
         self.last_activity = datetime.datetime.now()
+
+    def notify_followers(self, poster):
+        url = flask.url_for("forum.view_post", post_id=self.id)
+        for follower in self.followers:
+            # Don't notify the comment author
+            if follower.id != poster.id:
+                follower.notify(constants.NEW_COMMENT_NOTIF_STR, url)
 
     @property
     def html_body(self):

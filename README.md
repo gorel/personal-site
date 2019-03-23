@@ -25,6 +25,7 @@
 - ~admin panel~
 - ~Make async email less laggy (task queue?)~
 - ~Also add "delete old shelves" to task queue~
+- ~"Follow" button on forum posts to get notifications~
 - More task queue testing (daemons, email server)
 - i18n/l10n
 - homepage
@@ -37,4 +38,3 @@
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
 - Add hover details for "show as anonymous"
-- "Follow" button on forum posts to get notifications

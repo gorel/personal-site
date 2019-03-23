@@ -35,6 +35,7 @@ class User(db.Model, flask_login.UserMixin):
     unread_notifications = db.Column(db.Integer, default=0)
 
     tasks = db.relationship("Task", backref="user", lazy="dynamic")
+    followed_posts = db.relationship("Post", secondary="post_follow", lazy="dynamic")
 
     def __init__(self, username, email, password):
         flask_login.UserMixin.__init__(self)
@@ -66,6 +67,17 @@ class User(db.Model, flask_login.UserMixin):
             algorithm="HS256",
         ).decode("utf-8")
 
+    def notify(self, message, url_link=None, text_class=None, icon=None):
+        notif = profile_models.Notification(
+            recipient=self,
+            message=message,
+            url_link=url_link,
+            text_class=text_class,
+            icon=icon,
+        )
+        db.session.add(notif)
+        db.session.commit()
+
     def set_notification_read_time(self):
         self.unread_notifications = 0
         self.last_notification_read_time = datetime.datetime.utcnow()
@@ -79,15 +91,13 @@ class User(db.Model, flask_login.UserMixin):
 
     def set_banned(self, is_banned):
         if is_banned:
-            notif = profile_models.Notification(
-                recipient=self,
+            self.notify(
                 message="You have been banned for your recent behavior",
                 text_class="text-danger",
                 icon="fas fa-ban",
             )
         else:
-            notif = profile_models.Notification(
-                recipient=self,
+            self.notify(
                 message="You have been unbanned",
                 text_class="text-success",
                 icon="fas fa-badge-check",
