@@ -72,6 +72,11 @@ class User(db.Model, flask_login.UserMixin):
         db.session.commit()
 
 
+    def new_notifications(self):
+        return self.notifications.filter(
+            profile_models.Notification.timestamp > self.last_notification_read_time).count()
+
+
     def set_banned(self, is_banned):
         if is_banned:
             notif = profile_models.Notification(

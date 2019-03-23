@@ -16,6 +16,17 @@
           <li class="nav-item"><a class="nav-link" href="{{ url_for("auth.register") }}">Register</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for("auth.login") }}">Login</a></li>
         {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("profile.notifications") }}">
+              <i class="fas fa-globe-americas"></i>
+              Notifications
+              {% set new_notifs = current_user.new_notifications() %}
+              <span id="notification_count" class="badge badge-secondary"
+                  style="visibility: {% if new_notifs  %} visible {% else %} hidden {% endif %}">
+                {{ new_notifs }}
+              </span>
+            </a>
+          </li>
           <li class="nav-item"><a class="nav-link" href="{{ url_for("profile.index") }}">My profile</a></li>
           {% if current_user.is_admin %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for("admin.index") }}">Admin panel</a></li>

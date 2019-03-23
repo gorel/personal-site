@@ -36,7 +36,8 @@ def edit():
 @profile.route("/num_unread_notifications")
 @flask_login.login_required
 def num_unread_notifications():
-    return flask.jsonify({"count": flask_login.current_user.unread_notifications})
+    count = flask_login.current_user.new_notifications()
+    return flask.jsonify({"count": count})
 
 
 @profile.route("/notifications")

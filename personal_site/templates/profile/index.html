@@ -1,3 +1,16 @@
 {% extends "profile/base.html" %}
 
 {# Really nothing else needed here... #}
+{% block profile_content %}
+  {% if current_user.id == user.id %}
+    {# TODO: Consider if this should paginate (realistically that would be a ban) #}
+    {% set warnings = current_user.warnings.all() %}
+    {% if warnings %}
+      <h3>Warnings you've received</h3>
+      <p><b>Remember:</b> Continued negative behavior on the site could result in your account being banned from participating in the forums or posting questions on lessons.</p>
+      {% for warning in warnings %}
+        {% include "profile/partials/_warning.html" %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{% endblock %}

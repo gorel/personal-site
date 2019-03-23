@@ -1,9 +1,11 @@
 <div style="padding-bottom: 10px">
   <div class="border border-secondary" style="padding: 10px">
+    {% set new_notif = notification.timestamp > last_read_time %}
 
-    <div>
-      {% if notification.timestamp > last_read_time %}
-        <i class="fas fa-exclamation-circle text-primary"></i>
+    <div {% if new_notif %}class="border border-info bg-primary text-white"{% endif %}
+        style="padding: 10px">
+      {% if new_notif %}
+        <i class="fas fa-exclamation-circle text-white"></i>
       {% endif %}
       <span class="small">Received {{ moment(notification.timestamp).fromNow() }}</span>
     </div>
@@ -19,6 +21,5 @@
         {{ notification.message }}
       </span>
     </div>
-
   </div>
 </div>

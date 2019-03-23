@@ -106,4 +106,26 @@
   <script src="{{ url_for("static", filename="js/app.js") }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+
+  {# Enable notifcation count updates #}
+  {% if current_user.is_authenticated %}
+    <script>
+      // Update notification badge
+      function set_notification_count(n) {
+        $("#notification_count").text(n);
+        $("#notification_count").css("visibility", n > 0 ? "visible" : "hidden");
+      }
+
+      {# 10 second interval for updates #}
+      $(function() {
+        setInterval(function() {
+          $.ajax("{{ url_for("profile.num_unread_notifications") }}").done(
+            function(result_json) {
+              set_notification_count(result_json.count);
+            }
+          );
+        }, 10000);
+      });
+    </script>
+  {% endif %}
 {% endblock %}
