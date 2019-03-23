@@ -1,22 +1,16 @@
 import datetime
-import json
-import os
-import requests
-import schedule
 import time
 
-import personal_site
+import schedule
 
-from dli_app.mod_admin.models import ErrorReport
-from dli_app.mod_auth.models import PasswordReset
+from personal_site import create_app, tasks
 
-
-app = personal_site.create_app()
+app = create_app()
 
 
 def clear_old_shelf_objects():
     with app.app_context():
-        personal_site.tasks.clear_old_shelf_objects()
+        tasks.clear_old_shelf_objects()
 
 
 ############################
@@ -32,5 +26,8 @@ schedule.every().day.at("23:59").do(clear_old_shelf_objects)
 
 # Run all scheduled jobs forever
 while True:
+    now = datetime.datetime.utcnow()
+    now = now - datetime.timedelta(microseconds=now.microsecond)
+    print(f"Run pending ({now}Z)")
     schedule.run_pending()
     time.sleep(60)

@@ -26,15 +26,17 @@
 - ~Make async email less laggy (task queue?)~
 - ~Also add "delete old shelves" to task queue~
 - ~"Follow" button on forum posts to get notifications~
-- More task queue testing (daemons, email server)
-- i18n/l10n
+- ~user notifications~
+- ~More task queue testing (daemons, email server)~
 - homepage
 - about
 - migrate to mysql
-- user notifications
 - new/edit comment links to comment instead of parent post
 - Quiz support
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
 - Add hover details for "show as anonymous"
+- Pagination
+- Permanent email server
+- i18n/l10n
