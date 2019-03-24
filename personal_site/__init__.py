@@ -46,6 +46,12 @@ def register_jinja_utils(app):
         return isinstance(field, wtforms.fields.HiddenField)
     app.jinja_env.globals["bootstrap_is_hidden_field"] = _is_hidden_field
 
+    def _url_for_other_page(page):
+        args = flask.request.view_args.copy()
+        args['page'] = page
+        return flask.url_for(flask.request.endpoint, **args)
+    app.jinja_env.globals['url_for_other_page'] = _url_for_other_page
+
 
 def set_up_logger(app):
     if not app.debug and not app.testing:

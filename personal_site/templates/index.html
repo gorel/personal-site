@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
 {% block center_content %}
-  <h1>Hello, world</h1>
+  <h1>Welcome!</h1>
+
+  <p>Welcome to my personal site. I made this mainly to have a centralized location for my intro to programming content. The content in the level 1 class is aimed at someone completely new to programming. If you've programmed before (especially in a formal setting such as a college classroom), you will likely find that it is all review.</p>
+
+  <p>With that said, I've tried to aim the content in the level 2 class towards some features that may not have been covered in a first semester college class. I take requests to cover new content, but usually the lessons are aimed at someone who is in a non-technical role but wishes to learn some new library to help them in their position.</p>
+  
+  <p>For example, most people don't need to understand algorithmic complexity or computer architecture if they're in a role where they just need to do some occasional data analysis. For them, learning the basics of <code>pandas</code> and <code>matplotlib</code> is all they really want.</p>
+
+  <p>My goal with the programmer beginner series is to take someone who has never programmed before, and after 2-3 months, put them in a position where they can write basic programs either for fun or to make some aspect of their job easier.</p>
+
+  <hr />
+
+  <p>If you're intererested in the course content, take a look at the <a href="{{ url_for("learn.view", name="level-1-foreword.html") }}">level 1 foreword</a>. All of the content is available for free, however, if you create an account on this site, you will also have the opportunity to ask questions on lessons or submit new posts/comments on the fourm.</p>
 {% endblock %}

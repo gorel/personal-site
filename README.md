@@ -29,14 +29,15 @@
 - ~user notifications~
 - ~More task queue testing (daemons, email server)~
 - ~Add hover details for "show as anonymous"~
-- Homepage
-- About
+- ~Quiz support: add quiz, do quiz, my quizzes~ -> out of scope, forum works
+- ~Pagination~
+- ~New/Edit comment links to comment instead of parent post~
+- ~Homepage~
+- ~About~ -> not really needed, just keep content on homepage
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
-- Quiz support: add quiz, do quiz, my quizzes
 - Save progress on completed lessons
-- New/Edit comment links to comment instead of parent post
-- Pagination
 - Permanent email server
 - Migrate to MySQL
 - i18n/l10n
+- Testing

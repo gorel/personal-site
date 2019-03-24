@@ -60,32 +60,33 @@
         <hr />
 
         {# prev/next page #}
-        <div class="row">
-          <div class="col-sm-2">
-            <ul class="pager navbar-nav">
-              <li class="nav-item">
-                {% block pagination_prev %}
-                  {% if prev_url %}
-                    {{ utils.paginate_prev(prev_url) }}
-                  {% endif %}
-                {% endblock %}
-              </li>
-            </ul>
-          </div>
+        {% block pagination %}
+          <div class="row">
+            <div class="col-sm-2">
+              <ul class="pager navbar-nav">
+                <li class="nav-item">
+                  {% block pagination_prev %}
+                    {% if prev_url %}
+                      {{ utils.paginate_prev(prev_url) }}
+                    {% endif %}
+                  {% endblock %}
+                </li>
+              </ul>
+            </div>
 
-          <div class="offset-sm-8 col-sm-2">
-            <ul class="pager navbar-nav">
-              <li class="nav-item">
-                {% block pagination_next -%}
-                  {% if next_url -%}
-                    {{ utils.paginate_next(next_url) }}
-                  {%- endif %}
-                {%- endblock %}
-              </li>
-            </ul>
+            <div class="offset-sm-8 col-sm-2">
+              <ul class="pager navbar-nav">
+                <li class="nav-item">
+                  {% block pagination_next -%}
+                    {% if next_url -%}
+                      {{ utils.paginate_next(next_url) }}
+                    {%- endif %}
+                  {%- endblock %}
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-
+        {% endblock %}
       </div>
 
       <div class="col-sm-2 sidenav">

@@ -1,4 +1,5 @@
 {% extends "forum/base.html" %}
+{% import "partials/_utils.html" as utils222 %}
 
 {% block forum_content %}
   {% include "forum/partials/_post.html" %}
@@ -14,4 +15,11 @@
   {% for comment in comments.items %}
     {% include "forum/partials/_comment.html" %}
   {% endfor %}
+
+  <hr />
+
+{% endblock %}
+
+{% block pagination %}
+  {{ utils.render_pagination(comments) }}
 {% endblock %}

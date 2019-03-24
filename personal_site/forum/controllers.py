@@ -1,4 +1,5 @@
 import datetime
+import math
 
 import flask
 import flask_login
@@ -104,7 +105,9 @@ def new_comment(post_id):
         post.notify_followers(poster=flask_login.current_user)
         db.session.add(form.comment)
         db.session.commit()
-        return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
+
+        page = max(1, math.ceil(form.comment.comment_idx / constants.COMMENTS_PER_PAGE))
+        return flask.redirect(flask.url_for("forum.view_post", post_id=post_id, page=page))
     else:
         return flask.render_template("forum/new_comment.html", form=form, post=post)
 
@@ -120,7 +123,10 @@ def edit_comment(post_id, comment_id):
 
     if form.validate_on_submit():
         db.session.commit()
-        return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
+        page = max(1, math.ceil(comment.comment_idx / constants.COMMENTS_PER_PAGE))
+        flask.current_app.logger.warning(f"comment_idx = {comment.comment_idx}")
+        flask.current_app.logger.warning(f"page = {page}")
+        return flask.redirect(flask.url_for("forum.view_post", post_id=post_id, page=page))
     else:
         form.body.data = comment.body
         form.show_anon.data = comment.show_anon

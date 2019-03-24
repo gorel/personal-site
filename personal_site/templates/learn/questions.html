@@ -11,5 +11,8 @@
     {% include "learn/partials/_question.html" %}
   {% endfor %}
 
-  {# TODO: Paginate #}
+{% endblock %}
+
+{% block pagination %}
+  {{ utils.render_pagination(questions) }}
 {% endblock %}

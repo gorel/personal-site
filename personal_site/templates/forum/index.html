@@ -12,4 +12,9 @@
       {% include "forum/partials/_post_preview.html" %}
     {% endfor %}
   </table>
+
+{% endblock %}
+
+{% block pagination %}
+  {{ utils.render_pagination(posts) }}
 {% endblock %}

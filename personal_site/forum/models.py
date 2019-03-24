@@ -65,6 +65,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    comment_idx = db.Column(db.Integer)
     body = db.Column(db.Text)
 
     posted_at = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
@@ -74,6 +75,9 @@ class Comment(db.Model):
 
     def __init__(self, post, author, body, show_anon):
         self.post_id = post.id
+        # comment_idx helps with redirects after an edit
+        post.num_comments += 1
+        self.comment_idx = post.num_comments
         self.author_id = author.id
         self.body = body
         self.show_anon = show_anon
