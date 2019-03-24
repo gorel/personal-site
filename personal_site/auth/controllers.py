@@ -61,7 +61,7 @@ def resend_verification_email():
     user = flask_login.current_user
     user.send_verify_account_email()
     flask.flash(f"Sent verification email to {user.email}", "alert-success")
-    flask.redirect(flask.url_for("default.home"))
+    return flask.redirect(flask.url_for("default.home"))
 
 
 @auth.route("/verify_account/<token>")

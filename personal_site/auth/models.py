@@ -9,6 +9,8 @@ import flask_login
 import jwt
 
 from personal_site import bcrypt, constants, db, login_manager, mail
+
+import personal_site.models as base_models
 import personal_site.profile.models as profile_models
 
 
@@ -113,19 +115,18 @@ class User(db.Model, flask_login.UserMixin):
 
         rq_job = flask.current_app.task_queue.enqueue(
             constants.TASK_PREFIX + task_name,
-            self.id,
             *args,
             **kwargs)
-        task = Task(id=rq_job.get_id(), name=name, description=description, user=self)
+        task = base_models.Task(id=rq_job.get_id(), name=task_name, description=description, user=self)
         db.session.add(task)
         db.session.commit()
         return task
 
     def get_tasks_in_progress(self):
-        return Task.query.filter_by(user=self, complete=False).all()
+        return base_models.Task.query.filter_by(user=self, complete=False).all()
 
     def get_task_in_progress(self, name):
-        return Task.query.filter_by(name=name, user=self, complete=False).first()
+        return base_models.Task.query.filter_by(name=name, user=self, complete=False).first()
 
     @classmethod
     def gen_user_for_token(cls, kind, token):
@@ -146,11 +147,11 @@ class User(db.Model, flask_login.UserMixin):
         token = self.gen_token(constants.VERIFY_ACCOUNT_TOKEN_STR)
 
         self.launch_task(
-            name="send_email",
+            task_name="send_email",
             description=f"Email verification for user_id={self.id}",
             # func args below
             email_props={
-                "subject": "[LoganGore] Verify your email",
+                "subject": constants.VERIFY_ACCOUNT_SUBJECT_STR,
                 "sender": flask.current_app.config["ADMINS"][0],
                 "recipients": [self.email],
                 "text_body": flask.render_template(
@@ -175,11 +176,11 @@ class User(db.Model, flask_login.UserMixin):
         token = self.gen_token(constants.RESET_PASSWORD_TOKEN_STR, exp_seconds=exp_seconds)
 
         self.launch_task(
-            name="send_email",
+            task_name="send_email",
             description=f"Password reset email for user_id={self.id}",
             # func args below
             email_props={
-                "subject": "[LoganGore] Reset your password",
+                "subject": constants.RESET_PASSWORD_SUBJECT_STR,
                 "sender": flask.current_app.config["ADMINS"][0],
                 "recipients": [self.email],
                 "text_body": flask.render_template(

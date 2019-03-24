@@ -28,15 +28,15 @@
 - ~"Follow" button on forum posts to get notifications~
 - ~user notifications~
 - ~More task queue testing (daemons, email server)~
-- homepage
-- about
-- migrate to mysql
-- new/edit comment links to comment instead of parent post
-- Quiz support
+- ~Add hover details for "show as anonymous"~
+- Homepage
+- About
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
+- Quiz support: add quiz, do quiz, my quizzes
 - Save progress on completed lessons
-- Add hover details for "show as anonymous"
+- New/Edit comment links to comment instead of parent post
 - Pagination
 - Permanent email server
+- Migrate to MySQL
 - i18n/l10n

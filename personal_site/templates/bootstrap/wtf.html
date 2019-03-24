@@ -208,8 +208,13 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
                     form_type=form_type,
                     horizontal_columns=horizontal_columns,
                     button_map=button_map) }}
+      {% if field.id == "show_anon" -%}
+        <p class="text-warning">
+          {# TODO: This is a big hard-coded string #}
+          <b>NOTE</b>: Enabling this will make you show up as anonymous to your classmates, but admins still have the ability to look up your username in case you violate the community standards.
+        </p>
+      {%- endif %}
     {%- endif %}
   {%- endfor %}
-
 </form>
 {%- endmacro %}

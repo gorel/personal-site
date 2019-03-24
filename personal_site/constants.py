@@ -23,6 +23,9 @@ PW_HASH_LEN = 64
 PASSWORD_MIN_LEN = 8
 VERIFY_ACCOUNT_TOKEN_STR = "verify_account"
 RESET_PASSWORD_TOKEN_STR = "reset_password"
+EMAIL_SUBJ_LEAD = "[logangore.dev]"
+VERIFY_ACCOUNT_SUBJECT_STR = f"{EMAIL_SUBJ_LEAD} Verify your email"
+RESET_PASSWORD_SUBJECT_STR = f"{EMAIL_SUBJ_LEAD} Reset your password",
 
 # Profile
 NOTIFICATION_MAX_LEN = 140

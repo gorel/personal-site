@@ -19,7 +19,9 @@ app = create_app()
 app.app_context().push()
 
 
-def register_task(f, *args, **kwargs):
+def register_task(f):
+    REGISTERED_TASKS.add(f.__name__)
+
     @functools.wraps(f)
     def _wrap(*args, **kwargs):
         job = rq.get_current_job()
@@ -34,12 +36,11 @@ def register_task(f, *args, **kwargs):
             db.session.add(task)
             db.session.commit()
 
-        f(*args, **kwargs)
+        res = f(*args, **kwargs)
         job = rq.get_current_job()
         task.meta = json.dumps(job.meta)
         db.session.commit()
-
-    REGISTERED_TASKS.add(f.__name__)
+        return res
     return _wrap
 
 
@@ -53,7 +54,6 @@ def fake_request_context(*args, **kwargs):
     finally:
         if ctx is not None:
             ctx.pop()
-
 
 
 def _set_progress(job, progress_pct):
