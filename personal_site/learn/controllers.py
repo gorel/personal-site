@@ -79,6 +79,7 @@ def questions(name):
 
 
 @learn.route("/pages/<name>/ask_question", methods=["GET", "POST"])
+@flask_login.login_required
 @auth_utils.require_verified_email
 def ask_question(name):
     get_learn_page_path_or_404(name)
