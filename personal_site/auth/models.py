@@ -47,6 +47,7 @@ class User(db.Model, flask_login.UserMixin):
         pw_bytes = bytes(password, encoding="utf-8")
         sha256 = hashlib.sha256(pw_bytes).hexdigest()
         self.pw_hash = bcrypt.generate_password_hash(sha256).decode("utf-8")
+        self.last_notification_read_time = datetime.datetime.utcnow()
         self.send_verify_account_email()
 
     def set_password(self, new_password):

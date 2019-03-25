@@ -20,9 +20,9 @@
             <a class="nav-link" href="{{ url_for("profile.notifications") }}">
               <i class="fas fa-globe-americas"></i>
               Notifications
-              {% set new_notifs = 0 if not current_user.is_authenticated else current_user.new_notifications() %}
+              {% set new_notifs = current_user.new_notifications() %}
               <span id="notification_count" class="badge badge-secondary"
-                  style="visibility: {% if new_notifs  %} visible {% else %} hidden {% endif %}">
+                  style="visibility: {% if new_notifs %} visible {% else %} hidden {% endif %}">
                 {{ new_notifs }}
               </span>
             </a>
