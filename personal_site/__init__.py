@@ -59,7 +59,7 @@ def set_up_logger(app):
             "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
         )
         handler = logging.handlers.RotatingFileHandler(
-            "site.log", maxBytes=10000, backupCount=2,
+            app.config["LOGFILE"], maxBytes=10000, backupCount=2,
         )
         handler.setLevel(logging.INFO)
         handler.setFormatter(formatter)

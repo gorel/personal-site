@@ -11,6 +11,7 @@ class Config(object):
     FLASK_RUN_PORT = int(os.environ.get("FLASK_RUN_PORT"))
     SITE_URL = os.environ.get("SITE_URL")
     DEBUG = bool(os.environ.get("FLASK_DEBUG")) or False
+    LOGFILE = os.environ.get("LOGFILE")
 
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
     SQLALCHEMY_TRACK_MODIFICATIONS = False

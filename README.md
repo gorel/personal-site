@@ -43,3 +43,4 @@
 - Testing
 - Collapse comments in the forum
 - Report bug / ask for feature
+- Flashed messages should have optional links
