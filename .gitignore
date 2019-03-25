@@ -115,3 +115,7 @@ app_backup.db
 migrations/
 shelve.db
 shelve.db.lock
+
+# Production files and folders
+logs/
+deploy.sh

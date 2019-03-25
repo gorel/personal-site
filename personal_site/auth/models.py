@@ -149,7 +149,7 @@ class User(db.Model, flask_login.UserMixin):
 
         self.launch_task(
             task_name="send_email",
-            description=f"Email verification for user_id={self.id}",
+            description=f"Email verification for {self.email}",
             # func args below
             email_props={
                 "subject": constants.VERIFY_ACCOUNT_SUBJECT_STR,
