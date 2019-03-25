@@ -22,10 +22,7 @@ class LearnPageStats(db.Model):
 
     @classmethod
     def get_or_create(cls, name):
-        filepath = os.path.join(constants.LEARN_PAGE_TEMPLATE_DIR, name)
-        template_fullpath = os.path.join(constants.TEMPLATE_DIR, filepath)
         page_stats = cls.get_by_name(name)
-
         if page_stats is None and os.path.exists(template_fullpath):
             page_stats = cls(name)
             db.session.add(page_stats)
