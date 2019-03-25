@@ -41,3 +41,5 @@
 - Migrate to MySQL
 - i18n/l10n
 - Testing
+- Collapse comments in the forum
+- Report bug / ask for feature
