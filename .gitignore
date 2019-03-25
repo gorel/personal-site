@@ -106,6 +106,9 @@ venv.bak/
 # swp files from vim
 .*.swp
 
+# certs folder
+certs/
+
 # sqlite3 test db and related files
 app.db
 app_backup.db
