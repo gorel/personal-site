@@ -23,3 +23,22 @@
 {% block pagination %}
   {{ utils.render_pagination(comments) }}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {# Add jquery to change icons on collapse/show #}
+  {% for comment in comments.items %}
+    {# TODO: Should use mcaros from partials really #}
+    {% set collapser = "_comment-" ~ comment.id %}
+    <script>
+      $("#{{ collapser }}").on("show.bs.collapse", function() {
+        $("#{{ collapser }}-toggle").text("[-]");
+      });
+
+      $("#{{ collapser }}").on("hide.bs.collapse", function() {
+        $("#{{ collapser }}-toggle").text("[+]");
+      });
+    </script>
+  {% endfor %}
+{% endblock %}

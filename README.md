@@ -34,13 +34,13 @@
 - ~New/Edit comment links to comment instead of parent post~
 - ~Homepage~
 - ~About~ -> not really needed, just keep content on homepage
+- ~Migrate to MySQL~
+- ~Collapse comments in the forum~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
 - Permanent email server
-- Migrate to MySQL
 - i18n/l10n
 - Testing
-- Collapse comments in the forum
 - Report bug / ask for feature
 - Flashed messages should have optional links
