@@ -170,6 +170,7 @@ class User(db.Model, flask_login.UserMixin):
 
     def verify_email(self):
         self.email_verified = True
+        db.session.commit()
 
     def send_reset_password_email(self):
         # 24 hours
