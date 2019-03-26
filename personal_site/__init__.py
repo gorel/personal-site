@@ -56,7 +56,7 @@ def register_jinja_utils(app):
 def set_up_logger(app):
     if not app.debug and not app.testing:
         formatter = logging.Formatter(
-            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levename)s - %(message)s",
+            "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s",
         )
         handler = logging.handlers.RotatingFileHandler(
             app.config["LOGFILE"], maxBytes=10000, backupCount=2,
