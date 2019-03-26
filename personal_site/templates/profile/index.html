@@ -3,6 +3,13 @@
 {# Really nothing else needed here... #}
 {% block profile_content %}
   {% if current_user.id == user.id %}
+    {% if not current_user.email_verified %}
+      <h3>Your email has not been verified!</h3>
+      <p>Verification is required to post on the forum or ask questions on a learn page. <a href="{{ url_for("auth.resend_verification_email") }}">Click here</a> to send a new verification link to {{ current_user.email }}. If you don't see the message after a few minutes, be sure to check your spam folder.</p>
+      <hr />
+    {% endif %}
+
+
     {# TODO: Consider if this should paginate (realistically that would be a ban) #}
     {% set warnings = current_user.warnings.all() %}
     {% if warnings %}

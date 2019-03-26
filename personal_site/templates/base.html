@@ -48,7 +48,7 @@
                   {% elif category == "alert-danger" %}
                     <i class="fa fa-exclamation text-left" style="margin-right: 1rem"></i>
                   {% endif %}
-                  {{ message }}
+                  {{ message|safe }}
                 </div>
               {% endfor %}
             </div>
