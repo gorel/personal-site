@@ -1,34 +1,28 @@
 {% extends "learn/base.html" %}
 
-{% block lhs_content %}
-  <div class="row" style="position: fixed">
-    <div class="col">
-      <div class="row">
-        <div class="col">
-        <a class="btn btn-link" data-toggle="collapse" href="#level-2-toc" role="button"
-            aria-expanded="false" aria-controls="level-2-toc">
-          All level 2 lessons
-          <i id="lessons-dropdown-icon" class="fas fa-chevron-down"></i>
-        </a>
-        </div>
-      </div>
+{% block learn_lhs_content %}
+  <a class="btn btn-link" data-toggle="collapse" href="#level-2-toc" role="button"
+      aria-expanded="false" aria-controls="level-2-toc">
+    All level 2 lessons
+    <i id="lessons-dropdown-icon" class="fas fa-chevron-down"></i>
+  </a>
 
-      <div class="collapse" id="level-2-toc">
-        <div class="toc">
-          <ul>
-            <li><a href="level-2-foreword.html">Foreword</a></li>
-            <li><a href="level-2-lesson-1.html">Lesson 1</a></li>
-            <li><a href="level-2-lesson-2.html">Lesson 2</a></li>
-            <li><a href="level-2-lesson-3.html">Lesson 3</a></li>
-            <li><a href="level-2-lesson-4.html">Lesson 4</a></li>
-            <li><a href="level-2-lesson-5.html">Lesson 5</a></li>
-          </ul>
-        </div>
-      </div>
+  <br />
 
-      {% block lhs_toc %}{% endblock %}
+  <div class="collapse" id="level-2-toc">
+    <div class="toc">
+      <ul>
+        <li><a href="level-2-foreword.html">Foreword</a></li>
+        <li><a href="level-2-lesson-1.html">Lesson 1</a></li>
+        <li><a href="level-2-lesson-2.html">Lesson 2</a></li>
+        <li><a href="level-2-lesson-3.html">Lesson 3</a></li>
+        <li><a href="level-2-lesson-4.html">Lesson 4</a></li>
+        <li><a href="level-2-lesson-5.html">Lesson 5</a></li>
+      </ul>
     </div>
   </div>
+
+  {% block lhs_toc %}{% endblock %}
 {% endblock %}
 
 {% block scripts %}

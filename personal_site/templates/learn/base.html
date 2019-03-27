@@ -1,26 +1,22 @@
 {% extends "base.html" %}
 
 {% block lhs_content %}
-  <div class="row" style="position: fixed">
-    <div class="col">
-      {% if page_name -%}
-        <div>
-          <a class="btn btn-primary" href="{{ url_for("learn.ask_question", name=page_name) }}">
-            Question about this page?
-          </a>
-        </div>
+  <div class="sticky-top">
+    {% if page_name -%}
+      <a class="btn btn-primary" href="{{ url_for("learn.ask_question", name=page_name) }}" style="white-space: normal">
+        Question about this page?
+      </a>
 
-        <div>
-          {% if has_questions %}
-            <a href="{{ url_for("learn.questions", name=page_name) }}">View questions others have asked</a>
-          {% endif %}
-        </div>
+      <br />
 
-        <hr />
-      {%- endif %}
+      {% if has_questions %}
+        <a href="{{ url_for("learn.questions", name=page_name) }}">View questions others have asked</a>
+      {% endif %}
 
-      {% block learn_lhs_content %}{% endblock %}
-    </div>
+      <hr />
+    {%- endif %}
+
+    {% block learn_lhs_content %}{% endblock %}
   </div>
 {% endblock %}
 
