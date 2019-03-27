@@ -34,6 +34,7 @@ class RegisterForm(flask_wtf.Form):
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
     remember = wtforms.BooleanField("Remember me?")
+    recaptcha = flask_wtf.RecaptchaField()
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):

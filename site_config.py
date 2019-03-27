@@ -29,6 +29,10 @@ class Config(object):
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 
+    RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+    RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+    RECAPTCHA_DATA_ATTRS = {"theme": "dark"}
+
     SECRET_KEY = os.environ.get("SECRET_KEY")
     ADMINS = [os.environ.get("ADMIN_EMAIL")]
     LANGUAGES = ["en"]
