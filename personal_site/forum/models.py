@@ -4,6 +4,7 @@ import flask
 import markdown
 
 from personal_site import constants, db
+from personal_site.forum import utils
 
 
 class PostFollow(db.Model):
@@ -53,7 +54,8 @@ class Post(db.Model):
 
     @property
     def html_body(self):
-        return markdown.markdown(self.body, extensions=["extra", "codehilite"])
+        result = utils.safe_html(self.body)
+        return markdown.markdown(result, extensions=["extra", "codehilite"])
 
     @property
     def was_edited(self):
@@ -91,7 +93,8 @@ class Comment(db.Model):
 
     @property
     def html_body(self):
-        return markdown.markdown(self.body, extensions=["extra", "codehilite"])
+        result = utils.safe_html(self.body)
+        return markdown.markdown(result, extensions=["extra", "codehilite"])
 
     @property
     def was_edited(self):

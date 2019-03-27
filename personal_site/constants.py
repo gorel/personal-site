@@ -1,4 +1,5 @@
 import os
+import re
 
 # Basepath constants
 __basepath = os.path.dirname(os.path.abspath(__file__))
@@ -55,3 +56,4 @@ NEW_COMMENT_NOTIF_STR = "There is a new comment on a post you're following"
 
 # Other
 ES_PAGE_SIZE = 25
+MARKDOWN_CODE_PATTERN = re.compile("```((.|\n)*?)```")
