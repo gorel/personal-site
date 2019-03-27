@@ -36,10 +36,10 @@
 - ~About~ -> not really needed, just keep content on homepage
 - ~Migrate to MySQL~
 - ~Collapse comments in the forum~
+- ~Permanent email server~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
-- Permanent email server
 - i18n/l10n
 - Testing
 - Report bug / ask for feature
