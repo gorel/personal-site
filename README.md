@@ -46,6 +46,7 @@
 - Report bug / ask for feature
 - Flashed messages should have optional links
 - Edit/Delete post/comment for admin
+- Learn is broken on mobile
 
 # Completely different features
 - ~Facilitate bans for hearthstone (share_secret) -> needs better UI~

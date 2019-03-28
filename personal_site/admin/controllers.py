@@ -91,25 +91,3 @@ def delete_user(user_id):
 
     flask.flash("Deleted user account", "alert-info")
     return flask.redirect(flask.url_for("admin.users"))
-
-
-@admin.route("/bugsplat", methods=["GET", "POST"])
-@admin.route("/bugsplat/", methods=["GET", "POST"])
-@admin.route("/bugsplat/<error>", methods=["GET", "POST"])
-def bugsplat(error=None):
-    form = forms.ErrorReportForm()
-    if form.validate_on_submit():
-        # Add a reference to this user on the report
-        form.error_report.user_id = flask_login.current_user.id
-        db.sesion.add(form.error_report)
-        db.session.commit()
-
-        flask.flash("Thank you for your report!", "alert-success")
-        return flask.redirect(flask.url_for("default.home"))
-    else:
-        form.error.data = error
-        if error is not None:
-            form.report_type.data = int(forms.ReportType.BUG_REPORT)
-        else:
-            form.report_type.data = int(forms.ReportType.FEATURE_REQUEST)
-        return flask.render_template("admin/bugsplat.html", form=form)

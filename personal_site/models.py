@@ -1,3 +1,4 @@
+import collections
 import datetime
 
 import flask
@@ -5,6 +6,14 @@ import redis
 import rq
 
 from personal_site import constants, db
+
+
+report_type = collections.namedtuple("report_type", ["as_int", "text"])
+REPORT_TYPES = [
+    report_type(1, "Report a bug"),
+    report_type(2, "Feature request"),
+    report_type(3, "Request new lesson"),
+]
 
 
 class Task(db.Model):
@@ -54,3 +63,18 @@ class Secret(db.Model):
     @classmethod
     def get_by_shortname(cls, shortname):
         return cls.query.filter_by(shortname=shortname).first()
+
+
+class BugReport(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    report_type = db.Column(db.Integer)
+    text_response = db.Column(db.Text)
+    submitted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+    user = db.relationship("User", foreign_keys=[user_id])
+
+    def __init__(self, user, report_type, text_response):
+        self.user = user
+        self.report_type = report_type
+        self.text_response = text_response

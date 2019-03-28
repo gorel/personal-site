@@ -78,6 +78,7 @@ def register_error_handlers(app):
 
         @app.errorhandler(500)
         def error500(error):
+            # TODO: Create a db model with the error
             app.logger.error(f"HTTP 500: {error}")
             flask.flash(
                 "Something went wrong :( A log has been generated.",

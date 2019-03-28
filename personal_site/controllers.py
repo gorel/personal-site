@@ -51,3 +51,13 @@ def check_secret_ready(secret_id):
             for sr in secret.responses
         ]
     return flask.jsonify(response)
+
+
+@default.route("/bug_report", methods=["GET", "POST"])
+def bug_report():
+    form = forms.BugReportForm()
+    if form.validate_on_submit():
+        flask.flash("Thank you for your report!", "alert-success")
+        return flask.redirect(flask.url_for("default.home"))
+    else:
+        return flask.render_template("bug_report.html", form=form)
