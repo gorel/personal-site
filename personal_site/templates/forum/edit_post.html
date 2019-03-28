@@ -4,5 +4,6 @@
 {% block center_content %}
   <h1>Edit post</h1>
 
+  <h2>{{ form.post.title }}</h2>
   {{ wtf.quick_form(form) }}
 {% endblock %}

@@ -44,6 +44,7 @@
 - Testing
 - Report bug / ask for feature
 - Flashed messages should have optional links
+- Edit/Delete post/comment for admin
 
 # Completely different features
-- Facilitate bans for hearthstone (share_secret)
+- ~Facilitate bans for hearthstone (share_secret) -> needs better UI~

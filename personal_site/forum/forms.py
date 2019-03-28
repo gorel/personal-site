@@ -52,11 +52,11 @@ class EditPostForm(flask_wtf.Form):
     submit = wtforms.SubmitField("Submit")
 
     def __init__(self, post, *args, **kwargs):
-        super(NewPostForm, self).__init__(*args, **kwargs)
+        super(EditPostForm, self).__init__(*args, **kwargs)
         self.post = post
 
     def validate(self):
-        if not super(NewPostForm, self).validate():
+        if not super(EditPostForm, self).validate():
             return False
 
         if self.post.author.id != flask_login.current_user.id:

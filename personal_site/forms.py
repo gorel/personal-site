@@ -54,6 +54,11 @@ class ShareSecretForm(flask_wtf.Form):
             db.session.add(self.secret)
             db.session.commit()
 
+        # Don't allow submissions if the secret already has all required responses
+        if self.secret.expected_responses == self.secret.actual_responses:
+            self.shortname.errors.append("That secret already has all required responses")
+            return False
+
         self.secret_response = models.SecretResponse(
             secret_id=self.secret.id,
             person=self.person.data,
