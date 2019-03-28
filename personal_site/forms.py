@@ -11,6 +11,7 @@ class ShareSecretForm(flask_wtf.Form):
             # TODO: alphanum + - or _
             wtforms.validators.Length(max=constants.SECRET_SHORTNAME_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     person = wtforms.StringField(
         "Your name",
@@ -18,6 +19,7 @@ class ShareSecretForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.SECRET_PERSON_NAME_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     response = wtforms.StringField(
         "Your secret",
@@ -25,6 +27,7 @@ class ShareSecretForm(flask_wtf.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Length(max=constants.SECRET_RESPONSE_MAX_LEN),
         ],
+        render_kw={"class": "form-control", "autocomplete": "off"},
     )
     expected_responses = wtforms.IntegerField(
         "How many *other* responses are expected?",
