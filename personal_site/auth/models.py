@@ -110,7 +110,7 @@ class User(db.Model, flask_login.UserMixin):
         db.session.add(notif)
         db.session.commit()
 
-    def launch_task(self, task_name, description, *args, **kwargs):
+    def _launch_task(self, task_name, description, *args, **kwargs):
         if task_name not in flask.current_app.registered_tasks:
             raise NameError(f"Task {task_name} has not been registered")
 
@@ -147,7 +147,7 @@ class User(db.Model, flask_login.UserMixin):
     def send_verify_account_email(self):
         token = self.gen_token(constants.VERIFY_ACCOUNT_TOKEN_STR)
 
-        self.launch_task(
+        self._launch_task(
             task_name="send_email",
             description=f"Email verification for {self.email}",
             # func args below
@@ -174,10 +174,11 @@ class User(db.Model, flask_login.UserMixin):
 
     def send_reset_password_email(self):
         # 24 hours
+        # TODO: Move to constants
         exp_seconds = 60 * 60 * 24
         token = self.gen_token(constants.RESET_PASSWORD_TOKEN_STR, exp_seconds=exp_seconds)
 
-        self.launch_task(
+        self._launch_task(
             task_name="send_email",
             description=f"Password reset email for user_id={self.id}",
             # func args below
@@ -203,6 +204,15 @@ class User(db.Model, flask_login.UserMixin):
         self.last_notification_read_time = datetime.datetime.utcnow()
         return profile_models.Notification.query.filter_by(recipient=self).filter(
             profile_models.Notification.timestamp > last_read_time).limit(10)
+
+    def record_view(self, page_name):
+        self._launch_task(
+            task_name="record_view",
+            description=f"Record learn page view for {page_name}",
+            # func args below
+            username=self.username,
+            page_name=page_name,
+        )
 
     def __repr__(self):
         return f"<User {self.id}: {self.username}>"

@@ -33,30 +33,14 @@ def index():
 @learn.route("/pages/<name>")
 def view(name):
     filepath = get_learn_page_path_or_404(name)
-
-    page_stats = models.LearnPageStats.get_or_create(name)
-
-    # Increment views if user hasn't seen page in 1hr+
     if flask_login.current_user.is_authenticated:
-
-        # TODO: Set a timeout for updating page stats to not block the page
-        shelve_db = flask_shelve.get_shelve("c")
-        shelve_key = f"{flask_login.current_user.username}-{name}"
-
-        if utils.is_last_view_expired(shelve_db, shelve_key):
-            page_stats.views += 1
-            db.session.commit()
-
-        # Update last seen time to now
-        # It is INTENTIONAL that this updates even if we don't increment views
-        utils.update_shelve_expiration_time(shelve_db, shelve_key)
+        flask_login.current_user.record_view(name)
 
     has_questions = models.LearnQuestion.query.filter_by(
         page_name=name).first() is not None
 
     return flask.render_template(
         filepath,
-        page_stats=page_stats,
         page_name=name,
         has_questions=has_questions,
     )

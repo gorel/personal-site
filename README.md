@@ -37,6 +37,7 @@
 - ~Migrate to MySQL~
 - ~Collapse comments in the forum~
 - ~Permanent email server~
+- ~Updating views should be a redis job~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons

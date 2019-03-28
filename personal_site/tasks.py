@@ -9,6 +9,8 @@ import flask_shelve
 
 from personal_site import create_app, db, email_util, models
 
+import personal_site.learn.models as learn_models
+
 import personal_site.learn.utils as learn_utils
 
 
@@ -25,6 +27,7 @@ def register_task(f):
     @functools.wraps(f)
     def _wrap(*args, **kwargs):
         job = rq.get_current_job()
+        _set_progress(job, 0)
         task = models.Task.query.get(job.get_id())
 
         # Task was created from some other context -> add a new object to db
@@ -37,7 +40,7 @@ def register_task(f):
             db.session.commit()
 
         res = f(*args, **kwargs)
-        job = rq.get_current_job()
+        _set_progress(job, 100)
         task.meta = json.dumps(job.meta)
         db.session.commit()
         return res
@@ -68,16 +71,30 @@ def _set_progress(job, progress_pct):
 @register_task
 def send_email(email_props):
     job = rq.get_current_job()
-    _set_progress(job, 0)
     email_util.send_email(**email_props)
-    _set_progress(job, 100)
+
+@register_task
+def record_view(username, page_name):
+    with fake_request_context():
+        job = rq.get_current_job()
+
+        page_stats = learn_models.LearnPageStats.get_or_create(page_name)
+        shelve_db = flask_shelve.get_shelve("c")
+        shelve_key = f"{username}-{page_name}"
+
+        if learn_utils.is_last_view_expired(shelve_db, shelve_key):
+            page_stats.views += 1
+            db.session.commit()
+
+        # Update last seen time to now
+        # It is INTENTIONAL that this updates even if we don't increment views
+        learn_utils.update_shelve_expiration_time(shelve_db, shelve_key)
 
 
 @register_task
 def clear_old_shelve_objects():
     with fake_request_context():
         job = rq.get_current_job()
-        _set_progress(job, 0)
         job.meta["expired_keys"] = 0
         job.save_meta()
 
@@ -89,4 +106,3 @@ def clear_old_shelve_objects():
                 del shelve_db[key]
                 job.meta["expired_keys"] += 1
                 job.save_meta()
-        _set_progress(job, 100)
