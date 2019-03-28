@@ -5,6 +5,11 @@ import re
 __basepath = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(__basepath, "templates")
 
+# Secrets
+SECRET_SHORTNAME_MAX_LEN = 64
+SECRET_PERSON_NAME_MAX_LEN = 64
+SECRET_RESPONSE_MAX_LEN = 140
+
 # Tasks
 TASK_ID_LEN = 36
 TASK_NAME_MAX_LEN = 128

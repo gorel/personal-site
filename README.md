@@ -44,3 +44,6 @@
 - Testing
 - Report bug / ask for feature
 - Flashed messages should have optional links
+
+# Completely different features
+- Facilitate bans for hearthstone (share_secret)

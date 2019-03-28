@@ -1,3 +1,5 @@
+import datetime
+
 import flask
 import redis
 import rq
@@ -22,3 +24,33 @@ class Task(db.Model):
     def get_progress(self):
         job = self.get_rq_job()
         return job.meta.get('progress', 0) if job is not None else 100
+
+
+class SecretResponse(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    secret_id = db.Column(db.Integer, db.ForeignKey("secret.id"))
+    person = db.Column(db.String(constants.SECRET_PERSON_NAME_MAX_LEN))
+    response = db.Column(db.String(constants.SECRET_RESPONSE_MAX_LEN))
+
+
+class Secret(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    shortname = db.Column(db.String(constants.SECRET_SHORTNAME_MAX_LEN), index=True)
+    responses = db.relationship("SecretResponse", backref="secret")
+    expected_responses = db.Column(db.Integer)
+    actual_responses = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+
+    def __init__(self, shortname, expected_responses):
+        self.shortname = shortname
+        self.expected_responses = expected_responses
+        self.actual_responses = 0
+
+    def add_response(self, secret_response):
+        self.responses.add(secret_response)
+        db.session.commit()
+
+    @classmethod
+    def get_by_shortname(cls, shortname):
+        return cls.query.filter_by(shortname=shortname).first()
