@@ -10,7 +10,7 @@ from personal_site import constants, db, models
 def check_allowed_characters(charset, message=None):
     charset_str = "".join(sorted(charset))
     if message is None:
-        message = "Valid characters for this field: '{charset_str}'"
+        message = f"Valid characters for this field: '{charset_str}'"
     # Checks that all characters in field.data are in the allowed charset
     def _check_allowed_characters(form, field):
         for c in field.data:
