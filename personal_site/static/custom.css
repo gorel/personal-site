@@ -1,5 +1,16 @@
-@media (min-width: 1200px) {
+.lhs-sticky {
+  top: 75px;
+}
+
+@media (min-width: 992px) {
   .container {
     max-width: 80%;
+  }
+}
+
+/* Things get messed up here because navbar goes on two lines */
+@media (min-width: 992px) and (max-width: 1311px) {
+  .lhs-sticky {
+    top: 120px;
   }
 }

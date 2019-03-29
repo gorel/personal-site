@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block lhs_content %}
-  <div class="position-fixed">
+  <div class="lhs-sticky sticky-top">
     {% if page_name -%}
       <a class="btn btn-primary" href="{{ url_for("learn.ask_question", name=page_name) }}" style="white-space: normal">
         Question about this page?
