@@ -56,10 +56,6 @@ class Secret(db.Model):
         self.expected_responses = expected_responses
         self.actual_responses = 0
 
-    def add_response(self, secret_response):
-        self.responses.add(secret_response)
-        db.session.commit()
-
     @classmethod
     def get_by_shortname(cls, shortname):
         return cls.query.filter_by(shortname=shortname).first()

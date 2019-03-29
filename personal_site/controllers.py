@@ -23,8 +23,10 @@ def about():
 
 
 @default.route("/share_secret", methods=["GET", "POST"])
-def share_secret():
-    form = forms.ShareSecretForm()
+@default.route("/share_secret/<secret_shortname>", methods=["GET", "POST"])
+def share_secret(secret_shortname=None):
+    secret = models.Secret.get_by_shortname(secret_shortname)
+    form = forms.ShareSecretForm(secret)
     if form.validate_on_submit():
         return flask.redirect(flask.url_for("default.secret", secret_id=form.secret.id))
     else:

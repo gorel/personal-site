@@ -1,3 +1,5 @@
+import random
+
 import flask_login
 import flask_wtf
 import wtforms
@@ -5,14 +7,32 @@ import wtforms
 from personal_site import constants, db, models
 
 
+def check_allowed_characters(charset, message=None):
+    charset_str = "".join(sorted(charset))
+    if message is None:
+        message = "Valid characters for this field: '{charset_str}'"
+    # Checks that all characters in field.data are in the allowed charset
+    def _check_allowed_characters(form, field):
+        for c in field.data:
+            if c not in charset:
+                raise ValidationError(message)
+    return _check_allowed_characters
+
+
+
 class ShareSecretForm(flask_wtf.Form):
     shortname = wtforms.StringField(
         "Secret shortname",
         validators=[
-            # TODO: alphanum + - or _
+            wtforms.validators.Optional(),
             wtforms.validators.Length(max=constants.SECRET_SHORTNAME_MAX_LEN),
+            check_allowed_characters(constants.SECRET_SHORTNAME_CHARSET)
         ],
-        render_kw={"class": "form-control", "autocomplete": "off"},
+        render_kw={
+            "class": "form-control",
+            "autocomplete": "off",
+            "placeholder": constants.SECRET_SHORTNAME_PLACEHOLDER_TEXT,
+        },
     )
     person = wtforms.StringField(
         "Your name",
@@ -36,24 +56,34 @@ class ShareSecretForm(flask_wtf.Form):
     recaptcha = flask_wtf.RecaptchaField()
     submit = wtforms.SubmitField()
 
-    def __init__(self, *args,**kwargs):
+    def __init__(self, secret, *args,**kwargs):
         super(ShareSecretForm, self).__init__(*args, **kwargs)
-        self.secret = None
+        self.secret = secret
         self.secret_response = None
+        if secret is not None:
+            del self.shortname
+            del self.expected_responses
 
     def validate(self):
         if not super(ShareSecretForm, self).validate():
             return False
 
-        self.secret = models.Secret.get_by_shortname(self.shortname.data)
-        if self.secret is None:
-            self.secret = models.Secret(
-                shortname=self.shortname.data,
-                # Add one for this user
-                expected_responses=self.expected_responses.data + 1,
+        if self.secret is None and len(self.shortname.data) == 0:
+            self.shortname.data = "".join(
+                random.choice(tuple(constants.SECRET_SHORTNAME_CHARSET))
+                for _ in range(constants.SECRET_SHORTNAME_GEN_LEN)
             )
-            db.session.add(self.secret)
-            db.session.commit()
+
+        if self.secret is None:
+            self.secret = models.Secret.get_by_shortname(self.shortname.data)
+            if self.secret is None:
+                self.secret = models.Secret(
+                    shortname=self.shortname.data,
+                    # Add one for this user
+                    expected_responses=self.expected_responses.data + 1,
+                )
+                db.session.add(self.secret)
+                db.session.commit()
 
         # Don't allow submissions if the secret already has all required responses
         if self.secret.expected_responses == self.secret.actual_responses:

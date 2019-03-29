@@ -39,17 +39,20 @@
 - ~Permanent email server~
 - ~Updating views should be a redis job~
 - ~Should daemons be a systemctl service?~
+- ~Report bug / ask for feature~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
-- i18n/l10n
-- Testing
-- Report bug / ask for feature
 - Flashed messages should have optional links
 - Edit/Delete post/comment for admin
 - Learn is broken on mobile
 - Admin panel for bug reports
 - Email bug reports to me daily
+- db.session.add/commit should be in forms, not controllers
 
 # Completely different features
 - ~Facilitate bans for hearthstone (share_secret) -> needs better UI~
+
+# Major features
+- i18n/l10n
+- Testing
