@@ -11,7 +11,7 @@ SECRET_SHORTNAME_GEN_LEN = 20
 SECRET_SHORTNAME_MAX_LEN = 64
 SECRET_PERSON_NAME_MAX_LEN = 64
 SECRET_RESPONSE_MAX_LEN = 140
-SECRET_SHORTNAME_CHARSET = set(string.ascii_letters + string.digits + "-_")
+SECRET_SHORTNAME_CHARSET = set(string.ascii_letters + string.digits + "-_.")
 SECRET_SHORTNAME_PLACEHOLDER_TEXT = "Create a unique secret identifier, or we'll make one for you"
 
 # Tasks

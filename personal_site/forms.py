@@ -15,7 +15,7 @@ def check_allowed_characters(charset, message=None):
     def _check_allowed_characters(form, field):
         for c in field.data:
             if c not in charset:
-                raise ValidationError(message)
+                raise wtforms.ValidationError(message)
     return _check_allowed_characters
 
 
