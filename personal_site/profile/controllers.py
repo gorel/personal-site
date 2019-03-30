@@ -1,7 +1,7 @@
 import flask
 import flask_login
 
-from personal_site import constants, db
+from personal_site import constants
 
 import personal_site.auth.models as auth_models
 import personal_site.forum.models as forum_models
@@ -24,7 +24,6 @@ def index(user_id=None):
 def edit():
     form = forms.EditAccountForm()
     if form.validate_on_submit():
-        db.session.commit()
         flask.flash("Your account has been updated successfully", "alert-success")
         return flask.redirect(flask.url_for("profile.index"))
     else:

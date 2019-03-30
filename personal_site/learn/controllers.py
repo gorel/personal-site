@@ -5,7 +5,7 @@ import flask
 import flask_login
 import flask_shelve
 
-from personal_site import constants, db
+from personal_site import constants
 from personal_site.learn import forms, models, utils
 
 import personal_site.admin.utils as admin_utils
@@ -71,9 +71,6 @@ def ask_question(name):
     form = forms.AskQuestionForm(name)
 
     if form.validate_on_submit():
-        db.session.add(form.learn_question)
-        db.session.commit()
-
         flask.flash("Your question has been submitted", "alert-success")
         return flask.redirect(flask.url_for("learn.view", name=name))
     else:
@@ -91,7 +88,6 @@ def answer_question(qid):
     form = forms.AnswerQuestionForm(question)
 
     if form.validate_on_submit():
-        db.session.commit()
         return flask.redirect(flask.url_for("learn.questions", name=question.page_name))
     else:
         return flask.render_template("learn/answer_question.html", form=form)

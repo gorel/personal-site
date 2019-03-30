@@ -3,6 +3,8 @@ import flask_login
 import flask_wtf
 import wtforms
 
+from personal_site import db
+
 from personal_site.learn import models
 
 
@@ -30,6 +32,9 @@ class AskQuestionForm(flask_wtf.Form):
             asker=flask_login.current_user,
             show_anon=self.show_anon.data,
         )
+
+        db.session.add(self.learn_question)
+        db.session.commit()
         return True
 
 
@@ -52,4 +57,6 @@ class AnswerQuestionForm(flask_wtf.Form):
 
         self.question.answer = self.answer.data
         self.question.good_question = self.mark_as_good.data
+
+        db.session.commit()
         return True

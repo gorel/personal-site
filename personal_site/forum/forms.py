@@ -5,7 +5,7 @@ import flask_login
 import flask_wtf
 import wtforms
 
-from personal_site import constants
+from personal_site import constants, db
 from personal_site.forum import models
 
 
@@ -40,6 +40,9 @@ class NewPostForm(flask_wtf.Form):
             body=self.body.data,
             show_anon=self.show_anon.data,
         )
+
+        db.session.add(self.post)
+        db.session.commit()
         return True
 
 
@@ -65,6 +68,7 @@ class EditPostForm(flask_wtf.Form):
             return False
 
         self.post.edit(self.body.data, self.show_anon.data)
+        db.session.commit()
         return True
 
 
@@ -94,6 +98,9 @@ class NewCommentForm(flask_wtf.Form):
 
         self.post.num_comments += 1
         self.post.last_activity = datetime.datetime.utcnow()
+
+        db.session.add(self.comment)
+        db.session.commit()
         return True
 
 
@@ -127,4 +134,6 @@ class EditCommentForm(flask_wtf.Form):
 
         self.comment.edit(self.body.data, self.show_anon.data)
         self.post.last_activity = datetime.datetime.utcnow()
+
+        db.session.commit()
         return True

@@ -37,8 +37,6 @@ def warn_user(user_id):
     form = forms.WarnUserForm(user)
 
     if form.validate_on_submit():
-        db.session.add(form.warning)
-        db.session.commit()
         flask.flash(f"Sent a warning to {user.username}", "alert-info")
         return flask.redirect(flask.url_for("admin.users"))
     else:

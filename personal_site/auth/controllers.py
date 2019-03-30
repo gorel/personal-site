@@ -5,7 +5,7 @@ Authentication and related behavior
 import flask
 import flask_login
 
-from personal_site import constants, db
+from personal_site import constants
 from personal_site.auth import forms, models
 
 
@@ -16,9 +16,6 @@ auth = flask.Blueprint("auth", __name__, url_prefix="/auth")
 def register():
     form = forms.RegisterForm()
     if form.validate_on_submit():
-        db.session.add(form.user)
-        db.session.commit()
-
         flask_login.login_user(form.user, remember=form.remember.data)
         return flask.redirect(flask.request.args.get("next")
             or flask.url_for("default.home"))
@@ -82,10 +79,8 @@ def reset_password(token):
     if user is None:
         return flask.redirect(flask.url_for("default.home"))
 
-    form = forms.SetNewPasswordForm()
+    form = forms.SetNewPasswordForm(user)
     if form.validate_on_submit():
-        user.set_password(form.password.data)
-        db.session.commit()
         flask_login.login_user(user)
         flask.flash("Password reset successfully", "alert-success")
         return flask.redirect(flask.url_for("default.home"))

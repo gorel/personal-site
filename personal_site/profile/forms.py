@@ -2,7 +2,7 @@ import flask_login
 import flask_wtf
 import wtforms
 
-from personal_site import constants
+from personal_site import constants, db
 import personal_site.auth.models as auth_models
 
 
@@ -50,4 +50,5 @@ class EditAccountForm(flask_wtf.Form):
         if self.password.data:
             user.set_password(self.password.data)
 
+        db.session.commit()
         return True

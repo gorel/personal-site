@@ -3,7 +3,7 @@ import enum
 import flask_wtf
 import wtforms
 
-from personal_site import constants
+from personal_site import constants, db
 
 from personal_site.admin import models
 
@@ -28,4 +28,7 @@ class WarnUserForm(flask_wtf.Form):
             return False
 
         self.warning = models.Warning(user=self.user, reason=self.reason.data)
+
+        db.session.add(self.warning)
+        db.session.commit()
         return True

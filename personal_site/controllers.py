@@ -4,7 +4,7 @@ Default routing for the site not within any module
 
 import flask
 
-from personal_site import db, forms, models
+from personal_site import forms, models
 
 
 default = flask.Blueprint("default", __name__)

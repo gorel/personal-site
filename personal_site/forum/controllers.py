@@ -27,8 +27,6 @@ def index():
 def new_post():
     form = forms.NewPostForm()
     if form.validate_on_submit():
-        db.session.add(form.post)
-        db.session.commit()
         return flask.redirect(flask.url_for("forum.view_post", post_id=form.post.id))
     else:
         return flask.render_template("forum/new_post.html", form=form, title="New post")
@@ -42,7 +40,6 @@ def edit_post(post_id):
     post = models.Post.query.get_or_404(post_id)
     form = forms.EditPostForm(post)
     if form.validate_on_submit():
-        db.session.commit()
         return flask.redirect(flask.url_for("forum.view_post", post_id=form.post.id))
     else:
         form.body.data = post.body
@@ -103,9 +100,6 @@ def new_comment(post_id):
 
     if form.validate_on_submit():
         post.notify_followers(poster=flask_login.current_user)
-        db.session.add(form.comment)
-        db.session.commit()
-
         page = max(1, math.ceil(form.comment.comment_idx / constants.COMMENTS_PER_PAGE))
         return flask.redirect(flask.url_for("forum.view_post", post_id=post_id, page=page))
     else:
@@ -122,7 +116,6 @@ def edit_comment(post_id, comment_id):
     form = forms.EditCommentForm(post, comment)
 
     if form.validate_on_submit():
-        db.session.commit()
         page = max(1, math.ceil(comment.comment_idx / constants.COMMENTS_PER_PAGE))
         flask.current_app.logger.warning(f"comment_idx = {comment.comment_idx}")
         flask.current_app.logger.warning(f"page = {page}")

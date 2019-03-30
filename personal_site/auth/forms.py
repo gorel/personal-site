@@ -1,7 +1,7 @@
 import flask_wtf
 import wtforms
 
-from personal_site import constants
+from personal_site import constants, db
 from personal_site.auth import models
 
 
@@ -64,6 +64,9 @@ class RegisterForm(flask_wtf.Form):
             email=self.email.data,
             password=self.password.data,
         )
+
+        db.session.add(self.user)
+        db.session.commit()
         return True
 
 
@@ -146,3 +149,15 @@ class SetNewPasswordForm(flask_wtf.Form):
     )
     confirm_password = wtforms.PasswordField("Confirm Password")
     submit = wtforms.SubmitField("Send email")
+
+    def __init__(self, user, *args, **kwargs):
+        super(SetNewPasswordForm, self).__init__(*args, **kwargs)
+        self.user = user
+
+    def validate(self):
+        if not super(SetNewPasswordForm, self).validate():
+            return False
+
+        self.user.set_password(self.password.data)
+        db.session.commit()
+        return True
