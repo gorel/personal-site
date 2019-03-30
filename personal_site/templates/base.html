@@ -30,11 +30,11 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div class="col-sm-2 sidenav">
+      <div class="col-md-2 sidenav">
         {% block lhs_content %}{% endblock %}
       </div>
 
-      <div class="col-sm-8 text-left">
+      <div class="col-md-8 text-left">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="alert-list center-block">
@@ -62,7 +62,7 @@
         {# prev/next page #}
         {% block pagination %}
           <div class="row">
-            <div class="col-sm-2">
+            <div class="col-md-2">
               <ul class="pager navbar-nav">
                 <li class="nav-item">
                   {% block pagination_prev %}
@@ -74,7 +74,7 @@
               </ul>
             </div>
 
-            <div class="offset-sm-8 col-sm-2">
+            <div class="offset-md-8 col-md-2">
               <ul class="pager navbar-nav">
                 <li class="nav-item">
                   {% block pagination_next -%}
@@ -89,7 +89,7 @@
         {% endblock %}
       </div>
 
-      <div class="col-sm-2 sidenav">
+      <div class="col-md-2 sidenav">
         {% block rhs_content %}{% endblock %}
       </div>
     </div>

@@ -40,6 +40,7 @@
 - ~Updating views should be a redis job~
 - ~Should daemons be a systemctl service?~
 - ~Report bug / ask for feature~
+- ~On very large screens, limit center-column width~
 - Idea of a "cohort" -> subscribe to new posts for five weeks
 - With cohorts, it would be nice to have sub-forums
 - Save progress on completed lessons
