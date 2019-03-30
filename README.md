@@ -41,15 +41,12 @@
 - ~Should daemons be a systemctl service?~
 - ~Report bug / ask for feature~
 - ~On very large screens, limit center-column width~
-- Idea of a "cohort" -> subscribe to new posts for five weeks
-- With cohorts, it would be nice to have sub-forums
-- Save progress on completed lessons
+- ~db.session.add/commit should be in forms, not controllers~
+- ~Learn is broken on mobile~
+- ~Admin panel for bug reports~
+- ~Edit/Delete post/comment for admin~
 - Flashed messages should have optional links
-- Edit/Delete post/comment for admin
-- Learn is broken on mobile
-- Admin panel for bug reports
 - Email bug reports to me daily
-- db.session.add/commit should be in forms, not controllers
 
 # Completely different features
 - ~Facilitate bans for hearthstone (share_secret) -> needs better UI~
@@ -57,3 +54,6 @@
 # Major features
 - i18n/l10n
 - Testing
+- [cohort] Idea of a "cohort" -> subscribe to new posts for five weeks
+- [cohort] With cohorts, it would be nice to have sub-forums
+- [cohort] Save progress on completed lessons

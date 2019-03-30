@@ -25,11 +25,25 @@
 
       <p>{{ comment.html_body|safe }}</p>
 
-      {% if current_user.id == comment.author.id %}
+      {% if current_user.id == comment.author.id or current_user.is_admin %}
         <hr class="border-secondary" style="margin-bottom: 0rem" />
-        <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id,
-            comment_id=comment.id) }}" class="btn btn-link">
-          <b>Edit comment</b>
+        {# Edit #}
+        <a href="{{ url_for("forum.edit_comment", post_id=comment.parent_post.id, comment_id=comment.id) }}"
+            class="btn btn-link">
+          {% if current_user.id == comment.author.id %}
+            <b>Edit comment</b>
+          {% else %}
+          <b class="text-danger">[admin] Edit comment</b>
+          {% endif %}
+        </a>
+        {# Delete #}
+        <a href="{{ url_for("forum.delete_comment", post_id=comment.parent_post.id, comment_id=comment.id) }}"
+            class="btn btn-link" data-method="post" data-confirm="Are you sure you want to permamently delete this comment?">
+          {% if current_user.id == comment.author.id %}
+            <b class="text-danger">Delete comment</b>
+          {% else %}
+          <b class="text-danger">[admin] Delete comment</b>
+          {% endif %}
         </a>
       {% endif %}
     </div>

@@ -50,11 +50,29 @@ def edit_post(post_id):
 @flask_login.login_required
 def delete_post(post_id):
     post = models.Post.query.get_or_404(post_id)
+    for comment in post.comments:
+        db.session.delete(comment)
     db.session.delete(post)
     db.session.commit()
 
     flask.flash("Post successfully deleted", "alert-info")
     return flask.redirect(flask.url_for("forum.index"))
+
+@forum.route("/<int:post_id>/<int:comment_id>/delete", methods=["POST"])
+@flask_login.login_required
+def delete_comment(post_id, comment_id):
+    post = models.Post.query.get_or_404(post_id)
+    comment = models.Comment.query.get_or_404(comment_id)
+
+    # Reduce the comment_idx of all later comments
+    for later_comment in post.comments.filter(
+            models.Comment.comment_idx > comment.comment_idx):
+        later_comment.comment_idx -= 1
+    db.session.delete(comment)
+    db.session.commit()
+
+    flask.flash("Comment successfully deleted", "alert-info")
+    return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
 
 
 @forum.route("/<int:post_id>")

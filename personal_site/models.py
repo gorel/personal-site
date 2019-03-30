@@ -1,4 +1,3 @@
-import collections
 import datetime
 
 import flask
@@ -8,12 +7,11 @@ import rq
 from personal_site import constants, db
 
 
-report_type = collections.namedtuple("report_type", ["as_int", "text"])
-REPORT_TYPES = [
-    report_type(1, "Report a bug"),
-    report_type(2, "Feature request"),
-    report_type(3, "Request new lesson"),
-]
+REPORT_TYPES = {
+    1: "Report a bug",
+    2: "Feature request",
+    3: "Request new lesson",
+}
 
 
 class Task(db.Model):
@@ -71,6 +69,12 @@ class BugReport(db.Model):
     user = db.relationship("User", foreign_keys=[user_id])
 
     def __init__(self, user, report_type, text_response):
+        if report_type not in REPORT_TYPE.keys():
+            raise ValueError(f"Invalid report type ({report_type}) not in {REPORT_TYPE.keys()}")
         self.user = user
         self.report_type = report_type
         self.text_response = text_response
+
+    @property
+    def report_type_str(self):
+        return REPORT_TYPES[self.report_type]

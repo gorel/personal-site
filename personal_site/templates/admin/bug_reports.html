@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block center_content %}
+  <h1>Bug Reports</h1>
+
+  {# TODO: Bug Report search plus sorting (javascript probably) #}
+
+  <table class="table">
+    <tr>
+      <th>Report type</th>
+      <th>Reported by</th>
+      <th>Submitted at</th>
+      <th>Description</th>
+    </tr>
+    {% for bug_report in bug_reports.items %}
+      {% include "admin/partials/_bug_report.html" %}
+    {% endfor %}
+  </table>
+{% endblock %}

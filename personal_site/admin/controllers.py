@@ -4,6 +4,7 @@ import flask
 import flask_login
 
 from personal_site import constants, db
+import personal_site.models as default_models
 
 from personal_site.admin import forms, models, utils
 
@@ -28,6 +29,16 @@ def index():
 def users(page_num=1):
     users = auth_models.User.query.paginate(page_num, constants.ADMIN_USERS_PER_PAGE)
     return flask.render_template("admin/users.html", users=users, title="Users")
+
+
+@admin.route("/bug_reports")
+@admin.route("/bug_reports/")
+@admin.route("/bug_reports/<int:page_num>")
+@flask_login.login_required
+@utils.admin_required
+def bug_reports(page_num=1):
+    bug_reports = default_models.BugReport.query.paginate(page_num, constants.ADMIN_BUG_REPORTS_PER_PAGE)
+    return flask.render_template("admin/bug_reports.html", bug_reports=bug_reports, title="Bug Reports")
 
 
 @admin.route("/send_warning/<int:user_id>", methods=["GET", "POST"])

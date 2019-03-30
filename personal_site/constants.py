@@ -22,6 +22,7 @@ TASK_PREFIX = "personal_site.tasks."
 
 # Admin
 ADMIN_USERS_PER_PAGE = 50
+ADMIN_BUG_REPORTS_PER_PAGE = 10
 WARNING_MAX_LEN = 200
 WARNING_ICON = "fas fa-exclamation-triangle"
 WARNING_TEXT_CLASS = "text-warning"

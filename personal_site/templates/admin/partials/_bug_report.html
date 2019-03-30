@@ -1,0 +1,16 @@
+<tr>
+  <td>{{ bug_report.report_type_str }}</td>
+
+  <td>
+    {% set user = bug_report.user %}
+    {%- if user -%}
+      <a href="{{ url_for("profile.index", user_id=user.id) }}">{{ user.username }}</a>
+    {%- else -%}
+      <span class="text-muted">(Anonymous)</span>
+    {%- endif -%}
+  </td>
+
+  <td>{{ moment(bug_report.submitted_at).fromNow() }}</td>
+
+  <td>{{ bug_report.text_response }}</td>
+</tr>

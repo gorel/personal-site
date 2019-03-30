@@ -33,10 +33,24 @@
 
     <p>{{ post.html_body|safe }}</p>
 
-    {% if current_user.id == post.author.id %}
+    {% if current_user.id == post.author.id or current_user.is_admin %}
       <hr class="border border-secondary rounded" style="margin-bottom: 0rem" />
+      {# Edit #}
       <a href="{{ url_for("forum.edit_post", post_id=post.id) }}" class="btn btn-link">
-        <b>Edit post</b>
+        {% if current_user.id == post.author.id %}
+          <b>Edit post</b>
+        {% else %}
+        <b class="text-danger">[admin] Edit post</b>
+        {% endif %}
+      </a>
+      {# Delete #}
+      <a href="{{ url_for("forum.delete_post", post_id=post.id) }}" class="btn btn-link" data-method="post"
+          data-confirm="Are you sure you want to permanently delete this post?">
+        {% if current_user.id == post.author.id %}
+          <b class="text-danger">Delete post</b>
+        {% else %}
+        <b class="text-danger">[admin] Delete post</b>
+        {% endif %}
       </a>
     {% endif %}
   </div>

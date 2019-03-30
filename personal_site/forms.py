@@ -107,7 +107,7 @@ class BugReportForm(flask_wtf.Form):
     report_type = wtforms.SelectField(
         "What kind of report are you submitting?",
         coerce=int,
-        choices=[(opt.as_int, opt.text) for opt in models.REPORT_TYPES],
+        choices=models.REPORT_TYPES.items(),
         validators=[
             wtforms.validators.InputRequired(),
         ],
