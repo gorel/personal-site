@@ -6,7 +6,7 @@ import json
 
 import flask
 
-from personal_site import forms, models
+from personal_site.base import forms, models
 
 
 default = flask.Blueprint("default", __name__)

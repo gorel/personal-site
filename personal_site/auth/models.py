@@ -10,7 +10,7 @@ import jwt
 
 from personal_site import bcrypt, constants, db, login_manager, mail
 
-import personal_site.models as base_models
+import personal_site.base.models as base_models
 import personal_site.profile.models as profile_models
 
 

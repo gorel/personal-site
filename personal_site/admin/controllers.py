@@ -5,7 +5,7 @@ import flask
 import flask_login
 
 from personal_site import constants, db
-import personal_site.models as default_models
+import personal_site.base.models as base_models
 
 from personal_site.admin import forms, models, utils
 
@@ -38,7 +38,7 @@ def users(page_num=1):
 @flask_login.login_required
 @utils.admin_required
 def bug_reports(page_num=1):
-    bug_reports = default_models.BugReport.query.paginate(page_num, constants.ADMIN_BUG_REPORTS_PER_PAGE)
+    bug_reports = base_models.BugReport.query.paginate(page_num, constants.ADMIN_BUG_REPORTS_PER_PAGE)
     return flask.render_template("admin/bug_reports.html", bug_reports=bug_reports, title="Bug Reports")
 
 

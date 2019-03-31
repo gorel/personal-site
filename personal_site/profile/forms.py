@@ -31,8 +31,12 @@ class EditAccountForm(flask_wtf.Form):
                 message="Passwords must match",
             ),
         ],
+        render_kw={"class": "form-control", "placeholder": "Leave blank to keep current password"},
     )
-    confirm_password = wtforms.PasswordField("Confirm Password")
+    confirm_password = wtforms.PasswordField(
+        "Confirm Password",
+        render_kw={"class": "form-control", "placeholder": "Leave blank to keep current password"},
+    )
     submit = wtforms.SubmitField("Submit", render_kw={"class": "btn btn-primary"})
 
     def validate(self):

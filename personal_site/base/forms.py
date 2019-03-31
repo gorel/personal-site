@@ -4,7 +4,8 @@ import flask_login
 import flask_wtf
 import wtforms
 
-from personal_site import constants, db, models
+from personal_site import constants, db
+from personal_site.base import models
 
 
 def check_allowed_characters(charset, message=None):
@@ -107,7 +108,7 @@ class BugReportForm(flask_wtf.Form):
     report_type = wtforms.SelectField(
         "What kind of report are you submitting?",
         coerce=int,
-        choices=models.REPORT_TYPES.items(),
+        choices=[(k, v) for k, v in models.REPORT_TYPES.items()],
         validators=[
             wtforms.validators.InputRequired(),
         ],

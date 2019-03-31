@@ -7,8 +7,9 @@ import rq
 import flask
 import flask_shelve
 
-from personal_site import create_app, db, email_util, models
+from personal_site import create_app, db, email_util
 
+import personal_site.base.models as base_models
 import personal_site.auth.models as auth_models
 import personal_site.learn.models as learn_models
 
@@ -29,14 +30,14 @@ def register_task(f):
     def _wrap(*args, **kwargs):
         job = rq.get_current_job()
         _set_progress(job, 0)
-        task = models.Task.query.get(job.get_id())
+        task = base_models.Task.query.get(job.get_id())
 
         # Task was created from some other context -> add a new object to db
         if task is None:
             # Get caller's function name
             name = inspect.stack()[1].function
             description = "(Called from unknown context)"
-            task = models.Task(id=job.get_id(), name=name, description=description, user=None)
+            task = base_models.Task(id=job.get_id(), name=name, description=description, user=None)
             db.session.add(task)
             db.session.commit()
 
@@ -63,7 +64,7 @@ def fake_request_context(*args, **kwargs):
 def _set_progress(job, progress_pct):
     job.meta["progress"] = progress_pct
     job.save_meta()
-    task = models.Task.query.get(job.get_id())
+    task = base_models.Task.query.get(job.get_id())
     if progress_pct >= 100:
         task.complete = True
     db.session.commit()
@@ -111,9 +112,9 @@ def clear_old_shelve_objects():
 
 @register_task
 def email_daily_bug_reports(start, end):
-    new_reports = models.BugReport.query.filter(
-            (models.BugReport.submitted_at > start)
-            & (models.BugReport.submitted_at <= end)).all()
+    new_reports = base_models.BugReport.query.filter(
+            (base_models.BugReport.submitted_at > start)
+            & (base_models.BugReport.submitted_at <= end)).all()
 
     print(f"Detected {len(new_reports)} new reports")
     if len(new_reports) > 0:
@@ -138,9 +139,9 @@ def email_daily_bug_reports(start, end):
 def record_error500(tb, user_id):
     user = auth_models.User.query.get(user_id)
     print(type(tb))
-    bug_report = models.BugReport(
+    bug_report = base_models.BugReport(
         user=user,
-        report_type=models.REPORT_TYPES_INVERSE["BUG_REPORT"],
+        report_type=base_models.REPORT_TYPES_INVERSE["BUG_REPORT"],
         text_response=str(tb),
     )
     db.session.add(bug_report)

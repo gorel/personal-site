@@ -36,7 +36,7 @@ moment = flask_moment.Moment()
 
 # Import all models files to ensure SQLAlchemy finds and instantiates them
 def import_models():
-    import personal_site.models
+    import personal_site.base.models
     import personal_site.admin.models
     import personal_site.auth.models
     import personal_site.forum.models
@@ -146,7 +146,7 @@ def create_app(config_class=site_config.Config):
     register_error_handlers(app)
 
     # Import all blueprints from controllers
-    from personal_site.controllers import default
+    from personal_site.base.controllers import default
     from personal_site.admin.controllers import admin
     from personal_site.auth.controllers import auth
     from personal_site.forum.controllers import forum

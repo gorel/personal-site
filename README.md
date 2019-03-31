@@ -57,3 +57,12 @@
 - [cohort] Idea of a "cohort" -> subscribe to new posts for five weeks
 - [cohort] With cohorts, it would be nice to have sub-forums
 - [cohort] Save progress on completed lessons
+
+# Learn content
+- unittest
+- collections
+- basic data structures
+- algorithmic complexity
+- numpy
+- pandas
+- matplotlib
