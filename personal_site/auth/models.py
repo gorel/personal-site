@@ -174,9 +174,10 @@ class User(db.Model, flask_login.UserMixin):
 
     def send_reset_password_email(self):
         # 24 hours
-        # TODO: Move to constants
-        exp_seconds = 60 * 60 * 24
-        token = self.gen_token(constants.RESET_PASSWORD_TOKEN_STR, exp_seconds=exp_seconds)
+        token = self.gen_token(
+            constants.RESET_PASSWORD_TOKEN_STR,
+            exp_seconds=constants.PW_RESET_EXP_SECONDS,
+        )
 
         self._launch_task(
             task_name="send_email",

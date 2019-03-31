@@ -10,7 +10,6 @@
     {% endif %}
 
 
-    {# TODO: Consider if this should paginate (realistically that would be a ban) #}
     {% set warnings = current_user.warnings.all() %}
     {% if warnings %}
       <h3>Warnings you've received</h3>

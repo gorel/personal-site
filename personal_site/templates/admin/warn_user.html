@@ -3,7 +3,6 @@
 
 {% block center_content %}
   <h3>Send a warning to {{ form.user.username }}</h3>
-  {# TODO: Would be really cool to have this as ajax #}
   <h5>
     {% set warn_count = form.user.warnings.count() %}
     {% if warn_count > 0 %}

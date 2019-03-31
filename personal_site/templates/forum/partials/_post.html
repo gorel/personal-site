@@ -1,5 +1,4 @@
 <h5>
-  {# TODO: Add a way to unsubscribe #}
   {% if post in current_user.followed_posts %}
     <a href="{{ url_for("forum.unfollow_post", post_id=post.id) }}" data-method="post" class="text-info">
       You're subscribed to new comments on this post. Click here to unsubscribe.
