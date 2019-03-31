@@ -1,0 +1,25 @@
+<h1>Daily bug reports</h1>
+{% set n = bug_reports|count %}
+{% if n > 1 -%}
+  <p>There were {{ n }} new bug reports yesterday.</p>
+{%- else -%}
+  <p>There was {{ n }} new bug report yesterday.</p>
+{% endif %}
+
+<table>
+  <thead>
+    <th>Type</th>
+    <th>Reported by</th>
+    <th>Description</th>
+  </thead>
+
+  <tbody>
+    {% for bug_report in bug_reports -%}
+      <tr>
+        <td>{{ bug_report.report_type_str }}</td>
+        <td>{{ bug_report.user.username }}</td>
+        <td>{{ bug_report.text_response }}</td>
+      </tr>
+    {%- endfor %}
+</tbody>
+</table>

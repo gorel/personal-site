@@ -1,0 +1,10 @@
+{% set n = bug_reports|count %}
+{% if n > 1 -%}
+  There were {{ n }} new bug reports yesterday.
+{%- else -%}
+  There was {{ n }} new bug report yesterday.
+{% endif %}
+
+{% for bug_report in bug_reports -%}
+  [{{ bug_report.report_type_str }}] {{ bug_report.user.username }}: {{ bug_report.text_response }}
+{%- endfor %}

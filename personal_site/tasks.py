@@ -106,3 +106,28 @@ def clear_old_shelve_objects():
                 del shelve_db[key]
                 job.meta["expired_keys"] += 1
                 job.save_meta()
+
+
+@register_task
+def email_daily_bug_reports(start, end):
+    new_reports = models.BugReport.query.filter(
+            (models.BugReport.submitted_at > start)
+            & (models.BugReport.submitted_at <= end)).all()
+
+    print(f"Detected {len(new_reports)} new reports")
+    if len(new_reports) > 0:
+        email_props = {
+            "subject": "Daily Bug Reports on logangore.dev",
+            "sender": flask.current_app.config["ADMIN"],
+            "recipients": [flask.current_app.config["EXT_ADMIN"]],
+            "text_body": flask.render_template(
+                "tasks/daily_bug_reports.txt",
+                bug_reports=new_reports,
+            ),
+            "html_body": flask.render_template(
+                "tasks/daily_bug_reports.html",
+                bug_reports=new_reports,
+            ),
+        }
+
+        email_util.send_email(**email_props)

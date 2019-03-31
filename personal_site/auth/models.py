@@ -153,7 +153,7 @@ class User(db.Model, flask_login.UserMixin):
             # func args below
             email_props={
                 "subject": constants.VERIFY_ACCOUNT_SUBJECT_STR,
-                "sender": flask.current_app.config["ADMINS"][0],
+                "sender": flask.current_app.config["ADMIN"],
                 "recipients": [self.email],
                 "text_body": flask.render_template(
                     "auth/email/verify_account.txt",
@@ -184,7 +184,7 @@ class User(db.Model, flask_login.UserMixin):
             # func args below
             email_props={
                 "subject": constants.RESET_PASSWORD_SUBJECT_STR,
-                "sender": flask.current_app.config["ADMINS"][0],
+                "sender": flask.current_app.config["ADMIN"],
                 "recipients": [self.email],
                 "text_body": flask.render_template(
                     "auth/email/reset_password.txt",

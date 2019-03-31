@@ -35,6 +35,7 @@ class Config(object):
     RECAPTCHA_DATA_ATTRS = {"theme": "dark"}
 
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    ADMINS = [os.environ.get("ADMIN_EMAIL")]
+    ADMIN = os.environ.get("ADMIN_EMAIL")
+    EXT_ADMIN = os.environ.get("EXT_ADMIN_EMAIL")
     LANGUAGES = ["en"]
 

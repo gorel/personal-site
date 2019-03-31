@@ -69,8 +69,8 @@ class BugReport(db.Model):
     user = db.relationship("User", foreign_keys=[user_id])
 
     def __init__(self, user, report_type, text_response):
-        if report_type not in REPORT_TYPE.keys():
-            raise ValueError(f"Invalid report type ({report_type}) not in {REPORT_TYPE.keys()}")
+        if report_type not in REPORT_TYPES.keys():
+            raise ValueError(f"Invalid report type ({report_type}) not in {REPORT_TYPES.keys()}")
         self.user = user
         self.report_type = report_type
         self.text_response = text_response

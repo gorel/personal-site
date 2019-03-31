@@ -2,15 +2,17 @@
 
 {% block forum_content %}
   <table class="table">
-    <tr>
+    <thead>
       <th>Poster</th>
       <th>Title</th>
       <th>Posted at</th>
       <th>Last activity</th>
-    </tr>
-    {% for post_preview in posts.items %}
-      {% include "forum/partials/_post_preview.html" %}
-    {% endfor %}
+    </thead>
+    <tbody>
+      {% for post_preview in posts.items %}
+        {% include "forum/partials/_post_preview.html" %}
+      {% endfor %}
+    </tbody>
   </table>
 
 {% endblock %}
