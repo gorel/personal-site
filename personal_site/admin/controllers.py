@@ -1,4 +1,5 @@
 import functools
+import json
 
 import flask
 import flask_login
@@ -48,7 +49,12 @@ def warn_user(user_id):
     form = forms.WarnUserForm(user)
 
     if form.validate_on_submit():
-        flask.flash(f"Sent a warning to {user.username}", "alert-info")
+        flask.flash(
+            json.dumps({
+                "msg": f"Sent a warning to {user.username}",
+            }),
+            "alert-info",
+        )
         return flask.redirect(flask.url_for("admin.users"))
     else:
         return flask.render_template("admin/warn_user.html", form=form, title="Warn user")
@@ -71,7 +77,12 @@ def ban_user(user_id):
     user = auth_models.User.query.get_or_404(user_id)
     user.set_banned(True)
 
-    flask.flash(f"User {user.username} has been banned.", "alert-info")
+    flask.flash(
+        json.dumps({
+            "msg": f"User {user.username} has been banned.",
+        }),
+        "alert-info",
+    )
     return flask.redirect(flask.url_for("admin.users"))
 
 
@@ -82,7 +93,12 @@ def unban_user(user_id):
     user = auth_models.User.query.get_or_404(user_id)
     user.set_banned(False)
 
-    flask.flash(f"User {user.username} has been unbanned.", "alert-info")
+    flask.flash(
+        json.dumps({
+            "msg": f"User {user.username} has been unbanned.",
+        }),
+        "alert-info",
+    )
     return flask.redirect(flask.url_for("admin.users"))
 
 
@@ -91,12 +107,22 @@ def unban_user(user_id):
 @utils.admin_required
 def delete_user(user_id):
     if flask_login.current_user.id == user_id:
-        flask.flash("Now that doesn't seem like a great idea...", "alert-danger")
+        flask.flash(
+            json.dumps({
+                "msg": "Now that doesn't seem like a great idea...",
+            }),
+            "alert-danger",
+        )
         return flask.redirect(flask.url_for("admin.users"))
 
     user = auth_models.User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
 
-    flask.flash("Deleted user account", "alert-info")
+    flask.flash(
+        json.dumps({
+            "msg": "Deleted user account",
+        }),
+        "alert-info",
+    )
     return flask.redirect(flask.url_for("admin.users"))

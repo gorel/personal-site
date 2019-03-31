@@ -2,10 +2,11 @@
 Performs webapp startup procedures
 """
 
+import json
 import logging
 import logging.handlers
+import traceback
 
-import elasticsearch
 import flask
 import flask_bcrypt
 import flask_login
@@ -21,6 +22,7 @@ import redis
 import rq
 import wtforms
 
+from personal_site import constants
 import site_config
 
 
@@ -50,7 +52,11 @@ def register_jinja_utils(app):
         args = flask.request.view_args.copy()
         args['page'] = page
         return flask.url_for(flask.request.endpoint, **args)
-    app.jinja_env.globals['url_for_other_page'] = _url_for_other_page
+    app.jinja_env.globals["url_for_other_page"] = _url_for_other_page
+
+    def _parse_json(json_var):
+        return json.loads(json_var)
+    app.jinja_env.globals["parse_json"] = _parse_json
 
 
 def set_up_logger(app):
@@ -78,13 +84,23 @@ def register_error_handlers(app):
 
         @app.errorhandler(500)
         def error500(error):
-            # TODO: Create a db model with the error
+            tb = traceback.format_exc()
+            user_id = 0
+            if flask_login.current_user.is_authenticated:
+                user_id = flask_login.current_user.id
+            app.task_queue.enqueue(
+                constants.TASK_PREFIX + "record_error500",
+                tb,
+                user_id,
+            )
             app.logger.error(f"HTTP 500: {error}")
             flask.flash(
-                "Something went wrong :( A log has been generated.",
+                json.dumps({
+                    "msg": "Something went wrong :( A log has been generated.",
+                }),
                 "alert-warning",
             )
-            return flask.redirect(flask.url_for("default.home", error=error))
+            return flask.redirect(flask.url_for("default.home"))
 
         # Minify sent HTML
         @app.after_request
@@ -115,15 +131,16 @@ def create_app(config_class=site_config.Config):
     # Set up jinja utilities
     register_jinja_utils(app)
 
-    # Enable ElasticSearch for searchable pages
-    app.elasticsearch = elasticsearch.Elasticsearch([app.config["ELASTICSEARCH_URL"]])
-
     # Enable redis queue
     app.redis = redis.Redis.from_url(app.config["REDIS_URL"])
     app.task_queue = rq.Queue(app.config["RQ_NAME"], connection=app.redis)
 
     # Set up logging if we aren't in debug/testing mode
     set_up_logger(app)
+
+    # Register tasks
+    from personal_site import tasks
+    app.registered_tasks = tasks.REGISTERED_TASKS
 
     # Register error handlers if we aren't in debug/testing mode
     register_error_handlers(app)
@@ -143,9 +160,5 @@ def create_app(config_class=site_config.Config):
     app.register_blueprint(forum)
     app.register_blueprint(learn)
     app.register_blueprint(profile)
-
-    # Register tasks
-    from personal_site import tasks
-    app.registered_tasks = tasks.REGISTERED_TASKS
 
     return app

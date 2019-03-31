@@ -1,4 +1,5 @@
 import datetime
+import json
 import math
 
 import flask
@@ -55,7 +56,12 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
 
-    flask.flash("Post successfully deleted", "alert-info")
+    flask.flash(
+        json.dumps({
+            "msg": "Post successfully deleted",
+        }),
+        "alert-info",
+    )
     return flask.redirect(flask.url_for("forum.index"))
 
 @forum.route("/<int:post_id>/<int:comment_id>/delete", methods=["POST"])
@@ -71,7 +77,12 @@ def delete_comment(post_id, comment_id):
     db.session.delete(comment)
     db.session.commit()
 
-    flask.flash("Comment successfully deleted", "alert-info")
+    flask.flash(
+        json.dumps({
+            "msg": "Comment successfully deleted",
+        }),
+        "alert-info",
+    )
     return flask.redirect(flask.url_for("forum.view_post", post_id=post_id))
 
 
@@ -90,7 +101,12 @@ def follow_post(post_id):
     flask_login.current_user.followed_posts.append(post)
     db.session.commit()
 
-    flask.flash(f"You have subscribed to '{post.title}'", "alert-success")
+    flask.flash(
+        json.dumps({
+            "msg": f"You have subscribed to '{post.title}'",
+        }),
+        "alert-success",
+    )
     return flask.redirect(
         flask.request.referrer
         or flask.url_for("forum.view_post", post_id=post_id))
@@ -102,7 +118,12 @@ def unfollow_post(post_id):
     flask_login.current_user.followed_posts.remove(post)
     db.session.commit()
 
-    flask.flash(f"You have unsubscribed from '{post.title}'", "alert-success")
+    flask.flash(
+        json.dumps({
+            "msg": f"You have unsubscribed from '{post.title}'",
+        }),
+        "alert-success",
+    )
     return flask.redirect(
         flask.request.referrer
         or flask.url_for("forum.view_post", post_id=post_id))

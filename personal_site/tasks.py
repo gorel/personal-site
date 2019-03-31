@@ -9,6 +9,7 @@ import flask_shelve
 
 from personal_site import create_app, db, email_util, models
 
+import personal_site.auth.models as auth_models
 import personal_site.learn.models as learn_models
 
 import personal_site.learn.utils as learn_utils
@@ -131,3 +132,16 @@ def email_daily_bug_reports(start, end):
         }
 
         email_util.send_email(**email_props)
+
+
+@register_task
+def record_error500(tb, user_id):
+    user = auth_models.User.query.get(user_id)
+    print(type(tb))
+    bug_report = models.BugReport(
+        user=user,
+        report_type=models.REPORT_TYPES_INVERSE["BUG_REPORT"],
+        text_response=str(tb),
+    )
+    db.session.add(bug_report)
+    db.session.commit()

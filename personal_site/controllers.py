@@ -2,6 +2,8 @@
 Default routing for the site not within any module
 """
 
+import json
+
 import flask
 
 from personal_site import forms, models
@@ -15,11 +17,6 @@ default = flask.Blueprint("default", __name__)
 @default.route("/index.html")
 def home():
     return flask.render_template("index.html")
-
-
-@default.route("/about")
-def about():
-    return flask.render_template("about.html")
 
 
 @default.route("/share_secret", methods=["GET", "POST"])
@@ -59,7 +56,12 @@ def check_secret_ready(secret_id):
 def bug_report():
     form = forms.BugReportForm()
     if form.validate_on_submit():
-        flask.flash("Thank you for your report!", "alert-success")
+        flask.flash(
+            json.dumps({
+                "msg": "Thank you for your report!",
+            }),
+            "alert-success",
+        )
         return flask.redirect(flask.url_for("default.home"))
     else:
         return flask.render_template("bug_report.html", form=form)

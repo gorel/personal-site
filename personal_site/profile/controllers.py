@@ -1,3 +1,5 @@
+import json
+
 import flask
 import flask_login
 
@@ -24,7 +26,12 @@ def index(user_id=None):
 def edit():
     form = forms.EditAccountForm()
     if form.validate_on_submit():
-        flask.flash("Your account has been updated successfully", "alert-success")
+        flask.flash(
+            json.dumps({
+                "msg": "Your account has been updated successfully",
+            }),
+            "alert-success",
+        )
         return flask.redirect(flask.url_for("profile.index"))
     else:
         form.username.data = flask_login.current_user.username

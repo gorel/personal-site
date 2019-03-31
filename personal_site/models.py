@@ -12,6 +12,11 @@ REPORT_TYPES = {
     2: "Feature request",
     3: "Request new lesson",
 }
+REPORT_TYPES_INVERSE = {
+    "BUG_REPORT": 1,
+    "FEATURE_REQUEST": 2,
+    "LESSON_REQUEST": 3,
+}
 
 
 class Task(db.Model):

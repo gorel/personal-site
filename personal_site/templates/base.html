@@ -38,7 +38,8 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="alert-list center-block">
-              {% for category, message in messages %}
+              {% for category, message_json in messages %}
+                {% set message = parse_json(message_json) %}
                 <div class="alert {{ category }} fade show text-center">
                   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                   {% if category == "alert-success" %}
@@ -48,7 +49,11 @@
                   {% elif category == "alert-danger" %}
                     <i class="fa fa-exclamation text-left" style="margin-right: 1rem"></i>
                   {% endif %}
-                  {{ message|safe }}
+                  {{ message["msg"] |safe }}
+                  {% if message["link"] %}
+                    <br />
+                    <a href="{{ message["link"] }}">Click for more info</a>
+                  {% endif %}
                 </div>
               {% endfor %}
             </div>

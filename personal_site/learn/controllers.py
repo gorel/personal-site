@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 
 import flask
@@ -71,7 +72,12 @@ def ask_question(name):
     form = forms.AskQuestionForm(name)
 
     if form.validate_on_submit():
-        flask.flash("Your question has been submitted", "alert-success")
+        flask.flash(
+            json.dumps({
+                "msg": "Your question has been submitted",
+            }),
+            "alert-success",
+        )
         return flask.redirect(flask.url_for("learn.view", name=name))
     else:
         return flask.render_template(
