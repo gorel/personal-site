@@ -5,7 +5,7 @@ from personal_site import constants, db
 from personal_site.auth import models
 
 
-class RegisterForm(flask_wtf.Form):
+class RegisterForm(flask_wtf.FlaskForm):
     username = wtforms.TextField(
         "Username",
         validators=[
@@ -70,7 +70,7 @@ class RegisterForm(flask_wtf.Form):
         return True
 
 
-class LoginForm(flask_wtf.Form):
+class LoginForm(flask_wtf.FlaskForm):
     email = wtforms.TextField(
         "Email",
         validators=[
@@ -108,7 +108,7 @@ class LoginForm(flask_wtf.Form):
         return True
 
 
-class ForgotPasswordForm(flask_wtf.Form):
+class ForgotPasswordForm(flask_wtf.FlaskForm):
     email = wtforms.TextField(
         "Email",
         validators=[
@@ -135,7 +135,7 @@ class ForgotPasswordForm(flask_wtf.Form):
         return True
 
 
-class SetNewPasswordForm(flask_wtf.Form):
+class SetNewPasswordForm(flask_wtf.FlaskForm):
     password = wtforms.PasswordField(
         "Password",
         validators=[

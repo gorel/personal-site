@@ -9,7 +9,7 @@ from personal_site import constants, db
 from personal_site.forum import models
 
 
-class NewPostForm(flask_wtf.Form):
+class NewPostForm(flask_wtf.FlaskForm):
     title = wtforms.StringField(
         "Title",
         validators=[
@@ -46,7 +46,7 @@ class NewPostForm(flask_wtf.Form):
         return True
 
 
-class EditPostForm(flask_wtf.Form):
+class EditPostForm(flask_wtf.FlaskForm):
     body = wtforms.TextAreaField(
         "Body",
         render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},
@@ -72,7 +72,7 @@ class EditPostForm(flask_wtf.Form):
         return True
 
 
-class NewCommentForm(flask_wtf.Form):
+class NewCommentForm(flask_wtf.FlaskForm):
     body = wtforms.TextAreaField(
         "Body",
         render_kw={"class": "form-control", "rows": 10, "style": "resize: vertical"},
@@ -104,7 +104,7 @@ class NewCommentForm(flask_wtf.Form):
         return True
 
 
-class EditCommentForm(flask_wtf.Form):
+class EditCommentForm(flask_wtf.FlaskForm):
     body = wtforms.TextAreaField(
         "Body",
         render_kw={"class": "form-control", "rows": 20, "style": "resize: vertical"},

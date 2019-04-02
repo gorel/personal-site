@@ -6,7 +6,7 @@ from personal_site import constants, db
 import personal_site.auth.models as auth_models
 
 
-class EditAccountForm(flask_wtf.Form):
+class EditAccountForm(flask_wtf.FlaskForm):
     username = wtforms.TextField(
         "Username",
         validators=[

@@ -1,4 +1,3 @@
-import contextlib
 import inspect
 import json
 import functools
@@ -49,18 +48,6 @@ def register_task(f):
     return _wrap
 
 
-@contextlib.contextmanager
-def fake_request_context(*args, **kwargs):
-    ctx = None
-    try:
-        ctx = flask.current_app.test_request_context("")
-        ctx.push()
-        yield
-    finally:
-        if ctx is not None:
-            ctx.pop()
-
-
 def _set_progress(job, progress_pct):
     job.meta["progress"] = progress_pct
     job.save_meta()
@@ -77,7 +64,7 @@ def send_email(email_props):
 
 @register_task
 def record_view(username, page_name):
-    with fake_request_context():
+    with app.test_request_context("/"):
         job = rq.get_current_job()
 
         page_stats = learn_models.LearnPageStats.get_or_create(page_name)
@@ -95,7 +82,7 @@ def record_view(username, page_name):
 
 @register_task
 def clear_old_shelve_objects():
-    with fake_request_context():
+    with app.test_request_context("/"):
         job = rq.get_current_job()
         job.meta["expired_keys"] = 0
         job.save_meta()

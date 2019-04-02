@@ -8,7 +8,7 @@ from personal_site import constants, db
 from personal_site.admin import models
 
 
-class WarnUserForm(flask_wtf.Form):
+class WarnUserForm(flask_wtf.FlaskForm):
     reason = wtforms.StringField(
         "Reason for warning?",
         validators=[

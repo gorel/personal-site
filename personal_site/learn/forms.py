@@ -8,7 +8,7 @@ from personal_site import db
 from personal_site.learn import models
 
 
-class AskQuestionForm(flask_wtf.Form):
+class AskQuestionForm(flask_wtf.FlaskForm):
     question = wtforms.TextAreaField(
         "What's your question?",
         validators=[wtforms.validators.DataRequired()],
@@ -38,7 +38,7 @@ class AskQuestionForm(flask_wtf.Form):
         return True
 
 
-class AnswerQuestionForm(flask_wtf.Form):
+class AnswerQuestionForm(flask_wtf.FlaskForm):
     answer = wtforms.TextAreaField(
         "Question answer",
         validators=[wtforms.validators.DataRequired()],

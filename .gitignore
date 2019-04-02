@@ -115,6 +115,8 @@ app_backup.db
 migrations/
 shelve.db
 shelve.db.lock
+test_shelve.db
+test_shelve.db.lock
 
 # Production files and folders
 logs/

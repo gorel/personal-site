@@ -1,5 +1,7 @@
+import json
 import random
 
+import flask
 import flask_login
 import flask_wtf
 import wtforms
@@ -21,13 +23,13 @@ def check_allowed_characters(charset, message=None):
 
 
 
-class ShareSecretForm(flask_wtf.Form):
+class ShareSecretForm(flask_wtf.FlaskForm):
     shortname = wtforms.StringField(
         "Secret shortname",
         validators=[
             wtforms.validators.Optional(),
             wtforms.validators.Length(max=constants.SECRET_SHORTNAME_MAX_LEN),
-            check_allowed_characters(constants.SECRET_SHORTNAME_CHARSET)
+            check_allowed_characters(constants.SECRET_SHORTNAME_CHARSET),
         ],
         render_kw={
             "class": "form-control",
@@ -88,23 +90,33 @@ class ShareSecretForm(flask_wtf.Form):
 
         # Don't allow submissions if the secret already has all required responses
         if self.secret.expected_responses == self.secret.actual_responses:
-            self.shortname.errors.append("That secret already has all required responses")
+            # If the user clicked a direct link, shortname field is removed
+            msg = "That secret already has all required responses"
+            if self.shortname is not None:
+                self.shortname.errors.append(msg)
+            else:
+                flask.flash(
+                    json.dumps({
+                        "msg": msg,
+                        "link": flask.url_for("default.secret", secret_id=self.secret.id),
+                    }),
+                    "alert-warning",
+                )
             return False
 
         self.secret_response = models.SecretResponse(
-            secret_id=self.secret.id,
+            secret=self.secret,
             person=self.person.data,
             response=self.response.data,
         )
 
-        self.secret.actual_responses += 1
         db.session.add(self.secret_response)
         db.session.commit()
 
         return True
 
 
-class BugReportForm(flask_wtf.Form):
+class BugReportForm(flask_wtf.FlaskForm):
     report_type = wtforms.SelectField(
         "What kind of report are you submitting?",
         coerce=int,

@@ -9,7 +9,6 @@ dotenv.load_dotenv(os.path.join(basedir, ".env"))
 class Config(object):
     SERVER_HOST = os.environ.get("SERVER_HOST")
     FLASK_RUN_PORT = int(os.environ.get("FLASK_RUN_PORT"))
-    SITE_URL = os.environ.get("SITE_URL")
     DEBUG = bool(os.environ.get("FLASK_DEBUG")) or False
     TESTING = os.environ.get("TESTING") or False
     LOGFILE = os.environ.get("LOGFILE")
@@ -18,8 +17,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SHELVE_FILENAME = os.environ.get("SHELVE_FILENAME")
-
-    ELASTICSEARCH_URL = os.environ.get("ELASTICSEARCH_URL")
 
     REDIS_URL = os.environ.get("REDIS_URL")
     RQ_NAME = os.environ.get("RQ_NAME")
@@ -38,4 +35,3 @@ class Config(object):
     ADMIN = os.environ.get("ADMIN_EMAIL")
     EXT_ADMIN = os.environ.get("EXT_ADMIN_EMAIL")
     LANGUAGES = ["en"]
-

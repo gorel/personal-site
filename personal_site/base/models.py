@@ -44,6 +44,12 @@ class SecretResponse(db.Model):
     person = db.Column(db.String(constants.SECRET_PERSON_NAME_MAX_LEN))
     response = db.Column(db.String(constants.SECRET_RESPONSE_MAX_LEN))
 
+    def __init__(self, secret, person, response):
+        self.secret = secret
+        self.person = person
+        self.response = response
+        self.secret.actual_responses += 1
+
 
 class Secret(db.Model):
     id = db.Column(db.Integer, primary_key=True)
