@@ -36,7 +36,7 @@ VERIFY_ACCOUNT_TOKEN_STR = "verify_account"
 RESET_PASSWORD_TOKEN_STR = "reset_password"
 EMAIL_SUBJ_LEAD = "[logangore.dev]"
 VERIFY_ACCOUNT_SUBJECT_STR = f"{EMAIL_SUBJ_LEAD} Verify your email"
-RESET_PASSWORD_SUBJECT_STR = f"{EMAIL_SUBJ_LEAD} Reset your password",
+RESET_PASSWORD_SUBJECT_STR = f"{EMAIL_SUBJ_LEAD} Reset your password"
 PW_RESET_EXP_SECONDS = 60 * 60 * 24  # 24 hours
 
 # Profile

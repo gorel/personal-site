@@ -49,7 +49,7 @@ class EditAccountForm(flask_wtf.FlaskForm):
         if self.email.data:
             user.email = self.email.data
             user.email_verified = False
-            user.send_email_verification_link()
+            user.send_verify_account_email()
 
         if self.password.data:
             user.set_password(self.password.data)
