@@ -31,10 +31,16 @@
   <script>
     $("#level-2-toc").on("show.bs.collapse", function() {
       $("#lessons-dropdown-icon").addClass("fa-chevron-up").removeClass("fa-chevron-down");
+      createCookie("dropdown-toc-show", 1, 1);
     });
 
     $("#level-2-toc").on("hide.bs.collapse", function() {
       $("#lessons-dropdown-icon").addClass("fa-chevron-down").removeClass("fa-chevron-up");
+      deleteCookie("dropdown-toc-show");
     });
+
+    if (readCookie("dropdown-toc-show") !== null) {
+      $("#level-2-toc").show();
+    }
   </script>
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends "learn/base.html" %}
+
+{% block learn_lhs_content %}
+  <a data-toggle="collapse" href="#special-topics-toc" role="button"
+      aria-expanded="false" aria-controls="special-topics-toc">
+    All special_topics
+    <i id="lessons-dropdown-icon" class="fas fa-chevron-down"></i>
+  </a>
+
+  <br />
+
+  <div class="collapse" id="special-topics-toc">
+    <div class="toc">
+      <ul>
+        <li><a href="special-topics-algorithmic-complexity.html">Algorithmic Complexity</a></li>
+        <li><a href="special-topics-collections.html">The <code>collections</code> library</a></li>
+        <li><a href="special-topics-data-structures.html">Intro to data structures</a></li>
+        <li><a href="special-topics-exceptions.html">Exceptions</a></li>
+        <li><a href="special-topics-matplotlib.html">The <code>matplotlib</code> library</a></li>
+        <li><a href="special-topics-numpy.html">The <code>numpy</code> library</a></li>
+        <li><a href="special-topics-pandas.html">The <code>pandas</code> library</a></li>
+        <li><a href="special-topics-testing.html">Testing your code</a></li>
+      </ul>
+    </div>
+  </div>
+
+  {% block lhs_toc %}{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  <script>
+    $("#special-topics-toc").on("show.bs.collapse", function() {
+      $("#lessons-dropdown-icon").addClass("fa-chevron-up").removeClass("fa-chevron-down");
+      createCookie("dropdown-toc-show", 1, 1);
+    });
+
+    $("#special-topics-toc").on("hide.bs.collapse", function() {
+      $("#lessons-dropdown-icon").addClass("fa-chevron-down").removeClass("fa-chevron-up");
+      deleteCookie("dropdown-toc-show");
+    });
+
+    if (readCookie("dropdown-toc-show") !== null) {
+      $("#special-topics-toc").show();
+    }
+  </script>
+{% endblock %}

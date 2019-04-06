@@ -1,7 +1,7 @@
 {% extends "learn/base.html" %}
 
 {% block learn_lhs_content %}
-  <a  data-toggle="collapse" href="#level-1-toc" role="button"
+  <a data-toggle="collapse" href="#level-1-toc" role="button"
       aria-expanded="false" aria-controls="level-1-toc">
     All level 1 lessons
     <i id="lessons-dropdown-icon" class="fas fa-chevron-down"></i>
@@ -32,10 +32,16 @@
   <script>
     $("#level-1-toc").on("show.bs.collapse", function() {
       $("#lessons-dropdown-icon").addClass("fa-chevron-up").removeClass("fa-chevron-down");
+      createCookie("dropdown-toc-show", 1, 1);
     });
 
     $("#level-1-toc").on("hide.bs.collapse", function() {
       $("#lessons-dropdown-icon").addClass("fa-chevron-down").removeClass("fa-chevron-up");
+      deleteCookie("dropdown-toc-show");
     });
+
+    if (readCookie("dropdown-toc-show") !== null) {
+      $("#level-1-toc").show();
+    }
   </script>
 {% endblock %}

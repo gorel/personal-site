@@ -7,8 +7,18 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="{{ url_for("forum.index") }}">Forum</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for("learn.view", name="level-1-foreword.html") }}">Programming Beginners Level 1</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for("learn.view", name="level-2-foreword.html") }}">Programming Beginners Level 2</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="programmingLessonsDropdown" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+            Programming lessons
+          </a>
+          <div class="dropdown-menu" aria-labelledby="programmingLessonsDropdown">
+            <a class="dropdown-item" href="{{ url_for("learn.index") }}">Lessons index</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for("learn.view", name="level-1-foreword.html") }}">Level 1</a>
+            <a class="dropdown-item" href="{{ url_for("learn.view", name="level-2-foreword.html") }}">Level 2</a>
+          </div>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav ml-auto">

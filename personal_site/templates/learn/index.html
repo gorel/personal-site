@@ -1,9 +1,28 @@
 {% extends "learn/base.html" %}
 
 {% block learn_content %}
-  <h1>Learn</h1>
+  <h1>Programming lessons</h1>
 
+  <ul class="h5">
+    <li><a href="pages/level-1-foreword.html">Level 1</a></li>
+    <li><a href="pages/level-2-foreword.html">Level 2</a></li>
+    <li><a href="pages/special-topics.html">Special topics</a></li>
+  </ul>
+
+  <br />
+
+  <h3>Most popular pages</h3>
   {% for learn_page in most_popular %}
-    {% include "learn/partials/_learn_page.html" %}
+    <div style="padding-bottom: 10px">
+      <div class="border border-secondary" style="padding: 10px">
+        <span>
+          <a href="{{ learn_page.page_name }}">{{ learn_page.page_name }}</a>
+          <span class="float-right">{{ learn_page.views }} views</span>
+        </span>
+        <hr />
+        {# TODO: Preview #}
+        <em>Preview unavailable</em>
+      </div>
+    </div>
   {% endfor %}
 {% endblock %}
