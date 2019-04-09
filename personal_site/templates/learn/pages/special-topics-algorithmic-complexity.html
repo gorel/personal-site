@@ -1,4 +1,5 @@
 {% extends "learn/pages/special-topics-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <b>Table of contents</b>
@@ -6,10 +7,147 @@
   <div class="toc">
     <ul>
       <li><a href="#back-to-top">Back to top</a></li>
+      <li><a href="#vocab">Vocab</a></li>
+      <li><a href="#summary">What is algorithmic complexity?</a></li>
+      <li><a href="#quiz">Quiz</a></li>
+      <li><a href="#exercises">Exercises</a></li>
     </ul>
   </div>
 {% endblock %}
 
 {% block center_content %}
+  <div class="card text-white mb-3 bg-info">
+    <div class="card-body">
+      <p class="card-text">
+        <b style="font-size: 1.1em">NOTE:</b>
+        This is an advanced topic, even moreso than some others in the "special topics" section. This material is typically presented in the second or third semester of a traditional Computer Science curriculum, so keep that in mind if you're still relatively new to programming.
+      </p>
+    </div>
+  </div>
+
   <h1 id="back-to-top">Algorithmic Complexity</h1>
+  <p><strong>Before the lecture, please read the following </strong></p>
+  <ul>
+    <li>
+      <a href="https://www.belatrixsf.com/blog/introduction-to-algorithm-complexity/">
+        Introduction to Algorithm Complexity
+      </a>
+    </li>
+    <li>
+      <a href="https://dev.to/victoria/a-coffee-break-introduction-to-time-complexity-of-algorithms-160m">
+        A coffee-break introduction to time complexity of algorithms
+      </a>
+    </li>
+    <li>
+      <a href="https://discrete.gr/complexity/">
+        A Gentle Introduction to Algorithm Complexity Analysis
+      </a>
+    </li>
+  </ul>
+
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>"Big-Oh"</li>
+    <li>"Big-Omega"</li>
+    <li>Time complexity</li>
+    <li>Space complexity</li>
+  </ul>
+
+  <h2 id="summary">What is algorithmic complexity?</h2>
+  <p>If you're relatively new to programming, chances are you've never had to worry about how efficient your code was. Typically, as long as it runs and gives you the result you're lookig for, you're happy! For some applications (especially when working in a company), you need to care. If you have to process millions of events and render a web page in under a second, you have to ensure you're using the most efficient algorithms. The first step to identifying the slow parts of your code is to get a basic understanding of algorithmic complexity.</p>
+
+  <p>Complexity is rooted in mathematics. You can create a function to tell you how many <strong>operations</strong> a program would take to run. An operation is an abstract unit that roughly mimics something a computer can do in one* CPU instruction. The benefit of using operations instead of something like "seconds of runtime" is that it's consistent across different computers. The amount of data a laptop could process in one second is very different from a phone, a calculator, or a supercomputer. Algorithmic complexity doesn't care how fast or advanced computers get, though. What's more important is that we can measure how many operations it would take given some input. Even if you took a computer from 50 years ago, it would take roughly the same amount of operations*, it's just that the CPU executes those instructions more slowly.</p>
+
+  <p style="font-size: 0.8rem">*This isn't completely accurate, especially with modern CPUs, but the idea is roughly correct. I'm grossly oversimplifying a bunch of details about computer architecture here, but I really can't explain that in the confines of these short articles. The TL;DR: is that one operation = one thing a computer can do "instantly."</p>
+
+  <p>As I mentioned before, we assume the computer can do certain things instantly. Printing, doing basic mathematical operations (plus, minus, times, divide), indexing into a list (<code>mylist[0]</code>), or evaluating a simple condition (<code>if 3 &lt; 4</code>) would each count as a single operation. So far, this isn't too interesting, but let's start thinking about loops. Imagine the following program:</p>
+
+  <pre><code class="python">def foo(nums, threshold):
+    for num in nums:
+        if item &lt; threshold:
+            print(item) </code></pre>
+
+  <p>This function is pretty straightforward. Given a list of numbers and some threshold, it will print out all numbers strictly less than that threshold. So if we call <code>foo([1, 2, 3, 4], 3)</code>, our program would print 1 and 2. Let's try to analyze the complexity of this function, though. If we call <code>foo([1, 2, 3, 4], 3)</code>, how many <em>operations</em> get executed? The condition is a single operation and the print is a single operation, so each loop iteration takes two operations. That means our entire function call is 8 operations.</p>
+
+  <p>Great! Now what if we called <code>foo(somelist, 23)</code> where <code>somelist</code> has 100 elements? We can deduce that our function would now take 200 operations.</p>
+
+  <p>Now let's think abstractly. What if we call <code>foo</code> with a list of length <code>N</code>? In this case, our function would take <code>2N</code> operations. In mathematical terms, you could say <code>operations = 2 * N</code>. This is actually the basis for algorithmic complexity analysis. For an input of length <code>N</code>, how long will an algorithm run?</p>
+
+  <p>We say the <code>foo</code> function has linear complexity (it's a <em>linear-time algorithm</em>), because if you add <code>N</code> elements to the input, the computer takes <code>N</code> more operations to complete the function. At first you may be thinking, "Well then wouldn't every function be linear?" No, actually! Think about this rather simple function:</p>
+
+  <pre><code class="python">def get_middle_item(items):
+  n = len(items)
+    mid = n // 2
+    return items[mid] </code></pre>
+
+  <p>No matter how long the input list is, this function will always take the same number of operations to complete. Doing simple math and indexing into a list each just take one operation. We say this is a <em>constant-time algorithm</em> because if you add <code>N</code> elements to the input, the computer will not execute more operations.</p>
+
+  <p>Let's look at one more example.</p>
+
+  <pre><code class="python">def print_all_multiplications(nums):
+    n = len(nums)
+    for i in range(n):
+        for j in range(n):
+            num1 = nums[i]
+            num2 = nums[j]
+            result = num1 * num2
+            print(f"nums[{i}] = {num1}, nums[{j}] = {num2}, result={result}") </code></pre>
+
+  <p>What would the complexity of this function be? This one is a bit trickier. Let's try to work it out by hand. First, imagine we call <code>print_all_multiplications([1])</code>. If you work through the algorithm, you should see that it seems we perform five operations (<code>len(list)</code> also just takes one operation). Okay, now what about <code>print_all_multiplications([1, 2])</code>? By my count, that now leads to 17 operations. If you analyze <code>print_all_multiplications([1, 2, 3])</code>, you'll find that it takes 37 operations. It's hard to see a pattern here so far, but I promise one does actually exist.</p>
+
+  <p>To simplify our pattern finding, let's assume everything within the innermost loop happens in <code>C</code> operations (here, C = 4, but this should make our analysis easier). When we call <code>print_all_multiplications([1])</code>, it now takes <code>C + 1</code> operations. When we call <code>print_all_multiplications([1, 2])</code>, it takes <code>4C + 1</code> operations. For <code>print_all_multiplications([1, 2, 3])</code>, now it's <code>9C + 1</code> operations. Hey, these look like squared numbers! Indeed, if you keep going, you'll see that for a list with <code>N</code> items, this function takes <code>c*n^2 + 1</code> operations!</p>
+
+  <h3>Getting somewhere...</h3>
+  <p>When we talk about algorithmic complenity, we generally won't care about constants, since the functions are dominated by the leading terms. If you take a function that takes <code>5*n + 3</code> operations versus a function that takes <code>n^2</code> operations and see how many operations it would take for an input of size 1000, the first function would take 5,003 operations while the second takes 1,000,000. For this reason, we typically omit constants from our complenity analysis. This leads us to to the concept of <b>Big O notation</b>. Big O notation is a way to describe the limiting behavior of a function. For enample, if you have a program that takes <code>f(n) = 3n^3 + 4n^2 + 10n + 9</code> operations, you could say your program is <b>O(n^3)</b>.</p>
+
+  <p>Getting into the practical side of algorithmic complexity now, if we have two different ways to solve the same problem, we can analyze which one is more computationally efficient to ensure our programs can complete their tasks quickly. Let's think about the problem of figuring out if a number is in a list.</p>
+
+  <p>If I gave you a list of numbers and asked if some other number is in that list, what would you have to do? You'd have to scan through the list and figure out if the number exists. We would say this is a <em>linear scan</em> and is bounded by O(n). What if I told you the list was sorted, though? In this case, you could use the binary search algorithm. You'd start by looking at the middle of the list. If that number was larger than the number you were searching for, you would search the bottom half of the list. If that number was smaller, you'd search the top half of the list. You would continue this process, each time eliminating half the list to search. When you have a function that processes half its input in each iteration, that function's complexity is logarthmic; it is bounded by O(logn).</p>
+
+  <h3>Final thoughts</h3>
+  <p>I've already droned on far longer than the average lesson here, so I'm going to wrap this up here. The idea was to just give you an introduction about what it means to compute the complexity of an algorithm. There are many resources across the internet that explain this topic well. If you find one you like, let me know and I can add it here!</p>
+
+  <p>If you still feel confused, don't fret. I effectively had two semesters in college covering just this topic. It's extremely broad and not something you can just "figure out" after reading a half-page article. It takes time and practice. If there's something specific that you want to learn more about, please reach out and I can expand on it here.</p>
+
+  <h2 id="quiz">Quiz</h2>
+
+  <h2 id="exercises">Exercises</h2>
+  <p>Question 1: What is the complexity of the following algorithm?</p>
+  <pre><code class="python">def some_function(nums):
+    for num in nums:
+        if 2 * num &gt; 10:
+            print(item)</code></pre>
+
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "O(logn)", "Incorrect. We're going through each number at least once, so it must be at least n, right?"),
+      (True, "O(n)", "Correct!"),
+      (False, "O(n^2)", "Incorrect. n^2 is typical when you go through a list in a nested loop, but there are no nested loops here."),
+      (False, "O(1)", "Incorrect. This would mean the function is effectively instant. The computer is definitely doing some processing here."),
+    ])
+  }}
+
+  <p>Question 2: What is the complexity of the following algorithm?</p>
+  <pre><code class="python">def another_function(nums):
+    for num in nums:
+        if num &lt; 100:
+            return num
+    return -1</code></pre>
+
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (True, "O(n)", "Correct!"),
+      (False, "O(logn)", "Incorrect. We're going through each number at least once, so it must be at least n, right?"),
+      (False, "O(n^2)", "Incorrect. n^2 is typical when you go through a list in a nested loop, but there are no nested loops here."),
+      (False, "O(1)", "Incorrect. This would mean the function is effectively instant. The computer is definitely doing some processing here."),
+      (False, "It depends on the input", "Incorrect. Remember that Big O notation is about finding <b>bounding</b> behavior. Think about the worst case scenario"),
+    ])
+  }}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
 {% endblock %}
