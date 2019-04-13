@@ -12,7 +12,7 @@ def is_last_view_expired(db, shelve_key):
     key_expiry_time = db.get(shelve_key, now)
 
     # Returns True if the shelve_key expired some time before now
-    return key_expiry_time < now
+    return key_expiry_time is None or key_expiry_time < now
 
 
 def update_shelve_expiration_time(db, shelve_key):
