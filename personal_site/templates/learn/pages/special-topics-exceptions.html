@@ -1,4 +1,5 @@
 {% extends "learn/pages/special-topics-base.html" %}
+{% import "learn/pages/partials/_learn_pages_utils.html" as learn_pages_utils %}
 
 {% block lhs_toc %}
   <b>Table of contents</b>
@@ -6,10 +7,295 @@
   <div class="toc">
     <ul>
       <li><a href="#back-to-top">Back to top</a></li>
+      <li><a href="#vocab">Back to top</a></li>
+      <li><a href="#summary">Introduction to exception handling in Python</a></li>
+      <li><a href="#try-except"><code>try/except</code></a></li>
+      <li><a href="#the-finally-block">The <code>finally</code> block</a></li>
+      <li><a href="#raise-your-own-exceptions"><code>raise</code> your own exceptions</a></li>
+      <li><a href="#the-with-statement">The <code>with</code> statement</a></li>
     </ul>
   </div>
 {% endblock %}
 
 {% block center_content %}
-  <h1 id="back-to-top">Exceptions</h1>
+  <h1 id="back-to-top">Exceptions and the <code>with</code> statement</h1>
+  <p><strong>Before the lecture, please read the following:</strong></p>
+  <ul>
+    <li>
+      <a href="https://docs.python.org/3/tutorial/errors.html">
+        (Official Python3 documentation) Errors and Exceptions
+      </a>
+    </li>
+    <li>
+      <a href="https://www.tutorialspoint.com/python/python_exceptions.htm">
+        (TutorialsPoint) Python - Exception Handling
+      </a>
+    </li>
+    <li>
+      <a href="https://www.pythonforbeginners.com/files/with-statement-in-python">
+        (PythonForBeginners) Very brief intro to <code>with</code>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.geeksforgeeks.org/with-statement-in-python/">
+        (GeeksForGeeks) More on the <code>with</code> statement
+      </a>
+    </li>
+  </ul>
+
+  <h2 id="vocab">Vocab</h2>
+  <ul>
+    <li>Exception</li>
+    <li><code>try/except</code></li>
+    <li><code>finally</code></li>
+    <li><code>raise</code></li>
+    <li><code>with</code></li>
+    <li>Context manager</li>
+  </ul>
+
+  <h2 id="summary">Introduction to exception handling in Python</h2>
+  <p>One thing we've tried to deal with a few times is validating user input. We've shown how you can make sure user input is within some acceptable bounds with conditionals (for example, ensuring an inputted number is between 1 and 100), but our code still can't handle cases when a user puts in something completely unexpected, such as typing "five" into an input where we expect a number. This is the perfect use case for exception handling!</p>
+
+  <p>We've seen exceptions before in our own code. Try to think of a few exceptions you've seen before... <code>NameError</code>, <code>KeyError</code>, <code>ZeroDivisionError</code>. One phrase I've commonly said before is that if these exceptions happen, it's the user's fault and they shouldn't have been doing that. For some software, this is an acceptable response, but often we'd like to help the user out and let them try again instead of just letting our program crash, potentially losing any intermediate data the user was working on.</p>
+
+  <h3 id="try-except"><code>try/except</code></h3>
+  <p>Appropriately named, when you want to <em>try</em> a block of code that could potentially raise an exception, you can use a <code>try</code> block. A try block by itself will just attempt to run the code in the block and as soon as an exception occurs, it jumps to the end of the block and finds the first matching <code>except</code> block<sup>1</sup>. Try the following code on your own:</p>
+
+  <pre><code class="python">try:
+    a = 1
+    b = 0
+    result = a / b
+    print(f"{a} / {b} = {result}")
+except Exception:
+    # We don't care about any exceptions
+    pass
+print("Done!")</code></pre>
+
+  <p>An except block can do absolutely anything. Generally, you should use these blocks to try to recover from an exception, but really this almost acts like the exception never happened. Here's a common use for exception handling, though:</p>
+
+  <pre><code class="python">valid_input = False
+while not valid_input:
+    try:
+        number = int(input("Give me an integer: "))
+        valid_input = True
+    except ValueError:
+        print("Invalid input. Please try again.")</code></pre>
+
+  <p>The above code will ask the user for an integer and if Python fails to parse the input as an int, a ValueError will be raised which we handle by telling the user they supplied invalid input and asking them again. In just a few short lines, we can now handle literally any input the user tries to give us and we know that after this block, we have a valid integer in the <code>number</code> variable!</p>
+
+  <p>You can list as many <code>except</code> blocks after a try block as you want, but only the first matching exception will run. This is similar to the behavior we saw we if/elif/else. Even if multiple elif conditions <em>would</em> pass, only the first matching conditional will be run. Exceptions exist in a hierarchy. For now, you don't need to know much about this, but one relevant example could be "A ZeroDivisionError is a subset of ArithmeticError which is a subset of Exception which is a subset of BaseException." In Python, every exception must be a subclass of BaseException. If you'd like to see the full hierarchy, check out the <a href="https://docs.python.org/3/library/exceptions.html#exception-hierarchy">official Python3 documentation here</a>. So then in the following code:</p>
+
+  <pre><code class="python">try:
+    x = 1 / 0
+except Exception:
+    print("Something unknown happened")
+except ZeroDivisionError:
+    print("ZeroDivisionError!")</code></pre>
+
+  <p>It will actually print "Something unknown happened" and then exit since the exact error we get is a ZeroDivisionError, but the first except block (Exception) <em>is</em> a ZeroDivisionError by extension. If you find this confusing, it may help to first learn about classes and subclasses from the classes and objects lesson.</p>
+
+  <p>On a similar topic, I mentioned before that as soon as an exception is raised within a try block, it exits the block to find the first matching except. Take a look at this code fragment:</p>
+
+  <pre><code class="python">try:
+    print(a)
+    x = 1 / 0
+except ZeroDivisionError:
+    print("ZeroDivisionError!")
+except NameError:
+    print("NameError!")</code></pre>
+
+  <p>From this example, we'd see "NameError!" since the first line of the try block raises a NameError. Even though the ZeroDivisionError was listed first, we never even executed <code>x = 1 / 0</code> in our block.</p>
+
+  <p>Lastly, I want to show something that may seem obvious, but I just want to make sure we're on the same page. If no exception is raised from a try block, execution continues as normal and no except blocks are executed.</p>
+
+  <pre><code class="python">try:
+    a = 1
+    b = 2
+    result = a / b
+except NameError:
+    print("NameError!")
+except ZeroDivisionError:
+    print("ZeroDivisionError!")
+except Exception:
+    print("Something else happened")
+print(result)</code></pre>
+
+  <p>The above code runs the try block, no exceptions are thrown, then it prints the result of <code>0.5</code>.</p>
+
+  <p>NOTE: It wasn't covered here, but you can actually capture the exception object in a variable like so in case you would like to process it, modify it, or store it somewhere else (maybe in a database to record incidences of certain exceptions). Here's a short example of how that might look:</p>
+
+  <pre><code class="python">try:
+    x = 1 / 0
+except ZeroDivisionError as e:
+    print(f"Here's the exception you got: {e}")</code></pre>
+
+  <p class="small"><sup>1</sup> You can actually write a try/finally block without any except clauses, but it's rare that you would actually want to do this</p>
+
+  <h3 id="the-finally-block">The <code>finally</code> block</h3>
+  <p>There's one special block that <b>always</b> gets executed no matter which exceptions may have occurred called the <code>finally</code> block. The finally block is typically used for resource management to ensure we clean up properly even if an exception occurs. The following is a very common code pattern<sup>2</sup>:</p>
+
+  <pre><code class="python">try:
+    f = open("myfile.txt", "w")
+    f.write("Hello, world!\n")
+except Exception:
+    print("Something went wrong")
+finally:
+    f.close()</code></pre>
+
+  <p>No matter if the try block succeeded or threw an error, the finally block will <b>always</b> get executed last. You can try it out with this bit of code:</p>
+
+  <pre><code class="python"># prints try1, except, and finally
+try:
+    print("try1")
+    1 / 0
+    print("try2")
+except ZeroDivisionError:
+    print("except")
+finally:
+    print("finally")
+
+# prints try1, try2, and finally
+try:
+    print("try1")
+    print("try2")
+except ZeroDivisionError:
+    print("except")
+finally:
+    print("finally")</code></pre>
+
+  <p class="small"><sup>2</sup> So common, you should check out <a href="#the-with-statement">the <code>with</code> statement</a> below</p>
+
+  <h3 id="raise"><code>raise</code> your own exceptions</h3>
+  <p>You can raise your own exceptions at any point in your own code with the <code>raise</code> statement. Let's imagine you had some function that took a number as input but absolutely required that the given number be positive. Your code could look like this:</p>
+
+  <pre><code class="python">def do_something_with_a_positive_number(num):
+    if num <= 0:
+        raise ValueError("num must be > 0")
+    # ... rest of code here ...</code></pre>
+
+  <p>If someone tried calling your function with a non-positive number, your code would raise a ValueError. Raising exceptions instead of printing messages and crashing is incredibly valuable for both debugging as well as using the language-defined interface to efficiently let these sorts of issues be handled. The person using your code might then call your code in a try/except block of their own to handle it. In this way, we have an elegant way of writing library acceptable for use by anyone and we have provided a uesful error message to any programmer who may use our functions incorrectly.</p>
+
+  <p>For further reading, you may wish to look into how to define your own subclassed exceptions to be very explicit in why your functions can fail.</p>
+
+  <h3 id="the-with-statement">The <code>with</code> statement</h3>
+  <p>The <code>with</code> statement is used to make some exception handling code cleaner. There a certain blocks of code that are so common, the <code>with</code> statement was created to cut down on the repetition. We say that a with statement has a <b>context</b> and so <code>with</code> is a context manager. When we enter a with block, we call the context manager's <code>__enter__</code> function, and at the end of the with block, we call the context manager's <code>__exit__</code> function. I realize this may seem very abstract, so let's look at what is by far the most common usage for with: opening files.</p>
+
+  <pre><code class="python">with open("myfile.txt", "r") as f:
+    print(f.read())</code></pre>
+
+  <p>Although this is just two short lines of code, it's accomplishing quite a bit. Here's what happened:</p>
+  <ol>
+    <li>The <code>with</code> statement opens "myfile.txt" in read mode and refers to this file as the variable <code>f</code></li>
+    <li>We read the contents using <code>.read()</code> and print them out</li>
+    <li>When we exit our with block, the file is automatically closed for us!</li>
+  </ol>
+
+  <p>This automatic closing may not seem like much, but it's convenient and we never have to remember to write a finally block again. Even if the code within the with block threw an exception, it would still automatically close the file for us. Compare the following two snippets of code:</p>
+
+  <pre><code class="python"># Using with
+with open("myfile.txt", "r") as f:
+    contents = f.read()
+# ... Do something with contents ...</code></pre>
+
+  <pre><code class="python"># Using try/finally
+try:
+    f = None
+    f = open("myfile.txt", "r")
+    contents = f.read()
+finally:
+    if f is not None:
+        f.close()
+# ... Do something with contents ...</code></pre>
+
+  <p>I'll end by saying that you can do some other cool things with <code>with</code> statements, but by far the most common usage is with file opening.</p>
+
+  <h2 id="exercises">Exercises</h2>
+  <p>Question 1: What will be printed be the following program?</p>
+  <pre><code class="python">try:
+    x = 1
+    y = x - 1
+    result = x / y
+    print(result)
+except NameError as ne:
+    print("There was a NameError")
+except ZeroDivisionError as zde:
+    print("There was a ZeroDivisionError")
+except Exception as e:
+    print("Something weird happened")</code></pre>
+
+  {{
+    learn_pages_utils.render_question_responses(1, [
+      (False, "0", "Incorrect. Remember what happens when you try to divide by zero"),
+      (False, "There was a NameError", "Incorrect. NameErrors happen when you reference a variable that wasn't defined"),
+      (True , "There was a ZeroDivisionError", "Correct!"),
+      (False, "Something weird happened", "Incorrect. Similar to if/elif/else, only the first except block will be evaluated"),
+    ])
+  }}
+
+  <p>Question 2: What will be printed be the following program?</p>
+  <pre><code class="python">try:
+    x = 1
+    y = x - 1
+    result = x / y
+    print(result)
+except Exception as e:
+    print("Something weird happened")
+except ZeroDivisionError as zde:
+    print("There was a ZeroDivisionError")
+except NameError as ne:
+    print("There was a NameError")</code></pre>
+
+  {{
+    learn_pages_utils.render_question_responses(2, [
+      (False, "0", "Incorrect. Remember what happens when you try to divide by zero"),
+      (False, "There was a NameError", "Incorrect. NameErrors happen when you reference a variable that wasn't defined"),
+      (False, "There was a ZeroDivisionError", "Incorrect. Similar to if/elif/else, only the first except block will be evaluated"),
+      (True, "Something weird happened", "Correct!"),
+    ])
+  }}
+
+  <p>Question 3: What will be printed be the following program?</p>
+  <pre><code class="python">result = 0
+try:
+    x = 1
+    y = x - 1
+    result = x / y
+except NameError as ne:
+    result = 2
+except ZeroDivisionError as zde:
+    result = 3
+except Exception as e:
+    result = 4
+finally:
+    result = 5
+print(result)</code></pre>
+  {{
+    learn_pages_utils.render_question_responses(3, [
+      (False, "0", "Incorrect. The variable <code>result</code> within the try/except block is the same as the outer scope"),
+      (False, "1", "Incorrect."),
+      (False, "2", "Incorrect. In fact, this block would never even get executed (check question 1 again)"),
+      (False, "3", "Incorrect. While <code>result == 3</code> briefly, that is not the final value that will be printed"),
+      (False, "4", "Incorrect. In fact, this block would never even get executed (check question 1 again)"),
+      (True , "5", "Correct!"),
+    ])
+  }}
+
+  <p>Question 4: What is the main advantage of using the <code>with</code> statement?
+  {{
+    learn_pages_utils.render_question_responses(4, [
+      (False, "It runs faster than try/except blocks", "Incorrect. It shouldn't have any real impact on speed"),
+      (True, "It makes writing code to manage resources easier", "Correct!"),
+      (False, "It guarantees your code is bug free", "Incorrect. Unfortunately no, <code>with</code> can't guarantee that"),
+      (False, "It makes your code more easily testable", "Incorrect. Using <code>with</code> shouldn't really change how testable your code is"),
+    ])
+  }}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+
+  {{ learn_pages_utils.render_question_jquery(1) }}
+  {{ learn_pages_utils.render_question_jquery(2) }}
+  {{ learn_pages_utils.render_question_jquery(3) }}
+  {{ learn_pages_utils.render_question_jquery(4) }}
 {% endblock %}

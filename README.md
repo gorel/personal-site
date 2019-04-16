@@ -66,3 +66,6 @@
 - numpy
 - pandas
 - matplotlib
+
+# Bugs
+- First view of a page isn't recorded for some reason
