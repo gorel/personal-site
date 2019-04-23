@@ -47,6 +47,7 @@
 - ~Edit/Delete post/comment for admin~
 - ~Email bug reports to me daily~
 - ~Flashed messages should have optional links~
+- Admin page for viewing page view popularity
 
 # Completely different features
 - ~Facilitate bans for hearthstone (share_secret) -> needs better UI~

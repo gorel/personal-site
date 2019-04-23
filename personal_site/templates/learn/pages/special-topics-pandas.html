@@ -6,10 +6,38 @@
   <div class="toc">
     <ul>
       <li><a href="#back-to-top">Back to top</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#start-here">The interactive tutorial</a></li>
     </ul>
   </div>
 {% endblock %}
 
 {% block center_content %}
   <h1 id="back-to-top">The <code>pandas</code> library</h1>
+  <h2 id="setup">Setup</h2>
+  <p>Before beginning this lesson, you will need to install and set up Jupyter notebook. Instructions for this are listed here, though they may vary slightly between systems.</p>
+
+  <p>To begin, open a terminal and run the following commands (<code>$</code> represents the terminal prompt)</p>
+
+  <pre><code class="bash">$ pip3 install --user numpy pandas jupyter
+( you'll see lots of install messages here )
+$ jupyter-notebook
+( a new window should open in your browser like http://localhost:8888/tree )</code></pre>
+
+  <p>In the top right of the web page that opened, click New &rarr; Python3 notebook. Type the following in the first cell of the notebook:</p>
+
+  <pre><code class="python">import pandas as pd
+import numpy as np
+print("Success!")</code></pre>
+
+  <p>Hit the Run button in the toolbar. If you didn't get an error, great! You're all set for class. If you <em>did</em> get an error, send it to me, and I'll help you debug what's going wrong.</p>
+
+  <p>From here, you're ready to go through the interactive tutorial below. You may wish to play around in Jupyter first to get accustomed to how it works. It's extremely powerful and there are many features you may enjoy.</p>
+
+  <h2 id="start-here">The interactive tutorial</h2>
+  <p>The tutorial for pandas is completely interactive! To go through the tutorial, first download <a href="https://www.dropbox.com/s/m7qfx5npov5z2uo/winequality.csv?dl=0">this csv file</a> which will be the input dataset, then download the iPython notebook <a href="https://www.dropbox.com/s/qan5czprz3hm3x8/Pandas%20Tutorial.ipynb?dl=0">here</a>.
+{% endblock %}
+
+{% block pagination_next %}
+  {{ utils.paginate_next("special-topics-matplotlib.html", "Matplotlib") }}
 {% endblock %}
