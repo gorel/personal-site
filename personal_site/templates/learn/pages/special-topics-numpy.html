@@ -6,10 +6,125 @@
   <div class="toc">
     <ul>
       <li><a href="#back-to-top">Back to top</a></li>
+      <li><a href="#setup">Setup</a></li>
+      <li><a href="#intro">Introduction to <code>numpy</code></a></li>
+      <li><a href="#arange"><code>arange</code></a></li>
+      <li><a href="#transpose"><code>transpose</code></a></li>
+      <li><a href="#reshape"><code>reshape</code></a></li>
+      <li><a href="#math">Common math functions</a></li>
+      <li><a href="#stats">Statistical functions</a></li>
     </ul>
   </div>
 {% endblock %}
 
 {% block center_content %}
   <h1 id="back-to-top">The <code>numpy</code> library</h1>
+  <p><strong>Useful external links to learn about numpy:</strong></p>
+  <ul>
+    <li>
+      <a href="https://www.tutorialspoint.com/numpy/index.htm">
+        NumPy Tutorial
+      </a>
+    </li>
+  </ul>
+
+  <h2 id="setup">Setup</h2>
+  <p>Before beginning this lesson, you will need to install the <code>numpy</code> library on your system. This is actually very easy thanks to <code>pip</code>! Open a terminal and run the following commands (<code>$</code> represents the terminal prompt):</p>
+
+  <pre><code class="bash">$ pip3 install --user numpy
+#( you'll see lots of install messages here )
+$ python3
+#( Python startup messages here )
+&gt;&gt;&gt; import numpy
+&gt;&gt;&gt;</code></pre>
+
+  <p>If you didn't get an error, great! You're all set to continue. You have now installed numpy on your system and it should be available within the python3 interactive shell or within any python3 script.</p>
+
+  <h2 id="intro">Introduction to <code>numpy</code></h2>
+  <p>The <code>numpy</code> library contains many functions for efficiently dealing with numerical data in Python. It's typically used in conjuction with the <code>scipy</code>, <code>pandas</code>, and <code>matplotlib</code> libraries for use in data analysis. The basic data type defined by numpy is the <b>ndarray</b>. You can easily turn any Python list into a numpy ndarray like so:</p>
+
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; my_list = [1, 2, 3, 4, 5]
+&gt;&gt;&gt; my_nparray = np.array(my_list)</code></pre>
+
+  <p>Numpy also handles multi-dimensional arrays in a simple way and can recursively cast your nested lists to an ndarray. You can find the shape of an ndarray through the <code>.shape</code> attribute of an ndarray.</p>
+
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; my_2d_list = [[1, 2, 3], [4, 5, 6]]
+&gt;&gt;&gt; my_2d_array = np.array(my_2d_list)
+&gt;&gt;&gt; print(my_2d_array.shape)
+(2, 3)</code></pre>
+
+  <h2 id="arange"><code>arange</code></h2>
+  <p>You've used the built-in <code>range</code> function before, but numpy provides a great utility function called <code>arange</code> that's even more powerful. By default, arange returns a numpy ndarray of the range, but it can also operate on floats while the built-in range only works for ints.</p>
+
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; np.arange(5)
+array([0, 1, 2, 3, 4])
+&gt;&gt;&gt; np.arange(2, 6)
+array([2, 3, 4, 5])
+&gt;&gt;&gt; np.arange(0, 1, 0.2)
+array([0. , 0.2, 0.4, 0.6, 0.8])</code></pre>
+
+  <h2 id="transpose"><code>transpose()</code>/<code>.T</code></h2>
+  <p>A common operation needed in scientific computing is transposing a matrix. This is incredibly simple in numpy.</p>
+
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; a = np.array([[1, 2, 3], [4, 5, 6]])
+&gt;&gt;&gt; print(a)
+[[1 2 3]
+ [4 5 6]]
+&gt;&gt;&gt; print(a.T)
+[[1 4]
+ [2 5]
+ [3 6]]</code></pre>
+
+  <h2 id="reshape"><code>reshape</code></h2>
+  <p>Sometimes you need to reshape an array to fit different dimensions.</p>
+
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; a = np.array([[1, 2, 3], [4, 5, 6]])
+&gt;&gt;&gt; print(np.reshape(3, 2))
+[[1 2]
+ [3 4]
+ [5 6]]
+&gt;&gt;&gt; print(np.reshape(1, 6))
+[[1 2 3 4 5 6]]
+&gt;&gt;&gt; # cast to 1d array
+&gt;&gt;&gt; print(np.reshape(6))
+[1 2 3 4 5 6]</code></pre>
+
+  <h2 id="math">Common math functions</h2>
+  <p>The numpy library actually reimplements many functions from the math library in a way that is more efficient for numpy arrays and acts upon the entire array at once.</p>
+
+  <pre><code class="python">&gt;&gt;&gt;import numpy as np
+&gt;&gt;&gt; a = np.array([1, 2, 3])
+&gt;&gt;&gt; print(np.sin(a))
+[0.84147098 0.90929743 0.14112001]</code></pre>
+
+  <p>Another way that numpy ndarrays are different from basic lists is what happens when you perform mathematical operations on them</p>
+
+&gt;&gt;&gt;
+  <pre><code class="python">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = [4, 5, 6]
+&gt;&gt;&gt; a + b
+[1, 2, 3, 4, 5, 6]
+&gt;&gt;&gt; np.array(a) + np.array(b)
+np.array([5, 7, 9])
+&gt;&gt;&gt; a * 2
+[1, 2, 3, 1, 2, 3]
+&gt;&gt;&gt; np.array(a) * 2
+[2, 4, 6]</code></pre>
+
+  <h2 id="stats">Statistical functions</h2>
+  <p>Lastly, numpy exposes a number of statistical functions that can be incredibly useful during data analysis. I won't enumerate them all here, but you can look at the most commonly used functions <a href="https://www.tutorialspoint.com/numpy/numpy_statistical_functions.htm">at this page</a>. Some of the functions included:</p>
+  <ul>
+    <li>min/max</li>
+    <li>percentile</li>
+    <li>median</li>
+    <li>mean/average</li>
+    <li>stddev/variance</li>
+  </ul>
+
 {% endblock %}
