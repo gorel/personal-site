@@ -48,6 +48,7 @@
 - ~Email bug reports to me daily~
 - ~Flashed messages should have optional links~
 - Admin page for viewing page view popularity
+- Flash "copied link" when clicking copy button on share_secret
 
 # Completely different features
 - ~Facilitate bans for hearthstone (share_secret) -> needs better UI~
@@ -63,10 +64,12 @@
 - unittest
 - collections
 - basic data structures
-- algorithmic complexity
-- numpy
-- pandas
-- matplotlib
+- ~algorithmic complexity~
+- ~numpy~
+- ~pandas~
+- ~matplotlib~
 
 # Bugs
 - First view of a page isn't recorded for some reason
+- ~share_secret links are using http instead of https~
+- Can't use some links/buttons when page is narrow
