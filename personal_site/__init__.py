@@ -16,6 +16,7 @@ import flask_moment
 import flask_shelve
 import flask_sqlalchemy
 import flask_wtf
+import werkzeug.contrib.fixers
 
 import htmlmin.main
 import redis
@@ -114,6 +115,7 @@ def create_app(config_class=site_config.Config):
     # Create app
     app = flask.Flask(__name__)
     app.config.from_object(config_class)
+    app.wsgi_app = werkzeug.contrib.fixers.ProxyFix(app.wsgi_app)
 
     # Set up extensions
     bcrypt.init_app(app)
