@@ -73,3 +73,4 @@
 - First view of a page isn't recorded for some reason
 - ~share_secret links are using http instead of https~
 - Can't use some links/buttons when page is narrow
+- No job "clear_old_shelve_objects" or something
