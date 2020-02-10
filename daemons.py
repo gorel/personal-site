@@ -9,10 +9,10 @@ from personal_site import constants, create_app
 app = create_app()
 
 
-def clear_old_shelf_objects():
-    print("clear_old_shelf_objects running", file=sys.stderr)
-    app.task_queue.enqueue(constants.TASK_PREFIX + "clear_old_shelf_objects")
-    print("clear_old_shelf_objects enqueued", file=sys.stderr)
+def clear_old_shelve_objects():
+    print("clear_old_shelve_objects running", file=sys.stderr)
+    app.task_queue.enqueue(constants.TASK_PREFIX + "clear_old_shelve_objects")
+    print("clear_old_shelve_objects enqueued", file=sys.stderr)
 
 
 def email_daily_bug_reports():
@@ -32,7 +32,7 @@ def email_daily_bug_reports():
 ## BEGIN SCHEDULE SECTION ##
 ############################
 
-schedule.every().day.at("23:59").do(clear_old_shelf_objects)
+schedule.every().day.at("23:59").do(clear_old_shelve_objects)
 schedule.every().day.at("23:59").do(email_daily_bug_reports)
 
 ##########################
