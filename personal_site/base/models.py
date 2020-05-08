@@ -73,7 +73,7 @@ class Secret(db.Model):
 class MihkPlayer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(constants.MIHK_PLAYER_NAME_MAX_LEN))
-    game_id = db.Column(db.Integer, db.ForeignKey("mihkgame.id"))
+    game_id = db.Column(db.Integer, db.ForeignKey("mihk_game.id"))
     role = db.Column(db.Integer)
 
 
