@@ -133,6 +133,7 @@ class StartMihkGameForm(flask_wtf.FlaskForm):
         ],
         render_kw={"class": "form-control", "autocomplete": "off"},
     )
+    submit = wtforms.SubmitField()
 
     def validate(self):
         if not super(StartMihkGameForm, self).validate():
@@ -162,6 +163,7 @@ class JoinMihkGameForm(flask_wtf.FlaskForm):
         ],
         render_kw={"class": "form-control", "autocomplete": "off"},
     )
+    submit = wtforms.SubmitField()
 
     def __init__(self, game, *args, **kwargs):
         super(JoinMihkGameForm, self).__init__(*args, **kwargs)
