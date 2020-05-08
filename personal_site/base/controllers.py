@@ -52,6 +52,52 @@ def check_secret_ready(secret_id):
     return flask.jsonify(response)
 
 
+@default.route("/start_mihk", methods=["GET", "POST"])
+def start_mihk():
+    form = forms.StartMihkGameForm()
+    if form.validate_on_submit():
+        return flask.redirect("default.mihk", game_id=form.game.id, player_id=form.player.id)
+    else:
+        return flask.render_template("start_mihk.html", form=form)
+
+
+@default.route("/join_mihk/<int:game_id>", methods=["GET", "POST"])
+def join_mihk(game_id):
+    game = models.MihkGame.query.get_or_404(game_id)
+    form = forms.JoinMihkGameForm(game)
+    if form.validate_on_submit():
+        return flask.redirect(flask.url_for("default.mihk", game_id=form.game.id, player_id=form.player.id))
+    else:
+        return flask.render_template("join_mihk.html", form=form, game=game)
+
+
+@default.route("/mihk/<int:game_id>/<int:player_id>")
+def mihk(game_id, player_id):
+    game = models.MihkGame.query.get_or_404(game_id)
+    return flask.render_template("mihk.html", game=game, player_id=player_id)
+
+
+@default.route("/mihk_ready/<int:game_id>/<int:player_id>")
+def check_mihk_ready(game_id, player_id):
+    game = models.MihkGame.query.get_or_404(game_id)
+    roles = [game.role_to_str(player.role) for player in game.players]
+    player = MihkPlayer.query.get_or_404(player_id)
+
+    # TODO - Make this... good. Don't hardcode value
+    is_fs = player.role == 0
+    response = {
+        "players": [
+            {
+                "name": player.name,
+                "role": "Hidden" if player.id != player_id and not is_fs else player.role,
+            }
+            for player in game.players
+        ],
+        "remaining": num_players - len(game.players),
+    }
+    return flask.jsonify(response)
+
+
 @default.route("/bug_report", methods=["GET", "POST"])
 def bug_report():
     form = forms.BugReportForm()

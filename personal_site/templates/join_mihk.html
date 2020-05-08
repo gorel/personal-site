@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block center_content %}
+  <h1>Join a game of Deception: Murder in Hong Kong</h1>
+  {% set n_left = form.game.num_players - len(form.game.players) %}
+  <p>You're joining a game}</p>
+  <p>This game is waiting on {{ n_left }} more player{% if n_left > 1 %}s{% endif %}.</p>
+
+  {{ wtf.quick_form(form) }}
+{% endblock %}

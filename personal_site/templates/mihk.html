@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block center_content %}
+  <h1>Deception: Murder in Hong Kong</h1>
+
+  <div id="game_waiting_before">
+    <div class="border border-secondary" style="padding: 10px">
+      <p>Send this link to others who should join the game:</p>
+      <p>
+        <button onclick="copyToClipboard('#game-link')">
+          <i class="fas fa-copy"></i> Copy
+        </button>
+        <span id="game-link">{{ url_for("default.join_mihk", game_id=game.id, _external=True) }}</span>
+      </p>
+    </div>
+
+    <h3>Expected players: <span id="expected">{{ game.num_players }}</span></h3>
+    <h3>Players registered so far: <span id="actual">{{ len(game.players) }}</span></h3>
+  </div>
+
+  <div id="game_waiting_after">
+    {% for i in range(game.num_players) %}
+      <div style="padding-bottom: 10px">
+        <div class="border border-secondary" style="padding: 10px">
+          <h4><b id="player-name-{{ i }}">(No player yet)</b>'s role</h4>
+          <hr />
+          <h5 id="player-role-{{ i }}">Hidden</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super () }}
+
+  <script>
+    function add_players(players, remaining) {
+      if (remaining === 0) {
+        $("#game_waiting_before").hide();
+
+        var playerDiv = $("#players").text("");
+        for (var i = 0; i < responses.length; i++) {
+          $("#player-name-" + i).text(responses[i].name);
+          $("#player-role-" + i).text(responses[i].role);
+        }
+      } else {
+        $("#game_waiting_before").show();
+        $("#actual").text(remaining);
+      }
+    }
+
+    {# Immediately call this to load initial values #}
+    $.ajax("{{ url_for("default.check_mihk_ready", game_id=game.id, player_id=player_id) }}").done(
+      function(result_json) {
+        add_players(result_json.players, result_json.remaining);
+      }
+    );
+
+    {# 10 second interval for updates #}
+    var interval = null;
+    $(function() {
+      interval = setInterval(function() {
+        $.ajax("{{ url_for("default.check_mihk_ready", game_id=game.id, player_id=player_id) }}").done(
+          function(result_json) {
+            add_players(result_json.players, result_json.remaining);
+            if (result_json.remaining === 0) {
+              clearInterval(interval);
+            }
+          }
+        );
+      }, 10000);
+    });
+
+    {# function to copy text to clipboard for usability #}
+    function copyToClipboard(element) {
+      var $temp = $("<input>")
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+      {# TODO: Alert that text was copied #}
+    }
+  </script>
+{% endblock %}

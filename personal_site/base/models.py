@@ -70,6 +70,43 @@ class Secret(db.Model):
         return cls.query.filter_by(shortname=shortname).first()
 
 
+class MihkPlayer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(constants.MIHK_PLAYER_NAME_MAX_LEN))
+    game_id = db.Column(db.Integer, db.ForeignKey("mihkgame.id"))
+    role = db.Column(db.Integer)
+
+
+class MihkGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    num_players = db.Column(db.Integer)
+    creator_is_fs = db.Column(db.Boolean)
+    allow_extra_roles = db.Column(db.Boolean)
+    players = db.relationship("MihkPlayer", backref="game")
+
+    def role_to_str(role):
+        return {
+                0: "Forensic Scientist",
+                1: "Murderer",
+                2: "Accomplice",
+                3: "Witness",
+                4: "Investigator",
+        }[role]
+
+    def _get_all_roles():
+        # I'm lazy and hard-coding this... it's bad.
+        all_roles = [0, 1]
+        if self.num_players > 5 and allow_extra_roles:
+            all_roles += [2, 3]
+        investigators = [4] * (self.num_players - len(all_roles))
+        all_roles += investigators
+
+    def get_role():
+        all_roles = self._get_all_roles()
+        used_roles = [player.role for role in self.players]
+        return list((collections.Counter(all_roles) - collections.Counter(used_roles)).elements())
+
+
 class BugReport(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))

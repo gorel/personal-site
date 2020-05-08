@@ -14,6 +14,9 @@ SECRET_RESPONSE_MAX_LEN = 140
 SECRET_SHORTNAME_CHARSET = set(string.ascii_letters + string.digits + "-_.")
 SECRET_SHORTNAME_PLACEHOLDER_TEXT = "Create a unique secret identifier, or we'll make one for you"
 
+# MiHK game
+MIHK_PLAYER_NAME_MAX_LEN = 64
+
 # Tasks
 TASK_ID_LEN = 36
 TASK_NAME_MAX_LEN = 128
