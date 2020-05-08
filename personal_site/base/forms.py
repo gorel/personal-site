@@ -118,7 +118,9 @@ class ShareSecretForm(flask_wtf.FlaskForm):
 class StartMihkGameForm(flask_wtf.FlaskForm):
     num_players = wtforms.IntegerField(
         "How many players will be in the game?",
-        wtforms.validators.DataRequired(),
+        validators=[
+            wtforms.validators.DataRequired(),
+        ],
     )
     creator_is_fs = wtforms.BooleanField(
         "Will you be acting as the Forensic Investigator?"
