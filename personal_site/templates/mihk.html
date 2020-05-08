@@ -15,7 +15,7 @@
     </div>
 
     <h3>Expected players: <span id="expected">{{ game.num_players }}</span></h3>
-    <h3>Players registered so far: <span id="actual">{{ len(game.players) }}</span></h3>
+    <h3>Still waiting for <span id="remaining">{{ game.num_players }}</span> players to join.</h3>
   </div>
 
   <div id="game_waiting_after">
@@ -35,7 +35,7 @@
   {{ super () }}
 
   <script>
-    function add_players(players, remaining) {
+    function add_players(responses, remaining) {
       if (remaining === 0) {
         $("#game_waiting_before").hide();
 
@@ -46,7 +46,7 @@
         }
       } else {
         $("#game_waiting_before").show();
-        $("#actual").text(remaining);
+        $("#remaining").text(remaining);
       }
     }
 
@@ -57,7 +57,7 @@
       }
     );
 
-    {# 10 second interval for updates #}
+    {# 3 second interval for updates #}
     var interval = null;
     $(function() {
       interval = setInterval(function() {
@@ -69,7 +69,7 @@
             }
           }
         );
-      }, 10000);
+      }, 3000);
     });
 
     {# function to copy text to clipboard for usability #}

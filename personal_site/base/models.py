@@ -1,4 +1,6 @@
+import collections
 import datetime
+import random
 
 import flask
 import redis
@@ -84,7 +86,7 @@ class MihkGame(db.Model):
     allow_extra_roles = db.Column(db.Boolean)
     players = db.relationship("MihkPlayer", backref="game")
 
-    def role_to_str(role):
+    def role_to_str(self, role):
         return {
                 0: "Forensic Scientist",
                 1: "Murderer",
@@ -93,18 +95,22 @@ class MihkGame(db.Model):
                 4: "Investigator",
         }[role]
 
-    def _get_all_roles():
+    def _get_all_roles(self):
         # I'm lazy and hard-coding this... it's bad.
         all_roles = [0, 1]
-        if self.num_players > 5 and allow_extra_roles:
+        if self.num_players > 5 and self.allow_extra_roles:
             all_roles += [2, 3]
         investigators = [4] * (self.num_players - len(all_roles))
         all_roles += investigators
+        return all_roles
 
-    def get_role():
+    def get_role(self, force_fs=False):
+        # This is awful...
+        if force_fs:
+            return 0
         all_roles = self._get_all_roles()
-        used_roles = [player.role for role in self.players]
-        return list((collections.Counter(all_roles) - collections.Counter(used_roles)).elements())
+        used_roles = [player.role for player in self.players]
+        return random.choice(list((collections.Counter(all_roles) - collections.Counter(used_roles)).elements()))
 
 
 class BugReport(db.Model):

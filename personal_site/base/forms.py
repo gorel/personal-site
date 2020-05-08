@@ -125,6 +125,9 @@ class StartMihkGameForm(flask_wtf.FlaskForm):
     creator_is_fs = wtforms.BooleanField(
         "Will you be acting as the Forensic Investigator?"
     )
+    allow_extra_roles = wtforms.BooleanField(
+        "Will you be playing with the Accomplice/Witness roles?"
+    )
     player = wtforms.StringField(
         "Your name",
         validators=[
@@ -142,11 +145,12 @@ class StartMihkGameForm(flask_wtf.FlaskForm):
         self.game = models.MihkGame(
             num_players=self.num_players.data,
             creator_is_fs=self.creator_is_fs.data,
+            allow_extra_roles=self.allow_extra_roles.data,
         )
         db.session.add(self.game)
         db.session.commit()
 
-        role = self.game.get_role()
+        role = self.game.get_role(self.creator_is_fs.data)
         self.player = models.MihkPlayer(name=self.player.data, game_id=self.game.id, role=role)
         db.session.add(self.player)
         db.session.commit()
